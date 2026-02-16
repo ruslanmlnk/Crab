@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import { motion, Variants } from 'framer-motion'
 
 export const FromTheFleet: React.FC = () => {
   const articles = [
@@ -25,17 +26,53 @@ export const FromTheFleet: React.FC = () => {
     }
   ]
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  }
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" } as any
+    },
+  }
+
   return (
     <section className="bg-blue-dark section-padding relative overflow-hidden">
       {/* Background Large Text */}
-      <div className="absolute left-[-150px] top-[293px] text-[#E6F1F6] opacity-[0.04] text-[240px] font-semibold leading-none tracking-[-14.3px] whitespace-nowrap pointer-events-none z-0">
+      <motion.div 
+        initial={{ x: -100, opacity: 0 }}
+        whileInView={{ x: -150, opacity: 0.04 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute top-[293px] text-[#E6F1F6] text-[240px] font-semibold leading-none tracking-[-14.3px] whitespace-nowrap pointer-events-none z-0"
+      >
         FROM THE NORWEGIAN CRAB FLEET
-      </div>
+      </motion.div>
 
-      <div className="container-custom relative z-10 flex flex-col items-center gap-12">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className="container-custom relative z-10 flex flex-col items-center gap-12"
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {articles.map((article) => (
-            <div key={article.id} className="article-card flex-1">
+            <motion.div 
+              key={article.id} 
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="article-card flex-1"
+            >
               <div 
                 className="h-[250px] w-full bg-cover bg-center p-3.5 relative"
                 style={{ backgroundImage: `url('${article.image}')` }}
@@ -51,23 +88,41 @@ export const FromTheFleet: React.FC = () => {
                   <p className="text-sm text-blue-midnight leading-[145%] line-clamp-3">{article.description}</p>
                 </div>
 
-                <button className="flex items-center gap-2 group cursor-pointer w-fit">
+                <motion.button 
+                  whileHover="hover"
+                  className="flex items-center gap-2 group cursor-pointer w-fit"
+                >
                   <div className="flex flex-col items-start border-0">
                     <span className="text-blue-dark font-semibold lowercase leading-[145%] text-sm">learn more</span>
-                    <div className="h-[1px] w-full bg-blue-dark transition-transform origin-left group-hover:scale-x-0" />
+                    <motion.div 
+                      variants={{
+                        hover: { scaleX: 0 }
+                      }}
+                      className="h-[1px] w-full bg-blue-dark origin-left" 
+                    />
                   </div>
-                  <div className="w-5 h-5 flex items-center justify-center transition-transform group-hover:translate-x-1">
+                  <motion.div 
+                    variants={{
+                      hover: { x: 5 }
+                    }}
+                    className="w-5 h-5 flex items-center justify-center"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                       <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
                     </svg>
-                  </div>
-                </button>
+                  </motion.div>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <button className="btn-base btn-white mt-8 group">
+        <motion.button 
+          variants={itemVariants}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="btn-base btn-white mt-8 group"
+        >
           <div className="flex flex-col items-start">
             <span className="text-white font-semibold lowercase">Read stories</span>
             <div className="h-[1px] w-full bg-white transition-transform origin-left group-hover:scale-x-0" />
@@ -77,8 +132,8 @@ export const FromTheFleet: React.FC = () => {
               <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="white"/>
             </svg>
           </div>
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
     </section>
   )
 }

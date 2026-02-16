@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import { motion, Variants } from 'framer-motion'
 
 export const Pricing: React.FC = () => {
   const plans = [
@@ -33,17 +34,48 @@ export const Pricing: React.FC = () => {
     }
   ]
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95, y: 30 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" } as any
+    },
+  }
+
   return (
     <section className="bg-ice-mist section-padding">
-      <div className="container-custom flex flex-col items-center gap-14 md:gap-[48px]">
-        <div className="max-w-[568px] flex flex-col items-center gap-4 text-center">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={containerVariants}
+        className="container-custom flex flex-col items-center gap-14 md:gap-[48px]"
+      >
+        <motion.div variants={cardVariants} className="max-w-[568px] flex flex-col items-center gap-4 text-center">
           <span className="text-label text-blue-midnight">Pricing</span>
           <h2 className="text-h2 text-blue-dark">Pricing for Every Adventure</h2>
-        </div>
+        </motion.div>
 
         <div className="flex flex-col md:flex-row justify-center gap-5 w-full">
           {plans.map((plan) => (
-            <div key={plan.id} className="price-card w-full md:w-[400px]">
+            <motion.div 
+              key={plan.id} 
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+              className="price-card w-full md:w-[400px]"
+            >
               <div 
                 className="h-[230px] w-full bg-cover bg-center p-3.5 relative"
                 style={{ backgroundImage: `url('${plan.image}')` }}
@@ -59,17 +91,30 @@ export const Pricing: React.FC = () => {
                   <span className="text-base text-blue-dark tracking-wide">/access</span>
                 </div>
 
-                <div className="btn-base btn-dark w-full justify-center group cursor-pointer">
-                  <div className="flex flex-col items-start">
+                <motion.div 
+                  whileHover="hover"
+                  className="btn-base btn-dark w-full justify-center group cursor-pointer"
+                >
+                  <div className="flex flex-col items-start font-bold">
                     <span>Purchase now</span>
-                    <div className="h-[1px] w-full bg-blue-dark transition-transform origin-left group-hover:scale-x-0" />
+                    <motion.div 
+                      variants={{
+                        hover: { scaleX: 0 }
+                      }}
+                      className="h-[1px] w-full bg-blue-dark origin-left" 
+                    />
                   </div>
-                  <div className="w-6 h-6 flex items-center justify-center transition-transform group-hover:translate-x-1">
+                  <motion.div 
+                    variants={{
+                      hover: { x: 5 }
+                    }}
+                    className="w-6 h-6 flex items-center justify-center"
+                  >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
                     </svg>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
                 <div className="flex flex-col gap-2 min-h-[160px]">
                   <span className="text-sm font-bold tracking-[3px] uppercase text-[#1C4D74]">Includes:</span>
@@ -84,10 +129,10 @@ export const Pricing: React.FC = () => {
                   <span className="font-bold">Ideal for:</span> {plan.ideal}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
