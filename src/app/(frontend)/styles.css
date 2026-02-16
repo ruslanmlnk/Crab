@@ -1,164 +1,89 @@
-:root {
-  --font-mono: 'Roboto Mono', monospace;
+@import "tailwindcss";
+
+@theme {
+  --color-blue-dark: #071a26;
+  --color-blue-midnight: #0c2b3a;
+  --color-ice-mist: #e6f1f6;
+  --color-white: #ffffff;
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 18px;
-  line-height: 32px;
-
-  background: rgb(0, 0, 0);
-  -webkit-font-smoothing: antialiased;
-}
-
-html,
-body,
-#app {
-  height: 100%;
-}
-
-body {
-  font-family: system-ui;
-  font-size: 18px;
-  line-height: 32px;
-
-  margin: 0;
-  color: rgb(1000, 1000, 1000);
-
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    line-height: 24px;
+@layer base {
+  body {
+    @apply bg-blue-dark text-white antialiased font-sans transition-colors duration-300;
   }
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-h1 {
-  margin: 40px 0;
-  font-size: 64px;
-  line-height: 70px;
-  font-weight: bold;
-
-  @media (max-width: 1024px) {
-    margin: 24px 0;
-    font-size: 42px;
-    line-height: 42px;
+@layer components {
+  .container-custom {
+    @apply max-w-[1440px] w-full mx-auto px-10 md:px-20;
   }
 
-  @media (max-width: 768px) {
-    font-size: 38px;
-    line-height: 38px;
+  .section-padding {
+    @apply py-20 md:py-[140px];
   }
 
-  @media (max-width: 400px) {
-    font-size: 32px;
-    line-height: 32px;
-  }
-}
-
-p {
-  margin: 24px 0;
-
-  @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
-  }
-}
-
-a {
-  color: currentColor;
-
-  &:focus {
-    opacity: 0.8;
-    outline: none;
+  .text-h1 {
+    @apply text-5xl md:text-[80px] lg:text-[157px] font-bold uppercase leading-[100%] tracking-tight;
   }
 
-  &:active {
-    opacity: 0.7;
-    outline: none;
-  }
-}
-
-svg {
-  vertical-align: middle;
-}
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  padding: 45px;
-  max-width: 1024px;
-  margin: 0 auto;
-  overflow: hidden;
-
-  @media (max-width: 400px) {
-    padding: 24px;
+  .text-h2 {
+    @apply text-4xl md:text-[52px] font-semibold leading-[125%];
   }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-
-    h1 {
-      text-align: center;
-    }
+  .text-h2-faq {
+    @apply text-5xl md:text-[80px] font-semibold leading-[125%];
   }
 
-  .links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    a {
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .admin {
-      color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
-      border: 1px solid rgb(0, 0, 0);
-    }
-
-    .docs {
-      color: rgb(1000, 1000, 1000);
-      background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
-    }
+  .text-h3 {
+    @apply text-2xl md:text-[32px] font-semibold leading-[145%];
   }
 
-  .footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .text-tagline {
+    @apply text-lg lg:text-[26px] font-medium leading-[145%];
+  }
 
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      gap: 6px;
-    }
+  .text-body {
+    @apply text-base font-normal leading-[145%];
+  }
 
-    p {
-      margin: 0;
-    }
+  .text-label {
+    @apply text-sm md:text-base font-medium uppercase leading-[145%] tracking-wider;
+  }
 
-    .codeLink {
-      text-decoration: none;
-      padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
-      border-radius: 4px;
-    }
+  .btn-base {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-full border transition-all duration-300 text-base font-semibold lowercase;
+  }
+
+  .btn-dark {
+    @apply border-blue-dark text-blue-dark hover:bg-blue-dark hover:text-white;
+  }
+
+  .btn-white {
+    @apply border-white text-white hover:bg-white hover:text-blue-dark;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    @apply content-[''] absolute bottom-0 left-0 w-full h-[1px] bg-current;
+  }
+
+  .icon-circle {
+    @apply flex w-10 h-10 justify-center items-center rounded-full border border-white/50 transition-all duration-300 hover:bg-white/10 hover:scale-110;
+  }
+
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md;
+  }
+
+  .price-card {
+    @apply flex flex-col items-center p-2 pb-6 border border-ice-mist bg-white text-blue-dark gap-5 transition-transform duration-300 hover:-translate-y-2;
+  }
+
+  .article-card {
+    @apply flex flex-col items-center p-2 pb-6 border border-ice-mist bg-white text-blue-dark gap-5 transition-transform duration-300 hover:-translate-y-1;
   }
 }
