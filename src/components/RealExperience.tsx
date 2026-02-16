@@ -45,13 +45,13 @@ export const RealExperience: React.FC = () => {
       <div className="relative z-10 -mt-[100vh]">
         {experiences.map((exp, index) => (
           <div key={exp.id} className="w-full h-screen flex items-center">
-            <div className="container-custom w-full">
+            <div className="max-w-[1348px] w-full mx-auto px-6">
               <motion.div 
                 initial={{ opacity: 0, y: 50, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ margin: "-20%", once: false }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`max-w-[632px] p-8 md:p-12 glass-card flex gap-8 ${index % 2 === 1 ? 'ml-auto' : ''}`}
+                className={`max-w-[612.7px] p-8 md:p-12 glass-card flex gap-8 ${index % 2 === 1 ? 'ml-auto' : ''}`}
               >
                 <span className="text-[20px] font-bold leading-[145%] text-white shrink-0">{exp.id}</span>
                 <div className="flex flex-col gap-4">

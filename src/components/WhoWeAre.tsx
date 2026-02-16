@@ -23,7 +23,7 @@ export const WhoWeAre: React.FC = () => {
   }
 
   return (
-    <section className="bg-ice-mist section-padding relative overflow-hidden">
+    <section className="bg-ice-mist relative overflow-hidden min-h-[700px] flex items-center">
       {/* Background SVG Ornament */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}
@@ -44,12 +44,12 @@ export const WhoWeAre: React.FC = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
-        className="container-custom relative z-10 flex flex-col items-center"
+        className="max-w-[1440px] w-full mx-auto px-6 md:px-[70px] relative z-10 flex flex-col items-center"
       >
         <div className="max-w-[600px] w-full flex flex-col items-center gap-6 text-center">
           <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
-            <span className="text-label text-blue-dark">Who We Are</span>
-            <h2 className="text-h2 text-blue-dark">
+            <span className="text-blue-dark text-[14px] md:text-[16px] font-medium uppercase leading-[145%] tracking-normal">Who We Are</span>
+            <h2 className="text-blue-dark text-[34px] md:text-[44px] font-semibold leading-[110%]">
               An independent project sharing real experience and knowledge from inside the Norwegian crab fishing industry
             </h2>
           </motion.div>
@@ -60,7 +60,7 @@ export const WhoWeAre: React.FC = () => {
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="flex flex-col items-start">
-              <span className="text-blue-dark font-semibold lowercase leading-[145%]">learn more</span>
+              <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
               <motion.div 
                 variants={{
                   hover: { scaleX: 0 }
