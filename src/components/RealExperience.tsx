@@ -9,7 +9,7 @@ export const RealExperience: React.FC = () => {
     {
       id: '01.',
       label: 'Real path, not theory',
-      title: 'Built on firsthand experience — from fishing vessel entry level in Africa, Nederland to work on norwegian fishing/crab boat. More that 6 years experience',
+      title: 'Built on firsthand experience - from fishing vessel entry level in Africa, Nederland to work on norwegian fishing/crab boat. More than 6 years experience',
     },
     {
       id: '02.',
@@ -44,19 +44,21 @@ export const RealExperience: React.FC = () => {
       {/* Scrolling Content Blocks */}
       <div className="relative z-10 -mt-[100vh]">
         {experiences.map((exp, index) => (
-          <div key={exp.id} className="w-full h-screen flex items-center">
-            <div className="max-w-[1348px] w-full mx-auto px-6">
+          <div key={exp.id} className="w-full min-h-screen flex items-center py-8 md:py-0">
+            <div className="max-w-[1348px] w-full mx-auto px-4 sm:px-6">
               <motion.div 
                 initial={{ opacity: 0, y: 50, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ margin: "-20%", once: false }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`max-w-[612.7px] p-8 md:p-12 glass-card flex gap-8 ${index % 2 === 1 ? 'ml-auto' : ''}`}
+                className={`w-full max-w-[612.7px] p-6 sm:p-8 md:p-12 glass-card backdrop-blur-[6px] flex items-start gap-4 sm:gap-6 md:gap-8 ${index % 2 === 1 ? 'md:ml-auto' : ''}`}
               >
-                <span className="text-[20px] font-bold leading-[145%] text-white shrink-0">{exp.id}</span>
-                <div className="flex flex-col gap-4">
-                  <span className="text-label text-ice-mist uppercase tracking-wider">{exp.label}</span>
-                  <h3 className="text-h3 text-white leading-[145%]">{exp.title}</h3>
+                <span className="text-[20px] font-normal leading-[145%] text-white shrink-0">{exp.id}</span>
+                <div className="flex w-full max-w-[459.7px] flex-col gap-3 md:gap-4">
+                  <span className="text-[15px] md:text-[16px] font-medium leading-[145%] text-ice-mist uppercase tracking-[0.02em]">
+                    {exp.label}
+                  </span>
+                  <h3 className="text-[24px] md:text-[32px] font-semibold leading-[145%] text-white">{exp.title}</h3>
                 </div>
               </motion.div>
             </div>
@@ -66,3 +68,4 @@ export const RealExperience: React.FC = () => {
     </section>
   )
 }
+
