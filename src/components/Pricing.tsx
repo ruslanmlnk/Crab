@@ -91,7 +91,7 @@ export const Pricing: React.FC = () => {
               key={plan.id} 
               variants={cardVariants}
               whileHover={{ y: -8 }}
-              className="group flex flex-col w-full lg:w-[400px] h-auto lg:h-[842px] bg-white p-2 pb-[24px] gap-[24px] shadow-sm transition-shadow hover:shadow-md"
+              className="group flex flex-col w-full lg:w-[400px] h-auto lg:h-[842px] bg-white p-2 pb-[24px] gap-[24px]"
             >
               <div className="h-[230px] w-full relative overflow-hidden flex-shrink-0">
                 <Image
@@ -102,7 +102,7 @@ export const Pricing: React.FC = () => {
                   sizes="(max-width: 768px) 100vw, 400px"
                 />
                 <div className="absolute top-[14.15px] left-3.5 bg-[#D9EEFF] px-4 py-1 rounded-full z-10">
-                  <span className="text-[14px] font-semibold uppercase text-[#0B1F31] leading-[20px]">
+                  <span className="text-[14px] font-semibold uppercase text-[#0B1F31] leading-[20px] block">
                     {plan.tag}
                   </span>
                 </div>
