@@ -61,7 +61,7 @@ export const Pricing: React.FC = () => {
 
   return (
     <section className="bg-ice-mist py-20 md:py-[140px] relative overflow-hidden">
-      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.1} fade="bottom" fadeAmount={25} showCenterLine={false} />
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.1} fade="bottom" fadeAmount={25} showCenterLine={false} showMobile={false} />
       
       <motion.div 
         initial="hidden"

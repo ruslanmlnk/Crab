@@ -8,6 +8,7 @@ interface DecorativeLinesProps {
   fade?: 'top' | 'bottom' | 'both' | 'none'
   fadeAmount?: number // Percentage from 0 to 100
   showCenterLine?: boolean
+  showMobile?: boolean
 }
 
 export const DecorativeLines: React.FC<DecorativeLinesProps> = ({ 
@@ -15,7 +16,8 @@ export const DecorativeLines: React.FC<DecorativeLinesProps> = ({
   opacity = 0.15,
   fade = 'none',
   fadeAmount, // Optional custom fade amount
-  showCenterLine = true
+  showCenterLine = true,
+  showMobile = true
 }) => {
   let backgroundStyle = {}
 
@@ -47,7 +49,7 @@ export const DecorativeLines: React.FC<DecorativeLinesProps> = ({
   }
 
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+    <div className={`absolute inset-0 z-0 pointer-events-none overflow-hidden ${!showMobile ? 'hidden md:block' : ''}`}>
       <div className="container-custom h-full relative flex justify-between">
         {/* Left Line */}
         <motion.div 

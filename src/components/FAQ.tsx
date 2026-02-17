@@ -97,7 +97,7 @@ export const FAQ: React.FC = () => {
 
       {/* FAQ Accordion Section */}
       <div className="container-custom pb-20 md:pb-[137px] relative">
-        <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} />
+        <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} showMobile={false} />
         <div className="flex flex-col md:flex-row gap-4 items-start w-full relative z-10">
           {/* Left Column */}
           <motion.div 

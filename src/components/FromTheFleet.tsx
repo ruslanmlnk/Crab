@@ -49,7 +49,7 @@ export const FromTheFleet: React.FC = () => {
 
   return (
     <section className="bg-blue-dark py-20 md:py-[140px] flex flex-col justify-center items-center gap-12 overflow-hidden relative">
-      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} />
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} showMobile={false} />
       
       {/* Background Large Text */}
       <motion.div 

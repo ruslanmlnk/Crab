@@ -25,7 +25,7 @@ export const WhoWeAre: React.FC = () => {
 
   return (
     <section className="bg-ice-mist relative overflow-hidden min-h-[700px] flex items-center">
-      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} />
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} showMobile={false} />
       {/* Background SVG Ornament */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.8 }}

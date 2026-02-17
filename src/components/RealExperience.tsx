@@ -51,20 +51,20 @@ export const RealExperience: React.FC = () => {
       </div>
 
       <div className="absolute inset-0 z-20 pointer-events-none">
-        <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.2} fade="none" showCenterLine={false} />
+        <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.2} fade="none" showCenterLine={false} showMobile={false} />
       </div>
 
       {/* Scrolling Content Blocks */}
-      <div className="relative z-10 -mt-[100vh] flex flex-col gap-[70px] pt-[140.1px] pb-[140px]">
+      <div className="relative z-10 -mt-[100vh] flex flex-col gap-[70px] pt-[140.1px] pb-[140px] overflow-x-hidden">
         {experiences.map((exp, index) => (
           <div key={exp.id} className="w-full">
             <div className="mx-auto max-w-[1348px] px-6 w-full">
               <motion.div 
-                initial={{ opacity: 0, y: 50, x: index % 2 === 0 ? -50 : 50 }}
+                initial={{ opacity: 0, y: 50, x: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : (index % 2 === 0 ? -50 : 50) }}
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ margin: "-20%", once: false }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`w-full max-w-[612.7px] p-6 md:p-12 glass-card backdrop-blur-[6px] flex items-start gap-[32px] ${index % 2 === 1 ? 'md:ml-auto' : ''}`}
+                className={`w-full max-w-[612.7px] p-6 md:p-12 glass-card backdrop-blur-[6px] flex items-start gap-[16px] md:gap-[32px] ${index % 2 === 1 ? 'md:ml-auto' : ''}`}
               >
                 <span className="text-[20px] leading-[145%] text-white shrink-0">{exp.id}</span>
                 <div className="flex w-full flex-col gap-[8px]">

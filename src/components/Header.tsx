@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
 
   return (
     <header className="w-full bg-blue-dark py-4 md:py-6 border-b border-white/5 relative z-[100]">
-      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} showCenterLine={false} />
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} showCenterLine={false} showMobile={false} />
       <div className="mx-auto max-w-[1328px] px-6 flex justify-between items-center whitespace-nowrap">
         {/* Logo */}
         <motion.div 

@@ -44,7 +44,7 @@ export const Hero: React.FC = () => {
         sizes="100vw"
       />
       <div className="absolute inset-0 bg-blue-dark/30 z-[1]" />
-      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} />
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} showMobile={false} />
       <motion.div 
         className="mx-auto max-w-[1208px] px-6 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0 relative z-10"
         initial="hidden"
