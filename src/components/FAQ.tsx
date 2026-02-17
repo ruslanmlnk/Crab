@@ -96,7 +96,7 @@ export const FAQ: React.FC = () => {
       </motion.div>
 
       {/* FAQ Accordion Section */}
-      <div className="container-custom pb-20 md:pb-[140px] pt-10 md:pt-[8px] relative">
+      <div className="container-custom pb-20 md:pb-[137px] relative">
         <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} />
         <div className="flex flex-col md:flex-row gap-4 items-start w-full relative z-10">
           {/* Left Column */}
@@ -127,7 +127,7 @@ export const FAQ: React.FC = () => {
                   onClick={() => setActiveIndex(isActive ? null : actualIndex)}
                 >
                   <div className={`flex justify-between items-center gap-4 ${!isActive ? 'pb-4 border-b border-ice-mist' : ''}`}>
-                    <h4 className="text-[18px] font-bold text-blue-dark leading-[145%]">{faq.question}</h4>
+                    <h4 className="text-[18px] font-bold text-blue-dark leading-[26px]">{faq.question}</h4>
                     <motion.div 
                       animate={{ rotate: isActive ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
@@ -147,8 +147,8 @@ export const FAQ: React.FC = () => {
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-6 border-t border-ice-mist">
-                          <p className="text-[18px] font-medium text-blue-midnight leading-[145%]">{faq.answer}</p>
+                        <div className="pt-4 border-t border-ice-mist">
+                          <p className="text-[18px] font-medium text-blue-midnight leading-[26px]">{faq.answer}</p>
                         </div>
                       </motion.div>
                     )}
@@ -206,8 +206,8 @@ export const FAQ: React.FC = () => {
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-6 border-t border-ice-mist">
-                          <p className="text-[18px] font-medium text-blue-midnight leading-[145%]">{faq.answer}</p>
+                        <div className="pt-4 border-t border-ice-mist">
+                          <p className="text-[18px] font-medium text-blue-midnight leading-[26px]">{faq.answer}</p>
                         </div>
                       </motion.div>
                     )}
