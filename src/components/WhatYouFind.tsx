@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
@@ -43,15 +44,21 @@ export const WhatYouFind: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-[130px] items-stretch">
           <motion.div 
             variants={itemVariants}
-            className="w-full lg:w-[520px] h-[326px] overflow-hidden rounded-sm"
+            className="w-full lg:w-[520px] h-[326px] overflow-hidden rounded-sm relative"
           >
-            <motion.img 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.8 }}
-              src="https://api.builder.io/api/v1/image/assets/TEMP/4baa9141500c2b4a45eeb5c8233e91dc856e3b41?width=1040" 
-              alt="Crab fishing documentation"
-              className="w-full h-full object-cover"
-            />
+              className="w-full h-full relative"
+            >
+              <Image 
+                src="https://api.builder.io/api/v1/image/assets/TEMP/4baa9141500c2b4a45eeb5c8233e91dc856e3b41?width=1040" 
+                alt="Crab fishing documentation"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 520px"
+              />
+            </motion.div>
           </motion.div>
           
           <div className="flex flex-col justify-start py-0 gap-[137px] flex-1">

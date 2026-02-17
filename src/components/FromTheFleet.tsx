@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
@@ -75,11 +76,15 @@ export const FromTheFleet: React.FC = () => {
               whileHover={{ y: -5 }}
               className="article-card flex-1"
             >
-              <div 
-                className="h-[250px] w-full bg-cover bg-center p-3.5 relative"
-                style={{ backgroundImage: `url('${article.image}')` }}
-              >
-                <div className="bg-[#D9EEFF] text-blue-dark text-[14px] font-bold px-4 py-1 rounded-full w-fit uppercase">
+              <div className="h-[250px] w-full p-3.5 relative overflow-hidden">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="bg-[#D9EEFF] text-blue-dark text-[14px] font-bold px-4 py-1 rounded-full w-fit uppercase relative z-10">
                   {article.tag}
                 </div>
               </div>

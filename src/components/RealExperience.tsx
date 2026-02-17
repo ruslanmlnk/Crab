@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import React, { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
@@ -32,14 +33,21 @@ export const RealExperience: React.FC = () => {
       {/* Sticky Background Layer */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <motion.div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: `linear-gradient(0deg, rgba(11, 31, 49, 0.50) 0%, rgba(11, 31, 49, 0.50) 100%), url('${backgroundImage}')`
-          }}
+          className="absolute inset-0 z-0"
           initial={{ scale: 1.1 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-        />
+        >
+          <Image
+            src={backgroundImage}
+            alt="Real Experience Background"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-blue-dark/50" />
+        </motion.div>
       </div>
 
       <div className="absolute inset-0 z-20 pointer-events-none">

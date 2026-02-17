@@ -1,40 +1,44 @@
 "use client"
+import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
-export const Pricing: React.FC = () => {
-  const plans = [
-    {
-      id: 1,
-      title: 'Employer Database',
-      price: '€400',
-      tag: 'Employer Database',
-      image: 'https://api.builder.io/api/v1/image/assets/TEMP/eb4e8008b9a7327b6f3e17a384db1ff4f083c0f3?width=768',
-      features: [
-        '1000+ verified employer contacts (Norway, Denmark, UK, Europe)',
-        'No middlemen, no fake listings — direct company contacts only',
-        'Full database access (apply independently)'
-      ],
-      ideal: 'People ready to take action and apply on their own'
-    },
-    {
-      id: 2,
-      title: 'Full Support Course',
-      price: '€800',
-      tag: 'Full Support Course',
-      image: 'https://api.builder.io/api/v1/image/assets/TEMP/a2dd0a2b28130c4d6202529111b2d5ab43148127?width=768',
-      features: [
-        'Step-by-step guidance from “I don’t know where to start” to sending CVs',
-        'Professional CV tailored for fishing, crab, and offshore jobs',
-        'Guidance on how to communicate with employers',
-        'Personal support from me (calls + messages)',
-        'Private community access',
-        '4 group Zoom calls + weekly reviews'
-      ],
-      ideal: 'Those who want full guidance, feedback, and faster results'
-    }
-  ]
+const plans = [
+  {
+    id: 1,
+    title: 'Employer Database',
+    price: '€400',
+    unit: '/access',
+    tag: 'Employer Database',
+    image: 'https://api.builder.io/api/v1/image/assets/TEMP/eb4e8008b9a7327b6f3e17a384db1ff4f083c0f3?width=768',
+    features: [
+      '1000+ verified employer contacts (Norway, Denmark, UK, Europe)',
+      'No middlemen, no fake listings — direct company contacts only',
+      'Full database access (apply independently)'
+    ],
+    ideal: 'People ready to take action and apply on their own'
+  },
+  {
+    id: 2,
+    title: 'Full Support Course',
+    price: '€800',
+    unit: '/access',
+    tag: 'Full Support Course',
+    image: 'https://api.builder.io/api/v1/image/assets/TEMP/a2dd0a2b28130c4d6202529111b2d5ab43148127?width=768',
+    features: [
+      'Step-by-step guidance from “I don’t know where to start” to sending CVs',
+      '1000+ employer contacts + training on how to find new companies yourself',
+      'Professional CV tailored for fishing, crab, and offshore jobs',
+      'Guidance on how to communicate with employers',
+      'Personal support from me (calls + messages)',
+      'Private community access (people already working in Norway)',
+      '4 group Zoom calls + weekly reviews and strategy adjustments'
+    ],
+    ideal: 'Those who want full guidance, feedback, and faster results'
+  }
+]
 
+export const Pricing: React.FC = () => {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -56,80 +60,100 @@ export const Pricing: React.FC = () => {
   }
 
   return (
-    <section className="bg-ice-mist section-padding relative">
-      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} fade="bottom" fadeAmount={25} showCenterLine={false} />
+    <section className="bg-ice-mist py-20 md:py-[140px] relative overflow-hidden">
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.1} fade="bottom" fadeAmount={25} showCenterLine={false} />
+      
       <motion.div 
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
-        className="container-custom flex flex-col items-center gap-14 md:gap-[48px]"
+        className="container-custom relative z-10 flex flex-col items-center gap-[48px]"
       >
-        <motion.div variants={cardVariants} className="w-full flex flex-col items-center gap-4 text-center">
-          <span className="text-label text-blue-midnight">Pricing</span>
-          <h2 className="text-h2 text-blue-dark">Pricing for Every Adventure</h2>
-        </motion.div>
+        <div className="flex flex-col items-center gap-4 text-center max-w-[568px]">
+          <motion.span 
+            variants={cardVariants}
+            className="text-base font-medium uppercase tracking-wider text-blue-midnight leading-[145%]"
+          >
+            Pricing
+          </motion.span>
+          <motion.h2 
+            variants={cardVariants}
+            className="text-4xl md:text-[52px] font-semibold text-blue-dark leading-[125%] whitespace-pre-line"
+          >
+            Pricing for every {"\n"} dive adventure
+          </motion.h2>
+        </div>
 
-        <div className="flex flex-col md:flex-row justify-center gap-5 w-full">
+        <div className="flex flex-col lg:flex-row justify-center items-start gap-5 w-full">
           {plans.map((plan) => (
             <motion.div 
               key={plan.id} 
               variants={cardVariants}
-              whileHover={{ y: -10 }}
-              className="price-card w-full md:w-[400px]"
+              whileHover={{ y: -8 }}
+              className="group flex flex-col w-full lg:w-[400px] h-auto lg:h-[842px] bg-white p-2 pb-[24px] gap-[24px] shadow-sm transition-shadow hover:shadow-md"
             >
-              <div 
-                className="h-[230px] w-full bg-cover bg-center p-3.5 relative"
-                style={{ backgroundImage: `url('${plan.image}')` }}
-              >
-                <div className="bg-[#D9EEFF] text-blue-dark text-[14px] font-bold px-4 py-1 rounded-full w-fit uppercase">
-                  {plan.tag}
+              <div className="h-[230px] w-full relative overflow-hidden flex-shrink-0">
+                <Image
+                  src={plan.image}
+                  alt={plan.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                />
+                <div className="absolute top-[14.15px] left-3.5 bg-[#D9EEFF] px-4 py-1 rounded-full z-10">
+                  <span className="text-[14px] font-semibold uppercase text-[#0B1F31] leading-[20px]">
+                    {plan.tag}
+                  </span>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-8 w-full">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-[35px] font-bold tracking-tight text-blue-dark">{plan.price}</span>
-                  <span className="text-base text-blue-dark tracking-wide">/access</span>
+              <div className="flex flex-col gap-[32px] px-2 flex-grow">
+                <div className="flex items-end leading-none">
+                  <span className="text-[35px] font-semibold tracking-[1px] text-[#0B1F31]">
+                    {plan.price}
+                  </span>
+                  <span className="text-base font-normal text-[#0B1F31] leading-[1.6] tracking-[1px] ml-0.5">
+                    {plan.unit}
+                  </span>
                 </div>
 
-                <motion.div 
-                  whileHover="hover"
-                  className="btn-base btn-dark w-full justify-center group cursor-pointer"
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-2 px-6 py-[11.2px] rounded-full border border-blue-dark group/btn transition-colors hover:bg-blue-dark"
                 >
-                  <div className="flex flex-col items-start font-bold">
-                    <span>Purchase now</span>
-                    <motion.div 
-                      variants={{
-                        hover: { scaleX: 0 }
-                      }}
-                      className="h-[1px] w-full bg-blue-dark origin-left" 
-                    />
+                  <div className="flex flex-col items-start relative">
+                    <span className="text-base font-semibold  leading-[23px] lowercase text-blue-dark group-hover/btn:text-white transition-colors">
+                      Purchase now
+                    </span>
+                    <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
                   </div>
-                  <motion.div 
-                    variants={{
-                      hover: { x: 5 }
-                    }}
-                    className="w-6 h-6 flex items-center justify-center"
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
-                    </svg>
-                  </motion.div>
-                </motion.div>
+                  <svg className="w-6 h-6 transition-transform group-hover/btn:translate-x-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" 
+                      className="fill-blue-dark group-hover/btn:fill-white transition-colors"
+                    />
+                  </svg>
+                </motion.button>
 
-                <div className="flex flex-col gap-2 min-h-[160px]">
-                  <span className="text-sm font-bold tracking-[3px] uppercase text-[#1C4D74]">Includes:</span>
-                  <ul className="text-sm text-blue-dark flex flex-col gap-1 list-none p-0">
+                <div className="flex flex-col gap-2 h-auto lg:h-[331px]">
+                  <span className="text-base font-medium tracking-[3px] uppercase text-[#1C4D74] leading-[145%]">
+                    Includes:
+                  </span>
+                  <ul className="flex flex-col list-none p-0 m-0">
                     {plan.features.map((feature, i) => (
-                      <li key={i}>— {feature}</li>
+                      <li key={i} className="text-base font-normal text-[#0B1F31] leading-[145%]">
+                        — {feature}
+                      </li>
                     ))}
                   </ul>
                 </div>
 
-                <p className="text-sm text-blue-dark pt-4 border-t border-ice-mist">
-                  <span className="font-bold">Ideal for:</span> {plan.ideal}
-                </p>
+                <div className="mt-auto pt-4t">
+                  <p className="text-base leading-[145%] text-[#0B1F31]">
+                    <span className="font-bold">Ideal for:</span> <span className="font-normal">{plan.ideal}</span>
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}

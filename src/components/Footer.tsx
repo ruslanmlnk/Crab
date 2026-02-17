@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import Image from 'next/image'
 import { DecorativeLines } from './DecorativeLines'
 
 export const Footer: React.FC = () => {
@@ -11,11 +11,15 @@ export const Footer: React.FC = () => {
         <div className="flex animate-scroll whitespace-nowrap">
           {[...Array(10)].map((_, i) => (
             <div key={i} className="flex items-center gap-[68px] mx-[34px]">
-              <img 
-                src="https://api.builder.io/api/v1/image/assets/TEMP/09c56b150f502440ef166c7b7c035306d19395a8?width=300" 
-                alt="Logo" 
-                className="w-[150px] object-contain opacity-50"
-              />
+              <div className="w-[150px] h-[40px] relative">
+                <Image 
+                  src="https://api.builder.io/api/v1/image/assets/TEMP/09c56b150f502440ef166c7b7c035306d19395a8?width=300" 
+                  alt="Logo" 
+                  fill
+                  className="object-contain opacity-50"
+                  sizes="150px"
+                />
+              </div>
             </div>
           ))}
         </div>

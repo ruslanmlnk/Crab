@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
@@ -33,15 +34,19 @@ export const Hero: React.FC = () => {
   }
 
   return (
-    <section 
-      className="w-full min-h-[600px] md:h-[700px] flex justify-center items-center relative bg-center bg-cover border-b border-white/10 overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(0deg, rgba(11, 31, 49, 0.30) 0%, rgba(11, 31, 49, 0.30) 100%), url('https://api.builder.io/api/v1/image/assets/TEMP/306307a5eeac5febd9e5184f3c1049a12f107753?width=2880')`
-      }}
-    >
+    <section className="w-full min-h-[600px] md:h-[700px] flex justify-center items-center relative border-b border-white/10 overflow-hidden">
+      <Image
+        src="https://api.builder.io/api/v1/image/assets/TEMP/306307a5eeac5febd9e5184f3c1049a12f107753?width=2880"
+        alt="Crab Norway Hero"
+        fill
+        priority
+        className="object-cover"
+        sizes="100vw"
+      />
+      <div className="absolute inset-0 bg-blue-dark/30 z-[1]" />
       <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} />
       <motion.div 
-        className="mx-auto max-w-[1208px] px-6 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0"
+        className="mx-auto max-w-[1208px] px-6 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0 relative z-10"
         initial="hidden"
         animate="visible"
         variants={containerVariants}

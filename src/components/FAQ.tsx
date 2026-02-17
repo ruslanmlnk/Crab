@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
@@ -50,10 +51,16 @@ export const FAQ: React.FC = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="w-full h-[500px] bg-cover bg-center flex flex-col justify-end pb-12 overflow-hidden"
-        style={{ backgroundImage: `url('https://api.builder.io/api/v1/image/assets/TEMP/ec6b349f618e995449db6570acf6b8ff6a12f26b?width=2880')` }}
+        className="w-full h-[500px] flex flex-col justify-end pb-12 overflow-hidden relative"
       >
-        <div className="container-custom flex flex-col md:flex-row items-end justify-between gap-6">
+        <Image
+          src="https://api.builder.io/api/v1/image/assets/TEMP/ec6b349f618e995449db6570acf6b8ff6a12f26b?width=2880"
+          alt="FAQ Header"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="container-custom flex flex-col md:flex-row items-end justify-between gap-6 relative z-10">
           <motion.h2 
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
