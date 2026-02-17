@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const Header: React.FC = () => {
   const [isLangOpen, setIsLangOpen] = useState(false)
@@ -41,8 +42,9 @@ export const Header: React.FC = () => {
   }
 
   return (
-    <header className="w-full bg-blue-dark py-4 md:py-6 flex justify-center border-b border-white/5 relative z-[100]">
-      <div className="container-custom flex justify-between items-center whitespace-nowrap">
+    <header className="w-full bg-blue-dark py-4 md:py-6 border-b border-white/5 relative z-[100]">
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} showCenterLine={false} />
+      <div className="mx-auto max-w-[1328px] px-6 flex justify-between items-center whitespace-nowrap">
         {/* Logo */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}

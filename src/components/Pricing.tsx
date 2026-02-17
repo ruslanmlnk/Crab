@@ -1,5 +1,6 @@
 "use client"
 import { motion, Variants } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const Pricing: React.FC = () => {
   const plans = [
@@ -55,7 +56,8 @@ export const Pricing: React.FC = () => {
   }
 
   return (
-    <section className="bg-ice-mist section-padding">
+    <section className="bg-ice-mist section-padding relative">
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} fade="bottom" fadeAmount={25} showCenterLine={false} />
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -63,7 +65,7 @@ export const Pricing: React.FC = () => {
         variants={containerVariants}
         className="container-custom flex flex-col items-center gap-14 md:gap-[48px]"
       >
-        <motion.div variants={cardVariants} className="max-w-[568px] flex flex-col items-center gap-4 text-center">
+        <motion.div variants={cardVariants} className="w-full flex flex-col items-center gap-4 text-center">
           <span className="text-label text-blue-midnight">Pricing</span>
           <h2 className="text-h2 text-blue-dark">Pricing for Every Adventure</h2>
         </motion.div>
@@ -85,7 +87,7 @@ export const Pricing: React.FC = () => {
                 </div>
               </div>
 
-              <div className="px-2 flex flex-col gap-8 w-full">
+              <div className="flex flex-col gap-8 w-full">
                 <div className="flex items-baseline gap-1">
                   <span className="text-[35px] font-bold tracking-tight text-blue-dark">{plan.price}</span>
                   <span className="text-base text-blue-dark tracking-wide">/access</span>

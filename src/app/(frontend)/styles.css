@@ -16,7 +16,7 @@
 
 @layer components {
   .container-custom {
-    @apply max-w-[1440px] w-full mx-auto px-10 md:px-20;
+    @apply max-w-[1348px] w-full mx-auto px-6;
   }
 
   .section-padding {

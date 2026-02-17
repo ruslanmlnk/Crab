@@ -1,6 +1,7 @@
 "use client"
 import React, { useRef } from 'react'
 import { motion } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const RealExperience: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -41,20 +42,24 @@ export const RealExperience: React.FC = () => {
         />
       </div>
 
+      <div className="absolute inset-0 z-20 pointer-events-none">
+        <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.2} fade="none" showCenterLine={false} />
+      </div>
+
       {/* Scrolling Content Blocks */}
       <div className="relative z-10 -mt-[100vh]">
         {experiences.map((exp, index) => (
           <div key={exp.id} className="w-full min-h-screen flex items-center py-8 md:py-0">
-            <div className="max-w-[1348px] w-full mx-auto px-4 sm:px-6">
+            <div className="mx-auto max-w-[1348px] px-6 w-full">
               <motion.div 
                 initial={{ opacity: 0, y: 50, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ margin: "-20%", once: false }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`w-full max-w-[612.7px] p-6 sm:p-8 md:p-12 glass-card backdrop-blur-[6px] flex items-start gap-4 sm:gap-6 md:gap-8 ${index % 2 === 1 ? 'md:ml-auto' : ''}`}
+                className={`w-full max-w-[612px] p-6 sm:p-8 md:p-12 glass-card backdrop-blur-[6px] flex items-start gap-4 sm:gap-6 md:gap-8 ${index % 2 === 1 ? 'md:ml-auto' : ''}`}
               >
                 <span className="text-[20px] font-normal leading-[145%] text-white shrink-0">{exp.id}</span>
-                <div className="flex w-full max-w-[459.7px] flex-col gap-3 md:gap-4">
+                <div className="flex w-full flex-col gap-3 md:gap-4">
                   <span className="text-[15px] md:text-[16px] font-medium leading-[145%] text-ice-mist uppercase tracking-[0.02em]">
                     {exp.label}
                   </span>
@@ -68,4 +73,3 @@ export const RealExperience: React.FC = () => {
     </section>
   )
 }
-

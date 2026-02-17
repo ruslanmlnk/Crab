@@ -1,5 +1,6 @@
 "use client"
 import { motion, Variants } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const WhatYouFind: React.FC = () => {
   const containerVariants: Variants = {
@@ -22,7 +23,8 @@ export const WhatYouFind: React.FC = () => {
   }
 
   return (
-    <section className="bg-white py-20 md:py-[140px] overflow-hidden">
+    <section className="bg-white py-20 md:py-[140px] overflow-hidden relative">
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} fade="none" showCenterLine={false} />
       <motion.div 
         initial="hidden"
         whileInView="visible"

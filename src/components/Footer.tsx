@@ -1,9 +1,11 @@
 "use client"
 import React from 'react'
+import { DecorativeLines } from './DecorativeLines'
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-full flex flex-col bg-blue-dark">
+    <footer className="w-full flex flex-col bg-blue-dark relative">
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="bottom" showCenterLine={false} />
       {/* Footer Top Bar / Logo Slider Strip */}
       <div className="w-full h-[263px] bg-blue-dark overflow-hidden flex items-center relative border-b border-white/10">
         <div className="flex animate-scroll whitespace-nowrap">
@@ -40,8 +42,8 @@ export const Footer: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex justify-between items-start w-full gap-8 border-l border-white/20 pl-10 md:pl-[140px]">
-          <p className="text-white/60 text-sm md:text-base leading-[145%] max-w-[400px]">
+        <div className="flex justify-between items-start w-full gap-8 border-l border-white/20 pl-6">
+          <p className="text-white/60 text-sm md:text-base leading-[145%]">
             We share real offshore experience and practical knowledge about crab fishing, helping people understand life and work on Norwegian vessels
           </p>
           

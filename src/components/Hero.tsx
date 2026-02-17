@@ -1,5 +1,6 @@
 "use client"
 import { motion, Variants } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const Hero: React.FC = () => {
   const containerVariants: Variants = {
@@ -38,8 +39,9 @@ export const Hero: React.FC = () => {
         backgroundImage: `linear-gradient(0deg, rgba(11, 31, 49, 0.30) 0%, rgba(11, 31, 49, 0.30) 100%), url('https://api.builder.io/api/v1/image/assets/TEMP/306307a5eeac5febd9e5184f3c1049a12f107753?width=2880')`
       }}
     >
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} />
       <motion.div 
-        className="max-w-[1160px] w-full mx-auto px-6 md:px-10 lg:px-0 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0"
+        className="mx-auto max-w-[1208px] px-6 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -104,7 +106,7 @@ export const Hero: React.FC = () => {
             </motion.a>
           </div>
 
-          <div className="text-tagline text-white text-center md:text-right max-w-[408px]">
+          <div className="text-tagline text-white text-center md:text-right">
             log of the Norwegian crab<br className="hidden md:block" /> fishing industry
           </div>
         </motion.div>

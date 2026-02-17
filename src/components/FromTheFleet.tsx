@@ -1,5 +1,6 @@
 "use client"
 import { motion, Variants } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const FromTheFleet: React.FC = () => {
   const articles = [
@@ -47,6 +48,7 @@ export const FromTheFleet: React.FC = () => {
 
   return (
     <section className="bg-blue-dark section-padding relative overflow-hidden">
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} />
       {/* Background Large Text */}
       <motion.div 
         initial={{ x: -100, opacity: 0 }}
@@ -82,7 +84,7 @@ export const FromTheFleet: React.FC = () => {
                 </div>
               </div>
 
-              <div className="px-2 flex flex-col justify-between h-full py-4 gap-12">
+              <div className="flex flex-col justify-between h-full py-4 gap-12">
                 <div className="flex flex-col gap-2.5">
                   <h4 className="text-[18px] font-bold text-blue-dark leading-[145%]">{article.title}</h4>
                   <p className="text-sm text-blue-midnight leading-[145%] line-clamp-3">{article.description}</p>

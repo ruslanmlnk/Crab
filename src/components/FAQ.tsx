@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { DecorativeLines } from './DecorativeLines'
 
 export const FAQ: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
@@ -41,7 +42,8 @@ export const FAQ: React.FC = () => {
   ]
 
   return (
-    <section className="bg-white">
+    <section className="bg-white relative">
+      <DecorativeLines color="rgba(7, 26, 38, 1)" opacity={0.15} showCenterLine={false} />
       {/* FAQ Header Section */}
       <motion.div 
         initial={{ opacity: 0 }}
@@ -57,7 +59,7 @@ export const FAQ: React.FC = () => {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-h2-faq text-blue-dark max-w-[800px]"
+            className="text-h2-faq text-blue-dark"
           >
             Frequently asked questions
           </motion.h2>
@@ -66,7 +68,7 @@ export const FAQ: React.FC = () => {
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="text-blue-midnight text-lg max-w-[258px] pb-4"
+            className="text-blue-midnight text-lg pb-4"
           >
             Everything you need to know about crab fishing in Norway
           </motion.p>
