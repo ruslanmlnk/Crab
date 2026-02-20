@@ -1,0 +1,71 @@
+"use client"
+import React from 'react'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { DecorativeLines } from '../DecorativeLines'
+
+export const AboutHero: React.FC = () => {
+  return (
+    <section className="relative w-full bg-blue-dark overflow-hidden min-h-[600px] flex items-center pt-[140px] pb-[100px] md:py-[140px]">
+      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.1} showCenterLine={false} showMobile={false} />
+      
+      <div className="container-custom relative z-10">
+        <div className="flex flex-col gap-6 md:gap-12">
+          {/* Row 1 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex flex-wrap items-center gap-4 md:gap-6"
+          >
+            <h1 className="text-white text-5xl md:text-[88px] font-semibold leading-[110%] tracking-tight">
+              From cadet
+            </h1>
+            <div className="relative w-[150px] h-[80px] md:w-[200px] md:h-[110px] rounded-[2px] overflow-hidden flex-shrink-0">
+              <Image 
+                src="https://api.builder.io/api/v1/image/assets/TEMP/a094fe6bb6a8b0a1bab3cdec28b47b2ede034873"
+                alt="About Hero Image"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 150px, 200px"
+              />
+            </div>
+            <h1 className="text-white text-5xl md:text-[88px] font-semibold leading-[110%] tracking-tight">
+              in Africa
+            </h1>
+          </motion.div>
+
+          {/* Row 2 */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-8 md:gap-4"
+          >
+            <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-[33px]">
+              <h1 className="text-white text-5xl md:text-[88px] font-semibold leading-[110%] tracking-tight">
+                to fisherman in Norway
+              </h1>
+              <div className="md:pt-6 max-w-[175px]">
+                <p className="text-ice-mist text-base font-normal leading-[145%]">
+                  A real journey through offshore work, fishing vessels, and life at sea
+                </p>
+              </div>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-[60px] h-[60px] bg-white rounded-full flex items-center justify-center flex-shrink-0 transition-colors hover:bg-ice-mist"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-90">
+                <path d="M12.5283 18.9785L12.1553 19.3418L11.8076 18.9551L7.8945 14.5977L8.6387 13.9297L11.7119 17.3506V5H12.7119V17.4033L16.3027 13.9053L17 14.6221L12.5283 18.9785Z" fill="#071A26"/>
+              </svg>
+            </motion.button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
