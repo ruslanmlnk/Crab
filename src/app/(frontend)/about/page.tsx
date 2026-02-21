@@ -5,7 +5,6 @@ import { WhoWeAre } from '@/components/WhoWeAre'
 import { StorySection } from '@/components/about/StorySection'
 import { RealExperience } from '@/components/RealExperience'
 import { Reviews } from '@/components/about/Reviews'
-import { GetInTouch } from '@/components/GetInTouch'
 import { Footer } from '@/components/Footer'
 
 export default async function AboutPage() {
@@ -19,7 +18,6 @@ export default async function AboutPage() {
         <RealExperience isRight={true}/>
         <Reviews />
         {/* Other sections will go here later */}
-        <GetInTouch />
       </main>
       <Footer />
     </div>

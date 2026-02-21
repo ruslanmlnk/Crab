@@ -1,10 +1,16 @@
 "use client"
 import Image from 'next/image'
 import { DecorativeLines } from './DecorativeLines'
+import { GetInTouch } from './GetInTouch'
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  showGetInTouch?: boolean
+}
+
+export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
   return (
     <footer className="w-full flex flex-col bg-blue-dark relative">
+      {showGetInTouch && <GetInTouch />}
       <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="bottom" showCenterLine={false} showMobile={false} />
       {/* Footer Top Bar / Logo Slider Strip - Redesigned Marquee */}
       <div className="w-full h-[180px] md:h-[264px] bg-[#071A26] overflow-hidden flex items-center relative border-y border-white/10">

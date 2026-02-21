@@ -2,18 +2,53 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DecorativeLines } from './DecorativeLines'
+import { normalizeBlogLocale, type BlogLocale } from '@/lib/blog-locale'
 
 export const Header: React.FC = () => {
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const currentLocale = normalizeBlogLocale(searchParams.get('locale'))
+
   const [isLangOpen, setIsLangOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navLinks = [
     { name: 'About', href: '#' },
     { name: 'FAQ', href: '#' },
-    { name: 'Blog', href: '#' },
+    { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '#' },
   ]
+
+  const updateLocale = (locale: BlogLocale) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (locale === 'en') {
+      params.delete('locale')
+    } else {
+      params.set('locale', locale)
+    }
+
+    const queryString = params.toString()
+    router.push(queryString ? `${pathname}?${queryString}` : pathname)
+    setIsLangOpen(false)
+    setIsMenuOpen(false)
+  }
+
+  const getLinkHref = (href: string) => {
+    if (href.startsWith('#')) {
+      return href
+    }
+
+    if (currentLocale === 'en') {
+      return href
+    }
+
+    const separator = href.includes('?') ? '&' : '?'
+    return `${href}${separator}locale=${currentLocale}`
+  }
 
   const menuVariants = {
     closed: {
@@ -80,7 +115,7 @@ export const Header: React.FC = () => {
             {navLinks.map((link) => (
               <motion.a
                 key={link.name}
-                href={link.href}
+                href={getLinkHref(link.href)}
                 className="text-[18px] font-bold uppercase transition-opacity hover:opacity-70 leading-[145%]"
                 variants={{
                   hidden: { opacity: 0, y: -10 },
@@ -104,7 +139,9 @@ export const Header: React.FC = () => {
               className="flex items-center gap-2 cursor-pointer transition-opacity hover:opacity-70"
               onClick={() => setIsLangOpen(!isLangOpen)}
             >
-              <span className="text-[18px] font-bold uppercase leading-[145%]">EN</span>
+              <span className="text-[18px] font-bold uppercase leading-[145%]">
+                {currentLocale.toUpperCase()}
+              </span>
               <motion.svg 
                 width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" 
                 className="mt-0.5"
@@ -125,10 +162,22 @@ export const Header: React.FC = () => {
                   className="absolute top-full right-0 bg-blue-dark py-2 z-50 shadow-xl border border-white/10 mt-2"
                 >
                   <div className="flex flex-col">
-                    <button className="px-6 py-2 text-left text-[16px] font-bold uppercase transition-colors text-white hover:bg-white/5 whitespace-nowrap">
+                    <button
+                      className={`px-6 py-2 text-left text-[16px] font-bold uppercase transition-colors hover:bg-white/5 whitespace-nowrap ${
+                        currentLocale === 'en' ? 'text-white' : 'text-white/60'
+                      }`}
+                      onClick={() => updateLocale('en')}
+                      type="button"
+                    >
                       EN
                     </button>
-                    <button className="px-6 py-2 text-left text-[16px] font-bold uppercase transition-colors text-white/60 hover:bg-white/5 whitespace-nowrap">
+                    <button
+                      className={`px-6 py-2 text-left text-[16px] font-bold uppercase transition-colors hover:bg-white/5 whitespace-nowrap ${
+                        currentLocale === 'ru' ? 'text-white' : 'text-white/60'
+                      }`}
+                      onClick={() => updateLocale('ru')}
+                      type="button"
+                    >
                       RU
                     </button>
                   </div>
@@ -169,7 +218,7 @@ export const Header: React.FC = () => {
               {navLinks.map((link) => (
                 <motion.a
                   key={link.name}
-                  href={link.href}
+                  href={getLinkHref(link.href)}
                   className="text-[20px] font-bold uppercase text-white hover:text-white/70 transition-colors"
                   variants={listItemVariants}
                   onClick={() => setIsMenuOpen(false)}
@@ -180,8 +229,24 @@ export const Header: React.FC = () => {
               <motion.div variants={listItemVariants} className="pt-4 border-t border-white/10 flex flex-col gap-4">
                 <span className="text-white/60 uppercase text-sm font-bold tracking-widest">Language</span>
                 <div className="flex gap-6">
-                  <button className="text-[18px] font-bold uppercase text-white">EN</button>
-                  <button className="text-[18px] font-bold uppercase text-white/40">RU</button>
+                  <button
+                    className={`text-[18px] font-bold uppercase ${
+                      currentLocale === 'en' ? 'text-white' : 'text-white/40'
+                    }`}
+                    onClick={() => updateLocale('en')}
+                    type="button"
+                  >
+                    EN
+                  </button>
+                  <button
+                    className={`text-[18px] font-bold uppercase ${
+                      currentLocale === 'ru' ? 'text-white' : 'text-white/40'
+                    }`}
+                    onClick={() => updateLocale('ru')}
+                    type="button"
+                  >
+                    RU
+                  </button>
                 </div>
               </motion.div>
             </div>

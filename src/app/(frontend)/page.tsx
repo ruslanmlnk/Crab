@@ -7,7 +7,6 @@ import { WhatYouFind } from '@/components/WhatYouFind'
 import { Pricing } from '@/components/Pricing'
 import { FromTheFleet } from '@/components/FromTheFleet'
 import { FAQ } from '@/components/FAQ'
-import { GetInTouch } from '@/components/GetInTouch'
 import { Footer } from '@/components/Footer'
 
 export default async function HomePage() {
@@ -22,7 +21,6 @@ export default async function HomePage() {
         <Pricing />
         <FromTheFleet />
         <FAQ />
-        <GetInTouch />
       </main>
       <Footer />
     </div>

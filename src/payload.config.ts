@@ -5,6 +5,9 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { Authors } from './collections/Authors'
+import { BlogCategories } from './collections/BlogCategories'
+import { BlogPosts } from './collections/BlogPosts'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
@@ -18,8 +21,22 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Authors, BlogCategories, BlogPosts],
   editor: lexicalEditor(),
+  localization: {
+    defaultLocale: 'en',
+    fallback: true,
+    locales: [
+      {
+        code: 'en',
+        label: 'English',
+      },
+      {
+        code: 'ru',
+        label: 'Русский',
+      },
+    ],
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
