@@ -10,6 +10,8 @@ import { BlogCategories } from './collections/BlogCategories'
 import { BlogPosts } from './collections/BlogPosts'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { FAQ } from './globals/FAQ'
+import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -22,6 +24,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Authors, BlogCategories, BlogPosts],
+  globals: [FAQ, Home],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'en',

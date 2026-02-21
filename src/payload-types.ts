@@ -93,8 +93,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'ru') | ('en' | 'ru')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    faq: Faq;
+    home: Home;
+  };
+  globalsSelect: {
+    faq: FaqSelect<false> | FaqSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+  };
   locale: 'en' | 'ru';
   user: User;
   jobs: {
@@ -430,6 +436,168 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq".
+ */
+export interface Faq {
+  id: number;
+  items: {
+    question: string;
+    answer: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    openGraphImage: number | Media;
+  };
+  hero: {
+    eyebrow: string;
+    headline: string;
+    supportingText: string;
+  };
+  whoWeAre: {
+    description: string;
+    learnMoreUrl: string;
+  };
+  realExperience: {
+    cards: {
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  whatYouFind: {
+    sectionTitle: string;
+    headline: string;
+    firstColumnText: string;
+    secondColumnText: string;
+    ctaUrl: string;
+  };
+  pricing: {
+    headline: string;
+    plans: {
+      image: number | Media;
+      badgeLabel: string;
+      price: string;
+      features: {
+        text: string;
+        id?: string | null;
+      }[];
+      idealFor: string;
+      id?: string | null;
+    }[];
+  };
+  fromTheFleet: {
+    firstArticle: number | BlogPost;
+    secondArticle: number | BlogPost;
+    thirdArticle: number | BlogPost;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq_select".
+ */
+export interface FaqSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        openGraphImage?: T;
+      };
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        headline?: T;
+        supportingText?: T;
+      };
+  whoWeAre?:
+    | T
+    | {
+        description?: T;
+        learnMoreUrl?: T;
+      };
+  realExperience?:
+    | T
+    | {
+        cards?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  whatYouFind?:
+    | T
+    | {
+        sectionTitle?: T;
+        headline?: T;
+        firstColumnText?: T;
+        secondColumnText?: T;
+        ctaUrl?: T;
+      };
+  pricing?:
+    | T
+    | {
+        headline?: T;
+        plans?:
+          | T
+          | {
+              image?: T;
+              badgeLabel?: T;
+              price?: T;
+              features?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              idealFor?: T;
+              id?: T;
+            };
+      };
+  fromTheFleet?:
+    | T
+    | {
+        firstArticle?: T;
+        secondArticle?: T;
+        thirdArticle?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -254,3 +254,56 @@ export const getFeaturedBlogPosts = cache(
       .filter((post) => Boolean(post.slug && post.title))
   },
 )
+
+export const getHomeFleetArticles = cache(
+  async (locale: BlogLocale, articleIds?: Array<number | string>) => {
+    const payload = await getPayloadClient()
+
+    if (articleIds && articleIds.length > 0) {
+      const selectedPosts = await Promise.all(
+        articleIds.map(async (articleId) => {
+          try {
+            const post = await payload.findByID({
+              collection: 'blog-posts',
+              depth: 2,
+              fallbackLocale: 'en',
+              id: articleId,
+              locale,
+            })
+
+            if (post.status !== 'published') {
+              return null
+            }
+
+            return post
+          } catch {
+            return null
+          }
+        }),
+      )
+
+      return selectedPosts
+        .filter((post): post is BlogPost => Boolean(post))
+        .map((post) => mapPostToCard(post, locale))
+        .filter((post) => Boolean(post.slug && post.title))
+    }
+
+    const postsResult = await payload.find({
+      collection: 'blog-posts',
+      depth: 2,
+      fallbackLocale: 'en',
+      limit: 3,
+      locale,
+      sort: '-publishedAt',
+      where: {
+        status: {
+          equals: 'published',
+        },
+      },
+    })
+
+    return postsResult.docs
+      .map((post) => mapPostToCard(post, locale))
+      .filter((post) => Boolean(post.slug && post.title))
+  },
+)

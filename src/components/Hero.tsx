@@ -3,7 +3,17 @@ import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
-export const Hero: React.FC = () => {
+type HeroProps = {
+  eyebrow: string
+  headline: string
+  supportingText: string
+}
+
+export const Hero: React.FC<HeroProps> = ({
+  eyebrow,
+  headline,
+  supportingText,
+}) => {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -55,14 +65,14 @@ export const Hero: React.FC = () => {
           variants={itemVariants}
           className="text-tagline text-white text-left"
         >
-          Inside the industry
+          {eyebrow}
         </motion.div>
         
         <motion.h1 
           variants={titleVariants}
           className="w-full text-h1 tracking-normal text-center text-white"
         >
-          crab norway
+          {headline}
         </motion.h1>
 
         <motion.div 
@@ -112,7 +122,7 @@ export const Hero: React.FC = () => {
           </div>
 
           <div className="text-tagline text-white text-center md:text-right">
-            log of the Norwegian crab<br className="hidden md:block" /> fishing industry
+            {supportingText}
           </div>
         </motion.div>
       </motion.div>

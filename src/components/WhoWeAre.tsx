@@ -3,7 +3,18 @@ import React from 'react'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
-export const WhoWeAre: React.FC = () => {
+type WhoWeAreProps = {
+  description?: string
+  learnMoreUrl?: string
+}
+
+const DEFAULT_DESCRIPTION =
+  'An independent project sharing real experience and knowledge from inside the Norwegian crab fishing industry'
+
+export const WhoWeAre: React.FC<WhoWeAreProps> = ({
+  description = DEFAULT_DESCRIPTION,
+  learnMoreUrl = '/about',
+}) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,13 +63,14 @@ export const WhoWeAre: React.FC = () => {
           <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
             <span className="text-blue-dark text-[14px] md:text-[16px] font-medium uppercase leading-[145%] tracking-normal">Who We Are</span>
             <h2 className="text-blue-dark text-[34px] md:text-[44px] font-semibold leading-[110%]">
-              An independent project sharing real experience and knowledge from inside the Norwegian crab fishing industry
+              {description}
             </h2>
           </motion.div>
           
-          <motion.button 
+          <motion.a 
             variants={itemVariants}
             whileHover="hover"
+            href={learnMoreUrl}
             className="flex items-center gap-2 group cursor-pointer"
           >
             <div className="flex flex-col items-start">
@@ -80,7 +92,7 @@ export const WhoWeAre: React.FC = () => {
                 <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
               </svg>
             </motion.div>
-          </motion.button>
+          </motion.a>
         </div>
       </motion.div>
     </section>

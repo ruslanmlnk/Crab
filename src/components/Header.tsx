@@ -16,10 +16,10 @@ export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: 'About', href: '#' },
-    { name: 'FAQ', href: '#' },
+    { name: 'About', href: '/about' },
+    { name: 'FAQ', href: '/faq' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '#' },
+    { name: 'Contact', href: '/contact' },
   ]
 
   const updateLocale = (locale: BlogLocale) => {
