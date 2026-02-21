@@ -71,10 +71,10 @@ export default async function BlogPostPage({
           featuredImage={post.featuredImage}
           featuredPosts={featuredPosts}
           locale={locale}
+          title={post.title}
         />
       </main>
       <Footer showGetInTouch={false} />
     </div>
   )
 }
-
