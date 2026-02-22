@@ -1,5 +1,6 @@
 "use client"
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 
 import { DecorativeLines } from './DecorativeLines'
@@ -30,6 +31,45 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   secondColumnText = DEFAULT_PROPS.secondColumnText,
   sectionTitle = DEFAULT_PROPS.sectionTitle,
 }) => {
+  const normalizedHeadline = headline.replace(/\r/g, '').trim()
+  const headlineLines = normalizedHeadline
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  let headlineLineOne = headlineLines[0] || ''
+  let headlineLineTwo = headlineLines.slice(1).join(' ').trim()
+
+  if (!headlineLineTwo && normalizedHeadline) {
+    const semanticSplitIndex = normalizedHeadline.toLowerCase().indexOf(' real life')
+
+    if (semanticSplitIndex > 0) {
+      headlineLineOne = normalizedHeadline.slice(0, semanticSplitIndex).trim()
+      headlineLineTwo = normalizedHeadline.slice(semanticSplitIndex + 1).trim()
+    }
+  }
+
+  if (!headlineLineTwo && normalizedHeadline.length > 72) {
+    const middleIndex = Math.floor(normalizedHeadline.length / 2)
+    let splitIndex = normalizedHeadline.lastIndexOf(' ', middleIndex)
+
+    if (splitIndex < 0) {
+      splitIndex = normalizedHeadline.indexOf(' ', middleIndex)
+    }
+
+    if (splitIndex > 0) {
+      headlineLineOne = normalizedHeadline.slice(0, splitIndex).trim()
+      headlineLineTwo = normalizedHeadline.slice(splitIndex + 1).trim()
+    }
+  }
+
+  const isExternalCta =
+    ctaUrl.startsWith('http://') ||
+    ctaUrl.startsWith('https://') ||
+    ctaUrl.startsWith('mailto:') ||
+    ctaUrl.startsWith('tel:') ||
+    ctaUrl.startsWith('#')
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -65,7 +105,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
         variants={containerVariants}
         className="container-custom flex flex-col gap-[48px]"
       >
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[0px]">
           <motion.div
             variants={itemVariants}
             className="flex flex-col md:flex-row items-center gap-[154px] w-full"
@@ -73,8 +113,13 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
             <span className="text-label text-blue-midnight shrink-0 tracking-[0] font-medium text-[16px] leading-[145%]">
               {sectionTitle}
             </span>
-            <h2 className="text-h2 text-blue-dark flex-1 whitespace-pre-line">{headline}</h2>
+            <h2 className="text-h2 text-blue-dark flex-1">{headlineLineOne}</h2>
           </motion.div>
+          {headlineLineTwo ? (
+            <motion.h2 variants={itemVariants} className="text-h2 text-blue-dark">
+              {headlineLineTwo}
+            </motion.h2>
+          ) : null}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-[130px] items-stretch">
@@ -113,43 +158,83 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               </motion.p>
             </div>
 
-            <motion.a
-              variants={itemVariants}
-              whileHover="hover"
-              href={ctaUrl}
-              className="btn-base btn-dark self-start group px-6 py-3 border border-blue-dark rounded-[40px] flex items-center gap-2"
-            >
-              <div className="flex flex-col items-start leading-none">
-                <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
-                  Get in touch
-                </span>
+            {isExternalCta ? (
+              <motion.a
+                variants={itemVariants}
+                whileHover="hover"
+                href={ctaUrl}
+                className="btn-base btn-dark self-start group w-fit"
+              >
+                <div className="flex flex-col items-start leading-none">
+                  <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
+                    Get in touch
+                  </span>
+                  <motion.div
+                    variants={{
+                      hover: { scaleX: 0 },
+                    }}
+                    className="h-[1px] w-full bg-blue-dark origin-left"
+                  />
+                </div>
                 <motion.div
                   variants={{
-                    hover: { scaleX: 0 },
+                    hover: { x: 5 },
                   }}
-                  className="h-[1px] w-full bg-blue-dark origin-left"
-                />
-              </div>
-              <motion.div
-                variants={{
-                  hover: { x: 5 },
-                }}
-                className="w-6 h-6 flex items-center justify-center transition-transform"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-6 h-6 flex items-center justify-center transition-transform"
                 >
-                  <path
-                    d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                    fill="#071A26"
-                  />
-                </svg>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
+                      fill="#071A26"
+                    />
+                  </svg>
+                </motion.div>
+              </motion.a>
+            ) : (
+              <motion.div variants={itemVariants} whileHover="hover">
+                <Link
+                  href={ctaUrl}
+                  className="btn-base btn-dark self-start group w-fit"
+                >
+                  <div className="flex flex-col items-start leading-none">
+                    <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
+                      Get in touch
+                    </span>
+                    <motion.div
+                      variants={{
+                        hover: { scaleX: 0 },
+                      }}
+                      className="h-[1px] w-full bg-blue-dark origin-left"
+                    />
+                  </div>
+                  <motion.div
+                    variants={{
+                      hover: { x: 5 },
+                    }}
+                    className="w-6 h-6 flex items-center justify-center transition-transform"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
+                        fill="#071A26"
+                      />
+                    </svg>
+                  </motion.div>
+                </Link>
               </motion.div>
-            </motion.a>
+            )}
           </div>
         </div>
       </motion.div>

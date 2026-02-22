@@ -14,6 +14,24 @@ export const Hero: React.FC<HeroProps> = ({
   headline,
   supportingText,
 }) => {
+  const normalizedSupportingText = supportingText.replace(/\r/g, '').trim()
+  const supportingLines = normalizedSupportingText
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  let supportingLineOne = supportingLines[0] || ''
+  let supportingLineTwo = supportingLines.slice(1).join(' ').trim()
+
+  if (!supportingLineTwo && normalizedSupportingText) {
+    const semanticSplitIndex = normalizedSupportingText.toLowerCase().indexOf(' fishing industry')
+
+    if (semanticSplitIndex > 0) {
+      supportingLineOne = normalizedSupportingText.slice(0, semanticSplitIndex).trim()
+      supportingLineTwo = normalizedSupportingText.slice(semanticSplitIndex + 1).trim()
+    }
+  }
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,7 +64,7 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section className="w-full min-h-[600px] md:h-[700px] flex justify-center items-center relative border-b border-white/10 overflow-hidden">
       <Image
-        src="https://api.builder.io/api/v1/image/assets/TEMP/306307a5eeac5febd9e5184f3c1049a12f107753?width=2880"
+        src="/images/backgrounds/hero.png"
         alt="Crab Norway Hero"
         fill
         priority
@@ -63,7 +81,7 @@ export const Hero: React.FC<HeroProps> = ({
       >
         <motion.div 
           variants={itemVariants}
-          className="text-tagline text-white text-left"
+          className="text-tagline text-white text-left md:pl-[10px]"
         >
           {eyebrow}
         </motion.div>
@@ -79,7 +97,7 @@ export const Hero: React.FC<HeroProps> = ({
           variants={itemVariants}
           className="w-full flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0"
         >
-          <div className="flex items-center gap-[10px]">
+          <div className="flex items-center gap-[10px] md:pl-[10px]">
             {/* Youtube */}
             <motion.a 
               whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
@@ -122,7 +140,16 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           <div className="text-tagline text-white text-center md:text-right">
-            {supportingText}
+            {supportingLineTwo ? (
+              <>
+                {supportingLineOne}
+                <br className="hidden md:block" />
+                <span className="md:hidden"> </span>
+                {supportingLineTwo}
+              </>
+            ) : (
+              supportingLineOne
+            )}
           </div>
         </motion.div>
       </motion.div>

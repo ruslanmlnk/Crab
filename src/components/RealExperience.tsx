@@ -39,7 +39,7 @@ export const RealExperience: React.FC<RealExperienceProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const backgroundImage =
-    'https://api.builder.io/api/v1/image/assets/TEMP/0d446201a3dad7bfb8c419afbb32531a9a882784?width=2880'
+    '/images/backgrounds/experience.png'
 
   return (
     <section ref={containerRef} className="relative w-full">

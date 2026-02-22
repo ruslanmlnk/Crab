@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DecorativeLines } from './DecorativeLines'
@@ -113,18 +114,21 @@ export const Header: React.FC = () => {
             className="flex items-center gap-12"
           >
             {navLinks.map((link) => (
-              <motion.a
+              <motion.div
                 key={link.name}
-                href={getLinkHref(link.href)}
-                className="text-[18px] font-bold uppercase transition-opacity hover:opacity-70 leading-[145%]"
                 variants={{
                   hidden: { opacity: 0, y: -10 },
                   visible: { opacity: 1, y: 0 }
                 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                {link.name}
-              </motion.a>
+                <Link
+                  href={getLinkHref(link.href)}
+                  className="text-[18px] font-bold uppercase transition-opacity hover:opacity-70 leading-[145%]"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
             ))}
           </motion.div>
 
@@ -216,15 +220,15 @@ export const Header: React.FC = () => {
           >
             <div className="container-custom py-8 flex flex-col gap-6">
               {navLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={getLinkHref(link.href)}
-                  className="text-[20px] font-bold uppercase text-white hover:text-white/70 transition-colors"
-                  variants={listItemVariants}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.name}
-                </motion.a>
+                <motion.div key={link.name} variants={listItemVariants}>
+                  <Link
+                    href={getLinkHref(link.href)}
+                    className="text-[20px] font-bold uppercase text-white hover:text-white/70 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
               ))}
               <motion.div variants={listItemVariants} className="pt-4 border-t border-white/10 flex flex-col gap-4">
                 <span className="text-white/60 uppercase text-sm font-bold tracking-widest">Language</span>

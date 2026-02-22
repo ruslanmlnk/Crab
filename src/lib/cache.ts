@@ -1,0 +1,8 @@
+export const CACHE_REVALIDATE = {
+  home: 90,
+  faq: 90,
+  blogList: 120,
+  blogPost: 120,
+  featuredPosts: 120,
+  homeFleet: 120,
+} as const

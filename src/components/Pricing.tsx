@@ -172,7 +172,7 @@ export const Pricing: React.FC<PricingProps> = ({
                         key={`${plan.badgeLabel}-feature-${featureIndex}`}
                         className="text-base font-normal text-[#0B1F31] leading-[145%]"
                       >
-                        - {feature}
+                        — {feature}
                       </li>
                     ))}
                   </ul>

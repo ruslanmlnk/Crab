@@ -1,10 +1,12 @@
 import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import type { Author, BlogCategory, BlogPost, Media } from '@/payload-types'
 
 import type { BlogLocale } from './blog-locale'
+import { CACHE_REVALIDATE } from './cache'
 
 const FALLBACK_IMAGE =
   'https://api.builder.io/api/v1/image/assets/TEMP/76ae9b75a902932af3b137ff435b94350ef3dc78?width=588'
@@ -125,99 +127,119 @@ const mapPostToCard = (
   }
 }
 
-export const getBlogPageData = cache(async (locale: BlogLocale) => {
-  const payload = await getPayloadClient()
+const getBlogPageDataCached = unstable_cache(
+  async (locale: BlogLocale) => {
+    const payload = await getPayloadClient()
 
-  const [postsResult, categoriesResult] = await Promise.all([
-    payload.find({
-      collection: 'blog-posts',
-      depth: 2,
-      fallbackLocale: 'en',
-      limit: 100,
-      locale,
-      sort: '-publishedAt',
-      where: {
-        status: {
-          equals: 'published',
-        },
-      },
-    }),
-    payload.find({
-      collection: 'blog-categories',
-      fallbackLocale: 'en',
-      limit: 100,
-      locale,
-      sort: 'slug',
-    }),
-  ])
-
-  const posts = postsResult.docs
-    .map((post) => mapPostToCard(post, locale))
-    .filter((post) => Boolean(post.slug && post.title))
-
-  const categories = categoriesResult.docs
-    .map((category) => ({
-      label: category.name || '',
-      slug: category.slug || '',
-    }))
-    .filter((category) => Boolean(category.label && category.slug))
-
-  return {
-    categories,
-    posts,
-  }
-})
-
-export const getBlogPostBySlug = cache(async (locale: BlogLocale, slug: string) => {
-  const payload = await getPayloadClient()
-
-  const postResult = await payload.find({
-    collection: 'blog-posts',
-    depth: 2,
-    fallbackLocale: 'en',
-    limit: 1,
-    locale,
-    where: {
-      and: [
-        {
-          slug: {
-            equals: slug,
-          },
-        },
-        {
+    const [postsResult, categoriesResult] = await Promise.all([
+      payload.find({
+        collection: 'blog-posts',
+        depth: 2,
+        fallbackLocale: 'en',
+        limit: 100,
+        locale,
+        sort: '-publishedAt',
+        where: {
           status: {
             equals: 'published',
           },
         },
-      ],
-    },
-  })
+      }),
+      payload.find({
+        collection: 'blog-categories',
+        fallbackLocale: 'en',
+        limit: 100,
+        locale,
+        sort: 'slug',
+      }),
+    ])
 
-  const post = postResult.docs[0]
+    const posts = postsResult.docs
+      .map((post) => mapPostToCard(post, locale))
+      .filter((post) => Boolean(post.slug && post.title))
 
-  if (!post) {
-    return null
-  }
+    const categories = categoriesResult.docs
+      .map((category) => ({
+        label: category.name || '',
+        slug: category.slug || '',
+      }))
+      .filter((category) => Boolean(category.label && category.slug))
 
-  const category = getCategoryFromPost(post.category, locale)
-  const author = await getAuthorFromPost(payload, post.author)
+    return {
+      categories,
+      posts,
+    }
+  },
+  ['blog-page-data'],
+  {
+    revalidate: CACHE_REVALIDATE.blogList,
+    tags: ['blog-posts', 'blog-categories'],
+  },
+)
 
-  return {
-    authorImage: author.avatar,
-    authorName: author.name,
-    category: category.label,
-    categorySlug: category.slug,
-    content: post.content,
-    excerpt: post.excerpt || '',
-    featuredImage: getMediaURL(post.featuredImage, FALLBACK_IMAGE) ?? FALLBACK_IMAGE,
-    id: post.id,
-    publishedAt: post.publishedAt,
-    slug: post.slug || '',
-    title: post.title || '',
-  }
-})
+export const getBlogPageData = cache(async (locale: BlogLocale) => getBlogPageDataCached(locale))
 
-export const getFeaturedBlogPosts = cache(
+const getBlogPostBySlugCached = unstable_cache(
+  async (locale: BlogLocale, slug: string) => {
+    const payload = await getPayloadClient()
+
+    const postResult = await payload.find({
+      collection: 'blog-posts',
+      depth: 2,
+      fallbackLocale: 'en',
+      limit: 1,
+      locale,
+      where: {
+        and: [
+          {
+            slug: {
+              equals: slug,
+            },
+          },
+          {
+            status: {
+              equals: 'published',
+            },
+          },
+        ],
+      },
+    })
+
+    const post = postResult.docs[0]
+
+    if (!post) {
+      return null
+    }
+
+    const category = getCategoryFromPost(post.category, locale)
+    const author = await getAuthorFromPost(payload, post.author)
+
+    return {
+      authorImage: author.avatar,
+      authorName: author.name,
+      category: category.label,
+      categorySlug: category.slug,
+      content: post.content,
+      excerpt: post.excerpt || '',
+      featuredImage: getMediaURL(post.featuredImage, FALLBACK_IMAGE) ?? FALLBACK_IMAGE,
+      id: post.id,
+      publishedAt: post.publishedAt,
+      slug: post.slug || '',
+      title: post.title || '',
+    }
+  },
+  ['blog-post-by-slug'],
+  {
+    revalidate: CACHE_REVALIDATE.blogPost,
+    tags: ['blog-posts'],
+  },
+)
+
+export const getBlogPostBySlug = cache(async (locale: BlogLocale, slug: string) =>
+  getBlogPostBySlugCached(locale, slug),
+)
+
+const getFeaturedBlogPostsCached = unstable_cache(
   async (locale: BlogLocale, postId: number | string) => {
     const payload = await getPayloadClient()
 
@@ -253,9 +275,18 @@ export const getFeaturedBlogPosts = cache(
       }))
       .filter((post) => Boolean(post.slug && post.title))
   },
+  ['featured-blog-posts'],
+  {
+    revalidate: CACHE_REVALIDATE.featuredPosts,
+    tags: ['blog-posts'],
+  },
 )
 
-export const getHomeFleetArticles = cache(
+export const getFeaturedBlogPosts = cache(async (locale: BlogLocale, postId: number | string) =>
+  getFeaturedBlogPostsCached(locale, postId),
+)
+
+const getHomeFleetArticlesCached = unstable_cache(
   async (locale: BlogLocale, articleIds?: Array<number | string>) => {
     const payload = await getPayloadClient()
 
@@ -306,4 +337,14 @@ export const getHomeFleetArticles = cache(
       .map((post) => mapPostToCard(post, locale))
       .filter((post) => Boolean(post.slug && post.title))
   },
+  ['home-fleet-articles'],
+  {
+    revalidate: CACHE_REVALIDATE.homeFleet,
+    tags: ['blog-posts', 'home'],
+  },
+)
+
+export const getHomeFleetArticles = cache(
+  async (locale: BlogLocale, articleIds?: Array<number | string>) =>
+    getHomeFleetArticlesCached(locale, articleIds),
 )

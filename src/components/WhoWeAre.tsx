@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 import { DecorativeLines } from './DecorativeLines'
 
@@ -15,6 +16,13 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({
   description = DEFAULT_DESCRIPTION,
   learnMoreUrl = '/about',
 }) => {
+  const isExternalLearnMore =
+    learnMoreUrl.startsWith('http://') ||
+    learnMoreUrl.startsWith('https://') ||
+    learnMoreUrl.startsWith('mailto:') ||
+    learnMoreUrl.startsWith('tel:') ||
+    learnMoreUrl.startsWith('#')
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,32 +75,58 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({
             </h2>
           </motion.div>
           
-          <motion.a 
-            variants={itemVariants}
-            whileHover="hover"
-            href={learnMoreUrl}
-            className="flex items-center gap-2 group cursor-pointer"
-          >
-            <div className="flex flex-col items-start">
-              <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
+          {isExternalLearnMore ? (
+            <motion.a 
+              variants={itemVariants}
+              whileHover="hover"
+              href={learnMoreUrl}
+              className="flex items-center gap-2 group cursor-pointer"
+            >
+              <div className="flex flex-col items-start">
+                <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
+                <motion.div 
+                  variants={{
+                    hover: { scaleX: 0 }
+                  }}
+                  className="h-[1px] w-full bg-blue-dark origin-left" 
+                />
+              </div>
               <motion.div 
                 variants={{
-                  hover: { scaleX: 0 }
+                  hover: { x: 5 }
                 }}
-                className="h-[1px] w-full bg-blue-dark origin-left" 
-              />
-            </div>
-            <motion.div 
-              variants={{
-                hover: { x: 5 }
-              }}
-              className="w-6 h-6 flex items-center justify-center"
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
-              </svg>
+                className="w-6 h-6 flex items-center justify-center"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
+                </svg>
+              </motion.div>
+            </motion.a>
+          ) : (
+            <motion.div variants={itemVariants} whileHover="hover">
+              <Link href={learnMoreUrl} className="flex items-center gap-2 group cursor-pointer">
+                <div className="flex flex-col items-start">
+                  <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
+                  <motion.div 
+                    variants={{
+                      hover: { scaleX: 0 }
+                    }}
+                    className="h-[1px] w-full bg-blue-dark origin-left" 
+                  />
+                </div>
+                <motion.div 
+                  variants={{
+                    hover: { x: 5 }
+                  }}
+                  className="w-6 h-6 flex items-center justify-center"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="#071A26"/>
+                  </svg>
+                </motion.div>
+              </Link>
             </motion.div>
-          </motion.a>
+          )}
         </div>
       </motion.div>
     </section>

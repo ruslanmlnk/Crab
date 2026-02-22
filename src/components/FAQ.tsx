@@ -26,14 +26,26 @@ export const FAQ: React.FC<FAQProps> = ({ items }) => {
         transition={{ duration: 1 }}
         className="w-full relative py-20 md:pt-[140px] md:pb-[48px] overflow-hidden"
       >
-        <Image
-          src="https://api.builder.io/api/v1/image/assets/TEMP/ec6b349f618e995449db6570acf6b8ff6a12f26b?width=2880"
-          alt="FAQ Header"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="relative w-full h-full overflow-hidden">
+            <Image
+              src="/images/backgrounds/faq-cloud-blur.webp"
+              alt="Cloud Blur"
+              width={1075}
+              height={504}
+              className="absolute top-0 left-[50%] ml-[50px] rotate-[18deg] max-w-none pointer-events-none select-none"
+              priority
+            />
+            <Image
+              src="/images/backgrounds/faq-cloud-mask.webp"
+              alt="Cloud Mask"
+              width={1123}
+              height={726}
+              className="absolute top-[56px] left-[50%] ml-[-150px] rotate-[15deg] max-w-none pointer-events-none select-none"
+              priority
+            />
+          </div>
+        </div>
         <div className="container-custom relative z-10">
           <div className="flex flex-col items-start w-full">
             <motion.h2

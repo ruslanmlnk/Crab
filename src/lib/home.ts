@@ -1,10 +1,12 @@
 import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import type { Media } from '@/payload-types'
 
 import type { BlogLocale } from './blog-locale'
+import { CACHE_REVALIDATE } from './cache'
 
 const getPayloadClient = cache(async () => getPayload({ config }))
 
@@ -74,7 +76,7 @@ const DEFAULT_HOME_CONTENT = {
     firstColumnText:
       'We focus on practical knowledge, firsthand experience and honest insight gained through years of working at sea - from the first contracts to real offshore conditions on Norwegian vessels.',
     headline:
-      "For years, we've been documenting real life and work within the Norwegian crab fishing industry",
+      "For years, we've been documenting\nreal life and work within the Norwegian crab fishing industry",
     secondColumnText:
       'Alongside articles and interviews, we provide education and personal guidance for those who want to enter the industry prepared, avoid common mistakes and understand what this work really requires.',
     sectionTitle: "WHAT YOU'LL FIND HERE",
@@ -85,8 +87,7 @@ const DEFAULT_HOME_CONTENT = {
     learnMoreUrl: '/about',
   },
   seo: {
-    metaDescription:
-      'Crab Norway - Inside the industry log of the Norwegian crab fishing industry',
+    metaDescription: 'Crab Norway - Inside the industry log of the Norwegian crab fishing industry',
     metaTitle: 'Crab Norway',
     openGraphImage: null as null | string,
   },
@@ -115,101 +116,115 @@ const toAbsoluteUrl = (value: null | string): null | string => {
 
 export type HomeContent = typeof DEFAULT_HOME_CONTENT
 
-export const getHomeContent = cache(async (locale: BlogLocale): Promise<HomeContent> => {
-  const payload = await getPayloadClient()
+const getHomeContentCached = unstable_cache(
+  async (locale: BlogLocale): Promise<HomeContent> => {
+    const payload = await getPayloadClient()
 
-  const homeGlobal = await payload.findGlobal({
-    slug: 'home',
-    depth: 1,
-    fallbackLocale: 'en',
-    locale,
-  })
+    const homeGlobal = await payload.findGlobal({
+      slug: 'home',
+      depth: 1,
+      fallbackLocale: 'en',
+      locale,
+    })
 
-  const seo = homeGlobal.seo || {}
-  const hero = homeGlobal.hero || {}
-  const whoWeAre = homeGlobal.whoWeAre || {}
-  const realExperience = homeGlobal.realExperience || {}
-  const pricing = homeGlobal.pricing || {}
-  const fromTheFleet = homeGlobal.fromTheFleet || {}
-  const whatYouFind = homeGlobal.whatYouFind || {}
-  const realExperienceCards =
-    realExperience.cards?.filter((card) => Boolean(card?.title && card?.description)) || []
-  const pricingPlans =
-    pricing.plans
-      ?.map((plan, index) => {
-        const features = plan.features?.map((feature) => feature.text || '').filter(Boolean) || []
+    const seo = homeGlobal.seo || {}
+    const hero = homeGlobal.hero || {}
+    const whoWeAre = homeGlobal.whoWeAre || {}
+    const realExperience = homeGlobal.realExperience || {}
+    const pricing = homeGlobal.pricing || {}
+    const fromTheFleet = homeGlobal.fromTheFleet || {}
+    const whatYouFind = homeGlobal.whatYouFind || {}
+    const realExperienceCards =
+      realExperience.cards?.filter((card) => Boolean(card?.title && card?.description)) || []
+    const pricingPlans =
+      pricing.plans
+        ?.map((plan, index) => {
+          const features = plan.features?.map((feature) => feature.text || '').filter(Boolean) || []
 
-        return {
-          badgeLabel: plan.badgeLabel || '',
-          features,
-          idealFor: plan.idealFor || '',
-          image:
-            resolveMediaUrl(plan.image) ||
-            DEFAULT_HOME_CONTENT.pricing.plans[index]?.image ||
-            DEFAULT_HOME_CONTENT.pricing.plans[0].image,
-          price: plan.price || '',
-        }
-      })
-      .filter(
-        (plan) =>
+          return {
+            badgeLabel: plan.badgeLabel || '',
+            features,
+            idealFor: plan.idealFor || '',
+            image:
+              resolveMediaUrl(plan.image) ||
+              DEFAULT_HOME_CONTENT.pricing.plans[index]?.image ||
+              DEFAULT_HOME_CONTENT.pricing.plans[0].image,
+            price: plan.price || '',
+          }
+        })
+        .filter((plan) =>
           Boolean(
             plan.badgeLabel &&
-              plan.price &&
-              plan.idealFor &&
-              plan.image &&
-              plan.features.length > 0,
+            plan.price &&
+            plan.idealFor &&
+            plan.image &&
+            plan.features.length > 0,
           ),
-      ) || []
-  const fleetArticleIds = [fromTheFleet.firstArticle, fromTheFleet.secondArticle, fromTheFleet.thirdArticle]
-    .map((relation) => {
-      if (!relation) return null
-      if (typeof relation === 'number') return relation
-      return typeof relation.id === 'number' ? relation.id : null
-    })
-    .filter((id): id is number => id !== null)
+        ) || []
+    const fleetArticleIds = [
+      fromTheFleet.firstArticle,
+      fromTheFleet.secondArticle,
+      fromTheFleet.thirdArticle,
+    ]
+      .map((relation) => {
+        if (!relation) return null
+        if (typeof relation === 'number') return relation
+        return typeof relation.id === 'number' ? relation.id : null
+      })
+      .filter((id): id is number => id !== null)
 
-  return {
-    hero: {
-      eyebrow: hero.eyebrow || DEFAULT_HOME_CONTENT.hero.eyebrow,
-      headline: hero.headline || DEFAULT_HOME_CONTENT.hero.headline,
-      supportingText: hero.supportingText || DEFAULT_HOME_CONTENT.hero.supportingText,
-    },
-    realExperience: {
-      cards:
-        realExperienceCards.length > 0
-          ? realExperienceCards.map((card) => ({
-              description: card.description || '',
-              title: card.title || '',
-            }))
-          : DEFAULT_HOME_CONTENT.realExperience.cards,
-    },
-    pricing: {
-      headline: pricing.headline || DEFAULT_HOME_CONTENT.pricing.headline,
-      plans: pricingPlans.length === 2 ? pricingPlans : DEFAULT_HOME_CONTENT.pricing.plans,
-    },
-    fromTheFleet: {
-      articleIds:
-        fleetArticleIds.length === 3
-          ? fleetArticleIds
-          : DEFAULT_HOME_CONTENT.fromTheFleet.articleIds,
-    },
-    whatYouFind: {
-      ctaUrl: whatYouFind.ctaUrl || DEFAULT_HOME_CONTENT.whatYouFind.ctaUrl,
-      firstColumnText:
-        whatYouFind.firstColumnText || DEFAULT_HOME_CONTENT.whatYouFind.firstColumnText,
-      headline: whatYouFind.headline || DEFAULT_HOME_CONTENT.whatYouFind.headline,
-      secondColumnText:
-        whatYouFind.secondColumnText || DEFAULT_HOME_CONTENT.whatYouFind.secondColumnText,
-      sectionTitle: whatYouFind.sectionTitle || DEFAULT_HOME_CONTENT.whatYouFind.sectionTitle,
-    },
-    whoWeAre: {
-      description: whoWeAre.description || DEFAULT_HOME_CONTENT.whoWeAre.description,
-      learnMoreUrl: whoWeAre.learnMoreUrl || DEFAULT_HOME_CONTENT.whoWeAre.learnMoreUrl,
-    },
-    seo: {
-      metaDescription: seo.metaDescription || DEFAULT_HOME_CONTENT.seo.metaDescription,
-      metaTitle: seo.metaTitle || DEFAULT_HOME_CONTENT.seo.metaTitle,
-      openGraphImage: toAbsoluteUrl(resolveMediaUrl(seo.openGraphImage)),
-    },
-  }
-})
+    return {
+      hero: {
+        eyebrow: hero.eyebrow || DEFAULT_HOME_CONTENT.hero.eyebrow,
+        headline: hero.headline || DEFAULT_HOME_CONTENT.hero.headline,
+        supportingText: hero.supportingText || DEFAULT_HOME_CONTENT.hero.supportingText,
+      },
+      realExperience: {
+        cards:
+          realExperienceCards.length > 0
+            ? realExperienceCards.map((card) => ({
+                description: card.description || '',
+                title: card.title || '',
+              }))
+            : DEFAULT_HOME_CONTENT.realExperience.cards,
+      },
+      pricing: {
+        headline: pricing.headline || DEFAULT_HOME_CONTENT.pricing.headline,
+        plans: pricingPlans.length === 2 ? pricingPlans : DEFAULT_HOME_CONTENT.pricing.plans,
+      },
+      fromTheFleet: {
+        articleIds:
+          fleetArticleIds.length === 3
+            ? fleetArticleIds
+            : DEFAULT_HOME_CONTENT.fromTheFleet.articleIds,
+      },
+      whatYouFind: {
+        ctaUrl: whatYouFind.ctaUrl || DEFAULT_HOME_CONTENT.whatYouFind.ctaUrl,
+        firstColumnText:
+          whatYouFind.firstColumnText || DEFAULT_HOME_CONTENT.whatYouFind.firstColumnText,
+        headline: whatYouFind.headline || DEFAULT_HOME_CONTENT.whatYouFind.headline,
+        secondColumnText:
+          whatYouFind.secondColumnText || DEFAULT_HOME_CONTENT.whatYouFind.secondColumnText,
+        sectionTitle: whatYouFind.sectionTitle || DEFAULT_HOME_CONTENT.whatYouFind.sectionTitle,
+      },
+      whoWeAre: {
+        description: whoWeAre.description || DEFAULT_HOME_CONTENT.whoWeAre.description,
+        learnMoreUrl: whoWeAre.learnMoreUrl || DEFAULT_HOME_CONTENT.whoWeAre.learnMoreUrl,
+      },
+      seo: {
+        metaDescription: seo.metaDescription || DEFAULT_HOME_CONTENT.seo.metaDescription,
+        metaTitle: seo.metaTitle || DEFAULT_HOME_CONTENT.seo.metaTitle,
+        openGraphImage: toAbsoluteUrl(resolveMediaUrl(seo.openGraphImage)),
+      },
+    }
+  },
+  ['home-content'],
+  {
+    revalidate: CACHE_REVALIDATE.home,
+    tags: ['home'],
+  },
+)
+
+export const getHomeContent = cache(
+  async (locale: BlogLocale): Promise<HomeContent> => getHomeContentCached(locale),
+)
