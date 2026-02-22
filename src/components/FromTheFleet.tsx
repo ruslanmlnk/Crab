@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 
 import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
 import { BlogCard } from './BlogCard'
@@ -58,6 +59,8 @@ export const FromTheFleet: React.FC<FromTheFleetProps> = ({
   articles = DEFAULT_ARTICLES,
   locale = 'en',
 }) => {
+  const messages = getSiteMessages(locale)
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -97,7 +100,7 @@ export const FromTheFleet: React.FC<FromTheFleetProps> = ({
         transition={{ duration: 1.5, ease: 'easeOut' }}
         className="absolute top-[239px] left-0 text-[#E6F1F6] text-[180px] md:text-[240px] font-semibold leading-[145%] pointer-events-none z-0 select-none uppercase whitespace-nowrap"
       >
-        FROM THE NORWEGIAN CRAB FLEET
+        {messages.home.fleetBackdrop}
       </motion.div>
 
       <motion.div
@@ -119,6 +122,7 @@ export const FromTheFleet: React.FC<FromTheFleetProps> = ({
               slug={article.slug}
               showBorder={false}
               imageHeight="h-[221px]"
+              readMoreLabel={messages.home.learnMore}
               variants={itemVariants}
             />
           ))}
@@ -131,7 +135,7 @@ export const FromTheFleet: React.FC<FromTheFleetProps> = ({
           >
             <div className="flex flex-col items-start relative">
               <span className="text-white text-[16px] font-semibold leading-[23px] lowercase">
-                Read stories
+                {messages.home.readStories}
               </span>
               <div className="h-[1px] w-full bg-white transition-all duration-300" />
             </div>

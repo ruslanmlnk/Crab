@@ -29,17 +29,17 @@ const DEFAULT_EXPERIENCE_CARDS: RealExperienceCard[] = [
 ]
 
 type RealExperienceProps = {
+  backgroundImage?: string
   cards?: RealExperienceCard[]
   isRight?: boolean
 }
 
 export const RealExperience: React.FC<RealExperienceProps> = ({
+  backgroundImage = '/images/backgrounds/experience.png',
   cards = DEFAULT_EXPERIENCE_CARDS,
   isRight = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const backgroundImage =
-    '/images/backgrounds/experience.png'
 
   return (
     <section ref={containerRef} className="relative w-full">

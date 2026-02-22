@@ -2,8 +2,16 @@
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
+import type { BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 
-export const GetInTouch: React.FC = () => {
+type GetInTouchProps = {
+  locale?: BlogLocale
+}
+
+export const GetInTouch: React.FC<GetInTouchProps> = ({ locale = 'en' }) => {
+  const messages = getSiteMessages(locale)
+
   return (
     <section className="relative w-full py-25 md:py-0 h-auto md:h-[700px] overflow-hidden flex items-center">
       {/* Background with Gradient Overlay as per Figma */}
@@ -24,7 +32,7 @@ export const GetInTouch: React.FC = () => {
         <div className="w-full max-w-[1350px] px-6 h-full grid grid-cols-1 lg:grid-cols-2">
           <div className="hidden lg:block h-full" />
           <div className="flex flex-col justify-center h-full">
-            <GetInTouchContent />
+            <GetInTouchContent messages={messages} />
           </div>
         </div>
       </div>
@@ -32,7 +40,11 @@ export const GetInTouch: React.FC = () => {
   )
 }
 
-const GetInTouchContent = () => (
+type GetInTouchContentProps = {
+  messages: ReturnType<typeof getSiteMessages>
+}
+
+const GetInTouchContent: React.FC<GetInTouchContentProps> = ({ messages }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -42,10 +54,10 @@ const GetInTouchContent = () => (
   >
     <div className="flex flex-col gap-12 md:gap-[56px]">
       {/* Header Container */}
-      <div className="flex justify-between items-start gap-4">
-        <div className="text-[#E6F1F6] font-medium text-sm md:text-base uppercase tracking-[0.05em] opacity-90 -rotate-[0.2deg]">
-          get in touch
-        </div>
+        <div className="flex justify-between items-start gap-4">
+          <div className="text-[#E6F1F6] font-medium text-sm md:text-base uppercase tracking-[0.05em] opacity-90 -rotate-[0.2deg]">
+            {messages.getInTouch.eyebrow}
+          </div>
         <div className="relative w-[140px] h-[70px] md:w-[200px] md:h-[100px] overflow-hidden rounded-[2px] flex-shrink-0">
           <Image
             src="https://api.builder.io/api/v1/image/assets/TEMP/d91eeb7960bbb03f6efe4a901239777e93203b1a?width=400"
@@ -60,11 +72,10 @@ const GetInTouchContent = () => (
       <div className="flex flex-col gap-12 md:gap-[56px]">
         <div className="flex flex-col gap-4">
           <h2 className="text-white text-3xl md:text-[44px] font-bold leading-[110%] tracking-tight m-0">
-            Get clear guidance before working at sea
+            {messages.getInTouch.title}
           </h2>
           <p className="text-white/70 text-sm md:text-base font-normal leading-[145%] max-w-[471px]">
-            Based on real offshore experience, we help you understand what to expect, 
-            how to prepare, and how to take your first steps on fishing vessels
+            {messages.getInTouch.description}
           </p>
         </div>
 
@@ -72,7 +83,7 @@ const GetInTouchContent = () => (
         <div className="flex items-center gap-2 group cursor-pointer w-fit transition-opacity hover:opacity-80">
           <div className="flex flex-col">
             <span className="text-white text-base md:text-[16px] font-semibold lowercase leading-[145%]">
-              contact us
+              {messages.getInTouch.contactUs}
             </span>
             <div className="h-[1px] bg-white w-full" />
           </div>

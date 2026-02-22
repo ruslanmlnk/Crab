@@ -3,15 +3,19 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+import type { BlogLocale } from '@/lib/blog-locale'
 import type { FAQItem } from '@/lib/faq'
+import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
 
 type FAQProps = {
   items: FAQItem[]
+  locale?: BlogLocale
 }
 
-export const FAQ: React.FC<FAQProps> = ({ items }) => {
+export const FAQ: React.FC<FAQProps> = ({ items, locale = 'en' }) => {
+  const messages = getSiteMessages(locale)
   const [activeIndex, setActiveIndex] = useState<number | null>(
     items.length > 0 ? 0 : null,
   )
@@ -55,7 +59,7 @@ export const FAQ: React.FC<FAQProps> = ({ items }) => {
               transition={{ duration: 0.8, ease: 'easeOut' }}
               className="text-h2-faq text-blue-dark"
             >
-              Frequently asked
+              {messages.home.faqTitleLine1}
             </motion.h2>
             <div className="flex flex-col md:flex-row items-start md:items-center gap-x-6 w-full">
               <motion.h2
@@ -65,7 +69,7 @@ export const FAQ: React.FC<FAQProps> = ({ items }) => {
                 transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
                 className="text-h2-faq text-blue-dark"
               >
-                questions
+                {messages.home.faqTitleLine2}
               </motion.h2>
               <motion.p
                 initial={{ y: 30, opacity: 0 }}
@@ -74,7 +78,7 @@ export const FAQ: React.FC<FAQProps> = ({ items }) => {
                 transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
                 className="text-blue-midnight text-base md:pt-4 max-w-[258px] leading-[145%]"
               >
-                Everything you need to know about crab fishing in Norway
+                {messages.home.faqDescription}
               </motion.p>
             </div>
           </div>

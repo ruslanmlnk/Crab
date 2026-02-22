@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
+import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
 
@@ -9,11 +11,12 @@ type WhatYouFindProps = {
   ctaUrl?: string
   firstColumnText?: string
   headline?: string
+  locale?: BlogLocale
   secondColumnText?: string
   sectionTitle?: string
 }
 
-const DEFAULT_PROPS: Required<WhatYouFindProps> = {
+const DEFAULT_PROPS: Required<Omit<WhatYouFindProps, 'locale'>> = {
   ctaUrl: '/contact',
   firstColumnText:
     'We focus on practical knowledge, firsthand experience and honest insight gained through years of working at sea - from the first contracts to real offshore conditions on Norwegian vessels.',
@@ -28,10 +31,17 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   ctaUrl = DEFAULT_PROPS.ctaUrl,
   firstColumnText = DEFAULT_PROPS.firstColumnText,
   headline = DEFAULT_PROPS.headline,
+  locale = 'en',
   secondColumnText = DEFAULT_PROPS.secondColumnText,
   sectionTitle = DEFAULT_PROPS.sectionTitle,
 }) => {
-  const normalizedHeadline = headline.replace(/\r/g, '').trim()
+  const messages = getSiteMessages(locale)
+  const normalizedHeadline = headline
+    .replace(/\\r\\n/g, '\n')
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\n')
+    .replace(/\r/g, '')
+    .trim()
   const headlineLines = normalizedHeadline
     .split('\n')
     .map((line) => line.trim())
@@ -69,6 +79,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
     ctaUrl.startsWith('mailto:') ||
     ctaUrl.startsWith('tel:') ||
     ctaUrl.startsWith('#')
+  const localizedCtaUrl = isExternalCta ? ctaUrl : withBlogLocale(ctaUrl, locale)
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -162,12 +173,12 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               <motion.a
                 variants={itemVariants}
                 whileHover="hover"
-                href={ctaUrl}
+                href={localizedCtaUrl}
                 className="btn-base btn-dark self-start group w-fit"
               >
                 <div className="flex flex-col items-start leading-none">
                   <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
-                    Get in touch
+                    {messages.home.getInTouchButton}
                   </span>
                   <motion.div
                     variants={{
@@ -199,12 +210,12 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
             ) : (
               <motion.div variants={itemVariants} whileHover="hover">
                 <Link
-                  href={ctaUrl}
+                  href={localizedCtaUrl}
                   className="btn-base btn-dark self-start group w-fit"
                 >
                   <div className="flex flex-col items-start leading-none">
                     <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
-                      Get in touch
+                      {messages.home.getInTouchButton}
                     </span>
                     <motion.div
                       variants={{

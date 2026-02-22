@@ -96,10 +96,12 @@ export interface Config {
   globals: {
     faq: Faq;
     home: Home;
+    about: About;
   };
   globalsSelect: {
     faq: FaqSelect<false> | FaqSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
   };
   locale: 'en' | 'ru';
   user: User;
@@ -509,6 +511,49 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  seo: {
+    metaTitle: string;
+    metaDescription: string;
+    openGraphImage: number | Media;
+  };
+  hero: {
+    headlineBeforeImage: string;
+    inlineImage: number | Media;
+    headlineAfterImage: string;
+    headlineBottom: string;
+    description: string;
+  };
+  whoWeAre: {
+    description: string;
+    learnMoreUrl: string;
+  };
+  realExperience: {
+    cards: {
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  reviews: {
+    title: string;
+    description: string;
+    cards: {
+      name: string;
+      location?: string | null;
+      review: string;
+      storyUrl: string;
+      id?: string | null;
+    }[];
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faq_select".
  */
 export interface FaqSelect<T extends boolean = true> {
@@ -594,6 +639,63 @@ export interface HomeSelect<T extends boolean = true> {
         firstArticle?: T;
         secondArticle?: T;
         thirdArticle?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        openGraphImage?: T;
+      };
+  hero?:
+    | T
+    | {
+        headlineBeforeImage?: T;
+        inlineImage?: T;
+        headlineAfterImage?: T;
+        headlineBottom?: T;
+        description?: T;
+      };
+  whoWeAre?:
+    | T
+    | {
+        description?: T;
+        learnMoreUrl?: T;
+      };
+  realExperience?:
+    | T
+    | {
+        cards?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  reviews?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              name?: T;
+              location?: T;
+              review?: T;
+              storyUrl?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

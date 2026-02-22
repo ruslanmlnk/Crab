@@ -1,5 +1,8 @@
 "use client"
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { normalizeBlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 import { DecorativeLines } from './DecorativeLines'
 import { GetInTouch } from './GetInTouch'
 
@@ -8,9 +11,13 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
+  const searchParams = useSearchParams()
+  const locale = normalizeBlogLocale(searchParams.get('locale'))
+  const messages = getSiteMessages(locale)
+
   return (
     <footer className="w-full flex flex-col bg-blue-dark relative">
-      {showGetInTouch && <GetInTouch />}
+      {showGetInTouch && <GetInTouch locale={locale} />}
       <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="bottom" showCenterLine={false} showMobile={false} />
       {/* Footer Top Bar / Logo Slider Strip - Redesigned Marquee */}
       <div className="w-full h-[180px] md:h-[264px] bg-[#071A26] overflow-hidden flex items-center relative border-y border-white/10">
@@ -45,7 +52,9 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
 
             <button className="flex px-6 py-3 items-center gap-2 rounded-[40px] border border-white group transition-all duration-300 hover:bg-white/10">
               <div className="flex flex-col items-start">
-                <span className="text-white text-base font-semibold lowercase leading-[145%]">contact us</span>
+                <span className="text-white text-base font-semibold lowercase leading-[145%]">
+                  {messages.footer.contactUs}
+                </span>
                 <div className="h-[1px] w-full bg-white transition-all" />
               </div>
               <div className="w-6 h-6 flex items-center justify-center transition-transform group-hover:translate-x-1">
@@ -62,8 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
           {/* Right: About Section */}
           <div className="flex w-full lg:w-[609.5px] items-center lg:items-start gap-6 lg:gap-[140px] relative">
             <div className="flex-1 text-white/60 text-sm lg:text-base font-normal leading-[145%]">
-              We share real offshore experience and practical knowledge about crab fishing, 
-              helping people understand life and work on Norwegian vessels
+              {messages.footer.description}
             </div>
             
             <button 

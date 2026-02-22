@@ -1,6 +1,8 @@
 "use client"
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
+import type { BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
 
@@ -14,6 +16,7 @@ export type PricingPlan = {
 
 type PricingProps = {
   headline?: string
+  locale?: BlogLocale
   plans?: PricingPlan[]
 }
 
@@ -50,8 +53,11 @@ const DEFAULT_PLANS: PricingPlan[] = [
 
 export const Pricing: React.FC<PricingProps> = ({
   headline = 'Pricing for every dive adventure',
+  locale = 'en',
   plans = DEFAULT_PLANS,
 }) => {
+  const messages = getSiteMessages(locale)
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -95,7 +101,7 @@ export const Pricing: React.FC<PricingProps> = ({
             variants={cardVariants}
             className="text-base font-medium uppercase tracking-wider text-blue-midnight leading-[145%]"
           >
-            Pricing
+            {messages.home.pricingLabel}
           </motion.span>
           <motion.h2
             variants={cardVariants}
@@ -134,7 +140,7 @@ export const Pricing: React.FC<PricingProps> = ({
                     {plan.price}
                   </span>
                   <span className="text-base font-normal text-[#0B1F31] leading-[1.6] tracking-[1px] ml-0.5">
-                    /access
+                    {messages.home.accessSuffix}
                   </span>
                 </div>
 
@@ -145,7 +151,7 @@ export const Pricing: React.FC<PricingProps> = ({
                 >
                   <div className="flex flex-col items-start relative">
                     <span className="text-base font-semibold leading-[23px] lowercase text-blue-dark group-hover/btn:text-white transition-colors">
-                      Purchase now
+                      {messages.home.purchaseNow}
                     </span>
                     <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
                   </div>
@@ -164,7 +170,7 @@ export const Pricing: React.FC<PricingProps> = ({
 
                 <div className="flex flex-col gap-2 h-auto lg:h-[331px]">
                   <span className="text-base font-medium tracking-[3px] uppercase text-[#1C4D74] leading-[145%]">
-                    Includes:
+                    {messages.home.includesLabel}
                   </span>
                   <ul className="flex flex-col list-none p-0 m-0">
                     {plan.features.map((feature, featureIndex) => (
@@ -172,7 +178,7 @@ export const Pricing: React.FC<PricingProps> = ({
                         key={`${plan.badgeLabel}-feature-${featureIndex}`}
                         className="text-base font-normal text-[#0B1F31] leading-[145%]"
                       >
-                        — {feature}
+                        - {feature}
                       </li>
                     ))}
                   </ul>
@@ -180,7 +186,7 @@ export const Pricing: React.FC<PricingProps> = ({
 
                 <div className="mt-auto pt-4">
                   <p className="text-base leading-[145%] text-[#0B1F31]">
-                    <span className="font-bold">Ideal for:</span>{' '}
+                    <span className="font-bold">{messages.home.idealForLabel}</span>{' '}
                     <span className="font-normal">{plan.idealFor}</span>
                   </p>
                 </div>

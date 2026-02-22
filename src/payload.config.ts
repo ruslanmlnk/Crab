@@ -10,6 +10,7 @@ import { BlogCategories } from './collections/BlogCategories'
 import { BlogPosts } from './collections/BlogPosts'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { About } from './globals/About'
 import { FAQ } from './globals/FAQ'
 import { Home } from './globals/Home'
 
@@ -24,7 +25,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Authors, BlogCategories, BlogPosts],
-  globals: [FAQ, Home],
+  globals: [FAQ, Home, About],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'en',

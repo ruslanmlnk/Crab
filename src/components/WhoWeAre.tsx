@@ -2,11 +2,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
+import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 import { DecorativeLines } from './DecorativeLines'
 
 type WhoWeAreProps = {
   description?: string
   learnMoreUrl?: string
+  locale?: BlogLocale
 }
 
 const DEFAULT_DESCRIPTION =
@@ -15,13 +18,18 @@ const DEFAULT_DESCRIPTION =
 export const WhoWeAre: React.FC<WhoWeAreProps> = ({
   description = DEFAULT_DESCRIPTION,
   learnMoreUrl = '/about',
+  locale = 'en',
 }) => {
+  const messages = getSiteMessages(locale)
   const isExternalLearnMore =
     learnMoreUrl.startsWith('http://') ||
     learnMoreUrl.startsWith('https://') ||
     learnMoreUrl.startsWith('mailto:') ||
     learnMoreUrl.startsWith('tel:') ||
     learnMoreUrl.startsWith('#')
+  const localizedLearnMoreUrl = isExternalLearnMore
+    ? learnMoreUrl
+    : withBlogLocale(learnMoreUrl, locale)
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -69,7 +77,9 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({
       >
         <div className="w-full flex flex-col items-center gap-6 text-center">
           <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
-            <span className="text-blue-dark text-[14px] md:text-[16px] font-medium uppercase leading-[145%] tracking-normal">Who We Are</span>
+            <span className="text-blue-dark text-[14px] md:text-[16px] font-medium uppercase leading-[145%] tracking-normal">
+              {messages.home.whoWeAreLabel}
+            </span>
             <h2 className="text-blue-dark text-[34px] md:text-[44px] font-semibold leading-[110%]">
               {description}
             </h2>
@@ -79,11 +89,13 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({
             <motion.a 
               variants={itemVariants}
               whileHover="hover"
-              href={learnMoreUrl}
+              href={localizedLearnMoreUrl}
               className="flex items-center gap-2 group cursor-pointer"
             >
               <div className="flex flex-col items-start">
-                <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
+                <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">
+                  {messages.home.learnMore}
+                </span>
                 <motion.div 
                   variants={{
                     hover: { scaleX: 0 }
@@ -104,9 +116,11 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({
             </motion.a>
           ) : (
             <motion.div variants={itemVariants} whileHover="hover">
-              <Link href={learnMoreUrl} className="flex items-center gap-2 group cursor-pointer">
+              <Link href={localizedLearnMoreUrl} className="flex items-center gap-2 group cursor-pointer">
                 <div className="flex flex-col items-start">
-                  <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">learn more</span>
+                  <span className="text-blue-dark text-[16px] font-semibold lowercase leading-[145%]">
+                    {messages.home.learnMore}
+                  </span>
                   <motion.div 
                     variants={{
                       hover: { scaleX: 0 }

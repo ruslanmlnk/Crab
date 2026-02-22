@@ -14,7 +14,12 @@ export const Hero: React.FC<HeroProps> = ({
   headline,
   supportingText,
 }) => {
-  const normalizedSupportingText = supportingText.replace(/\r/g, '').trim()
+  const normalizedSupportingText = supportingText
+    .replace(/\\r\\n/g, '\n')
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\n')
+    .replace(/\r/g, '')
+    .trim()
   const supportingLines = normalizedSupportingText
     .split('\n')
     .map((line) => line.trim())

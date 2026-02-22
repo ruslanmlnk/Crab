@@ -68,24 +68,27 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         <WhoWeAre
           description={homeContent.whoWeAre.description}
           learnMoreUrl={homeContent.whoWeAre.learnMoreUrl}
+          locale={locale}
         />
         <RealExperience cards={homeContent.realExperience.cards} />
         <WhatYouFind
           ctaUrl={homeContent.whatYouFind.ctaUrl}
           firstColumnText={homeContent.whatYouFind.firstColumnText}
           headline={homeContent.whatYouFind.headline}
+          locale={locale}
           secondColumnText={homeContent.whatYouFind.secondColumnText}
           sectionTitle={homeContent.whatYouFind.sectionTitle}
         />
         <Pricing
           headline={homeContent.pricing.headline}
+          locale={locale}
           plans={homeContent.pricing.plans}
         />
         <FromTheFleet
           articles={fleetArticles}
           locale={locale}
         />
-        <FAQ items={faqItems} />
+        <FAQ items={faqItems} locale={locale} />
       </main>
       <Footer />
     </div>

@@ -6,21 +6,23 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DecorativeLines } from './DecorativeLines'
 import { normalizeBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import { getSiteMessages } from '@/lib/site-locale'
 
 export const Header: React.FC = () => {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
   const currentLocale = normalizeBlogLocale(searchParams.get('locale'))
+  const messages = getSiteMessages(currentLocale)
 
   const [isLangOpen, setIsLangOpen] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: 'About', href: '/about' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
+    { name: messages.header.about, href: '/about' },
+    { name: messages.header.faq, href: '/faq' },
+    { name: messages.header.blog, href: '/blog' },
+    { name: messages.header.contact, href: '/contact' },
   ]
 
   const updateLocale = (locale: BlogLocale) => {
@@ -115,7 +117,7 @@ export const Header: React.FC = () => {
           >
             {navLinks.map((link) => (
               <motion.div
-                key={link.name}
+                key={link.href}
                 variants={{
                   hidden: { opacity: 0, y: -10 },
                   visible: { opacity: 1, y: 0 }
@@ -220,7 +222,7 @@ export const Header: React.FC = () => {
           >
             <div className="container-custom py-8 flex flex-col gap-6">
               {navLinks.map((link) => (
-                <motion.div key={link.name} variants={listItemVariants}>
+                <motion.div key={link.href} variants={listItemVariants}>
                   <Link
                     href={getLinkHref(link.href)}
                     className="text-[20px] font-bold uppercase text-white hover:text-white/70 transition-colors"
@@ -231,7 +233,9 @@ export const Header: React.FC = () => {
                 </motion.div>
               ))}
               <motion.div variants={listItemVariants} className="pt-4 border-t border-white/10 flex flex-col gap-4">
-                <span className="text-white/60 uppercase text-sm font-bold tracking-widest">Language</span>
+                <span className="text-white/60 uppercase text-sm font-bold tracking-widest">
+                  {messages.header.language}
+                </span>
                 <div className="flex gap-6">
                   <button
                     className={`text-[18px] font-bold uppercase ${
