@@ -46,6 +46,7 @@ const DEFAULT_HOME_CONTENT = {
           'Full database access (apply independently)',
         ],
         idealFor: 'People ready to take action and apply on their own',
+        purchaseUrl: '#',
         image:
           'https://api.builder.io/api/v1/image/assets/TEMP/eb4e8008b9a7327b6f3e17a384db1ff4f083c0f3?width=768',
         price: '€400',
@@ -62,6 +63,7 @@ const DEFAULT_HOME_CONTENT = {
           '4 group Zoom calls + weekly reviews and strategy adjustments',
         ],
         idealFor: 'Those who want full guidance, feedback, and faster results',
+        purchaseUrl: '#',
         image:
           'https://api.builder.io/api/v1/image/assets/TEMP/a2dd0a2b28130c4d6202529111b2d5ab43148127?width=768',
         price: '€800',
@@ -150,12 +152,17 @@ const getHomeContentCached = unstable_cache(
               DEFAULT_HOME_CONTENT.pricing.plans[index]?.image ||
               DEFAULT_HOME_CONTENT.pricing.plans[0].image,
             price: plan.price || '',
+            purchaseUrl:
+              plan.purchaseUrl ||
+              DEFAULT_HOME_CONTENT.pricing.plans[index]?.purchaseUrl ||
+              '#',
           }
         })
         .filter((plan) =>
           Boolean(
             plan.badgeLabel &&
             plan.price &&
+            plan.purchaseUrl &&
             plan.idealFor &&
             plan.image &&
             plan.features.length > 0,
@@ -228,3 +235,5 @@ const getHomeContentCached = unstable_cache(
 export const getHomeContent = cache(
   async (locale: BlogLocale): Promise<HomeContent> => getHomeContentCached(locale),
 )
+
+

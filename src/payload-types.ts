@@ -493,6 +493,7 @@ export interface Home {
       image: number | Media;
       badgeLabel: string;
       price: string;
+      purchaseUrl: string;
       features: {
         text: string;
         id?: string | null;
@@ -623,6 +624,7 @@ export interface HomeSelect<T extends boolean = true> {
               image?: T;
               badgeLabel?: T;
               price?: T;
+              purchaseUrl?: T;
               features?:
                 | T
                 | {

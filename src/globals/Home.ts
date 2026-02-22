@@ -169,6 +169,12 @@ export const Home: GlobalConfig = {
               required: true,
             },
             {
+              name: 'purchaseUrl',
+              type: 'text',
+              defaultValue: '#',
+              required: true,
+            },
+            {
               name: 'features',
               type: 'array',
               required: true,

@@ -1,7 +1,8 @@
 "use client"
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import type { BlogLocale } from '@/lib/blog-locale'
+import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
@@ -12,6 +13,7 @@ export type PricingPlan = {
   idealFor: string
   image: string
   price: string
+  purchaseUrl: string
 }
 
 type PricingProps = {
@@ -32,6 +34,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
     image:
       'https://api.builder.io/api/v1/image/assets/TEMP/eb4e8008b9a7327b6f3e17a384db1ff4f083c0f3?width=768',
     price: 'EUR 400',
+    purchaseUrl: '#',
   },
   {
     badgeLabel: 'Full Support Course',
@@ -48,6 +51,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
     image:
       'https://api.builder.io/api/v1/image/assets/TEMP/a2dd0a2b28130c4d6202529111b2d5ab43148127?width=768',
     price: 'EUR 800',
+    purchaseUrl: '#',
   },
 ]
 
@@ -57,6 +61,11 @@ export const Pricing: React.FC<PricingProps> = ({
   plans = DEFAULT_PLANS,
 }) => {
   const messages = getSiteMessages(locale)
+  const isExternalUrl = (value: string) =>
+    value.startsWith('http://') ||
+    value.startsWith('https://') ||
+    value.startsWith('mailto:') ||
+    value.startsWith('tel:')
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -144,29 +153,59 @@ export const Pricing: React.FC<PricingProps> = ({
                   </span>
                 </div>
 
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 px-6 py-[11.2px] rounded-full border border-blue-dark group/btn transition-colors hover:bg-blue-dark"
-                >
-                  <div className="flex flex-col items-start relative">
-                    <span className="text-base font-semibold leading-[23px] lowercase text-blue-dark group-hover/btn:text-white transition-colors">
-                      {messages.home.purchaseNow}
-                    </span>
-                    <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
-                  </div>
-                  <svg
-                    className="w-6 h-6 transition-transform group-hover/btn:translate-x-1"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                {isExternalUrl(plan.purchaseUrl) ? (
+                  <motion.a
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    href={plan.purchaseUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-6 py-[11.2px] rounded-full border border-blue-dark group/btn transition-colors hover:bg-blue-dark"
                   >
-                    <path
-                      d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                      className="fill-blue-dark group-hover/btn:fill-white transition-colors"
-                    />
-                  </svg>
-                </motion.button>
+                    <div className="flex flex-col items-start relative">
+                      <span className="text-base font-semibold leading-[23px] lowercase text-blue-dark group-hover/btn:text-white transition-colors">
+                        {messages.home.purchaseNow}
+                      </span>
+                      <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
+                    </div>
+                    <svg
+                      className="w-6 h-6 transition-transform group-hover/btn:translate-x-1"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
+                        className="fill-blue-dark group-hover/btn:fill-white transition-colors"
+                      />
+                    </svg>
+                  </motion.a>
+                ) : (
+                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      href={withBlogLocale(plan.purchaseUrl || '#', locale)}
+                      className="flex items-center justify-center gap-2 px-6 py-[11.2px] rounded-full border border-blue-dark group/btn transition-colors hover:bg-blue-dark"
+                    >
+                      <div className="flex flex-col items-start relative">
+                        <span className="text-base font-semibold leading-[23px] lowercase text-blue-dark group-hover/btn:text-white transition-colors">
+                          {messages.home.purchaseNow}
+                        </span>
+                        <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
+                      </div>
+                      <svg
+                        className="w-6 h-6 transition-transform group-hover/btn:translate-x-1"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
+                          className="fill-blue-dark group-hover/btn:fill-white transition-colors"
+                        />
+                      </svg>
+                    </Link>
+                  </motion.div>
+                )}
 
                 <div className="flex flex-col gap-2 h-auto lg:h-[331px]">
                   <span className="text-base font-medium tracking-[3px] uppercase text-[#1C4D74] leading-[145%]">
