@@ -1,17 +1,23 @@
 "use client"
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
+
+import type { ContactSocialLinks } from '@/lib/contact'
+
 import { DecorativeLines } from './DecorativeLines'
+import { SocialLinks } from './SocialLinks'
 
 type HeroProps = {
   eyebrow: string
   headline: string
+  socialLinks: ContactSocialLinks
   supportingText: string
 }
 
 export const Hero: React.FC<HeroProps> = ({
   eyebrow,
   headline,
+  socialLinks,
   supportingText,
 }) => {
   const normalizedSupportingText = supportingText
@@ -29,11 +35,17 @@ export const Hero: React.FC<HeroProps> = ({
   let supportingLineTwo = supportingLines.slice(1).join(' ').trim()
 
   if (!supportingLineTwo && normalizedSupportingText) {
-    const semanticSplitIndex = normalizedSupportingText.toLowerCase().indexOf(' fishing industry')
+    const semanticSplitIndex = normalizedSupportingText
+      .toLowerCase()
+      .indexOf(' fishing industry')
 
     if (semanticSplitIndex > 0) {
-      supportingLineOne = normalizedSupportingText.slice(0, semanticSplitIndex).trim()
-      supportingLineTwo = normalizedSupportingText.slice(semanticSplitIndex + 1).trim()
+      supportingLineOne = normalizedSupportingText
+        .slice(0, semanticSplitIndex)
+        .trim()
+      supportingLineTwo = normalizedSupportingText
+        .slice(semanticSplitIndex + 1)
+        .trim()
     }
   }
 
@@ -42,28 +54,28 @@ export const Hero: React.FC<HeroProps> = ({
     visible: {
       opacity: 1,
       transition: {
+        delayChildren: 0.3,
         staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+      },
+    },
   }
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.8, ease: 'easeOut' } as any,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" } as any
-    }
+    },
   }
 
   const titleVariants: Variants = {
     hidden: { opacity: 0, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
-      transition: { duration: 1, ease: "easeOut" } as any
-    }
+      transition: { duration: 1, ease: 'easeOut' } as any,
+    },
   }
 
   return (
@@ -77,72 +89,42 @@ export const Hero: React.FC<HeroProps> = ({
         sizes="100vw"
       />
       <div className="absolute inset-0 bg-blue-dark/30 z-[1]" />
-      <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.15} fade="top" showCenterLine={false} showMobile={false} />
-      <motion.div 
+      <DecorativeLines
+        color="rgba(255, 255, 255, 1)"
+        opacity={0.15}
+        fade="top"
+        showCenterLine={false}
+        showMobile={false}
+      />
+      <motion.div
         className="mx-auto max-w-[1208px] px-6 flex flex-col justify-center items-start gap-[18px] py-20 md:py-0 relative z-10"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <motion.div 
+        <motion.div
           variants={itemVariants}
-          className="text-tagline text-white text-left md:pl-[10px]"
+          className="w-full text-tagline text-white text-center md:w-auto md:text-left md:pl-[10px]"
         >
           {eyebrow}
         </motion.div>
-        
-        <motion.h1 
+
+        <motion.h1
           variants={titleVariants}
           className="w-full text-h1 tracking-normal text-center text-white"
         >
           {headline}
         </motion.h1>
 
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="w-full flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0"
         >
-          <div className="flex items-center gap-[10px] md:pl-[10px]">
-            {/* Youtube */}
-            <motion.a 
-              whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-              href="#" 
-              className="icon-circle w-12 h-12 md:w-10 md:h-10"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.62 2.36385H3.37917C1.69677 2.36385 0.328125 3.73688 0.328125 5.42428V10.5754C0.328125 12.2631 1.69677 13.6358 3.37917 13.6358H12.62C14.3024 13.6358 15.671 12.2628 15.671 10.5754V5.42428C15.671 3.73688 14.3024 2.36385 12.62 2.36385ZM15.0448 10.5757C15.0448 11.9181 13.957 13.0099 12.62 13.0099H3.37917C2.04214 13.0099 0.954365 11.9178 0.954365 10.5757V5.42428C0.954365 4.08225 2.04214 2.99009 3.37917 2.99009H12.62C13.957 2.99009 15.0448 4.08225 15.0448 5.42428V10.5757Z" fill="white"/>
-                <path d="M0 10.5757V5.42471C0 3.55669 1.51486 2.03528 3.3798 2.03528V2.36384C1.69741 2.36384 0.328562 3.73731 0.328562 5.42471V10.5757L0.344615 10.8883C0.490872 12.3268 1.63421 13.4731 3.06836 13.6195L3.3798 13.6355H12.6202C14.1973 13.6355 15.4987 12.4293 15.6554 10.8883L15.6714 10.5757V5.42471C15.6714 3.73731 14.3026 2.36384 12.6202 2.36384V2.03528C14.4851 2.03528 16 3.55669 16 5.42471V10.5757C15.9998 12.4436 14.485 13.9641 12.6202 13.9641H3.3798C1.515 13.9641 0.000182479 12.4439 0 10.5757ZM12.6202 12.6809V13.0095H3.3798V12.6809H12.6202ZM14.7168 10.5757V5.42471C14.7168 4.26304 13.7744 3.31849 12.6202 3.31849H3.3798C2.22557 3.31849 1.28321 4.26304 1.28321 5.42471V10.5757C1.28322 11.7374 2.22557 12.6809 3.3798 12.6809V13.0095L3.13151 12.9977C1.99191 12.8809 1.08351 11.968 0.967492 10.824L0.954649 10.5757V5.42471C0.954649 4.16674 1.91058 3.12792 3.13151 3.00277L3.3798 2.98993H12.6202C13.9572 2.98993 15.0454 4.08268 15.0454 5.42471V10.5757L15.0325 10.824C14.9082 12.0502 13.8737 13.0095 12.6202 13.0095V12.6809C13.7745 12.6809 14.7168 11.7377 14.7168 10.5757ZM12.6202 2.03528V2.36384H3.3798V2.03528H12.6202Z" fill="white"/>
-                <path d="M10.7744 7.88662L6.43609 5.34565C6.38849 5.31802 6.33445 5.3034 6.27941 5.30325C6.22437 5.30311 6.17026 5.31745 6.12252 5.34483C6.07477 5.3722 6.03507 5.41166 6.00739 5.45924C5.97971 5.50681 5.96504 5.56083 5.96484 5.61587V10.6975C5.96501 10.7805 5.99805 10.86 6.05674 10.9187C6.11542 10.9774 6.19497 11.0105 6.27796 11.0106C6.33355 11.0106 6.38812 10.9958 6.43609 10.9677L10.7744 8.42738C10.8216 8.39979 10.8608 8.36031 10.888 8.31288C10.9152 8.26544 10.9296 8.21169 10.9296 8.157C10.9296 8.1023 11.1322 8.54944 11.0104 8.66487L10.9408 8.71089L6.60314 11.2516C6.50492 11.3091 6.39267 11.3393 6.27886 11.3394H6.27779C6.10787 11.339 5.94525 11.2711 5.82508 11.151C5.70493 11.0309 5.6371 10.8682 5.63672 10.6983V5.6147ZM9.99685 8.15651L6.59137 10.1514V6.16159L9.99685 8.15651ZM6.91993 9.57778L9.34615 8.15651L6.91993 6.73417V9.57778ZM5.96528 10.6972C5.96545 10.7802 5.99864 10.8601 6.05732 10.9188C6.10125 10.9627 6.1568 10.9923 6.21679 11.0044L6.27886 11.0108C6.30642 11.0108 6.33382 11.0073 6.3602 11.0001L6.43618 10.968L10.7749 8.42728C10.8221 8.3997 10.8612 8.36016 10.8884 8.31276C10.9019 8.28911 10.9124 8.26397 10.9194 8.23785L10.9301 8.15651C10.93 8.10203 10.9155 8.04859 10.8884 8.00133C10.8747 7.97753 10.8583 7.95534 10.8391 7.93604L10.7749 7.88681L6.43618 5.34607C6.38862 5.31849 6.33491 5.30342 6.27993 5.30327C6.22489 5.30312 6.17035 5.31762 6.12261 5.345C6.07501 5.37238 6.0357 5.41205 6.00809 5.45952C5.98047 5.50704 5.9655 5.56081 5.96528 5.61577V10.6972Z" fill="white"/>
-              </svg>
-            </motion.a>
-            {/* Instagram */}
-            <motion.a 
-              whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-              href="#" 
-              className="icon-circle w-12 h-12 md:w-10 md:h-10"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.01786 3.875C10.2679 3.875 12.125 5.73214 12.125 7.98214C12.125 10.2679 10.2679 12.0893 8.01786 12.0893C5.73214 12.0893 3.91071 10.2679 3.91071 7.98214C3.91071 5.73214 5.73214 3.875 8.01786 3.875ZM8.01786 10.6607C9.48214 10.6607 10.6607 9.48214 10.6607 7.98214C10.6607 6.51786 9.48214 5.33929 8.01786 5.33929C6.51786 5.33929 5.33929 6.51786 5.33929 7.98214C5.33929 9.48214 6.55357 10.6607 8.01786 10.6607ZM13.2321 3.73214C13.2321 4.26786 12.8036 4.69643 12.2679 4.69643C11.7321 4.69643 11.3036 4.26786 11.3036 3.73214C11.3036 3.19643 11.7321 2.76786 12.2679 2.76786C12.8036 2.76786 13.2321 3.19643 13.2321 3.73214ZM15.9464 4.69643C16.0179 6.01786 16.0179 9.98214 15.9464 11.3036C15.875 12.5893 15.5893 13.6964 14.6607 14.6607C13.7321 15.5893 12.5893 15.875 11.3036 15.9464C9.98214 16.0179 6.01786 16.0179 4.69643 15.9464C3.41071 15.875 2.30357 15.5893 1.33929 14.6607C0.410714 13.6964 0.125 12.5893 0.0535714 11.3036C-0.0178571 9.98214 -0.0178571 6.01786 0.0535714 4.69643C0.125 3.41071 1.33929 1.33929Z" fill="white"/>
-              </svg>
-            </motion.a>
-            {/* Telegram */}
-            <motion.a 
-              whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-              href="#" 
-              className="icon-circle w-12 h-12 md:w-10 md:h-10"
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_25_4733)">
-                  <path d="M15.755 1.71983C15.5598 1.48007 15.2667 1.34801 14.9296 1.34801C14.7478 1.34801 14.5552 1.38607 14.3571 1.46111L0.81115 6.59348C0.0909044 6.86643 -0.00603664 7.27729 0.000276097 7.49789C0.00655758 7.7174 0.125656 8.1191 0.85062 8.35098L3.72338 9.40374L5.23741 12.8694C5.3896 13.3487 5.70761 13.685 6.1135 13.7941C6.20655 13.8191 6.30248 13.8317 6.39883 13.8316C6.72846 13.8316 7.06598 13.6864 7.35745 13.4127L8.61181 12.2342L11.6724 14.3408C11.948 14.5445 12.2479 14.652 12.5404 14.652C13.134 14.652 13.6074 14.2175 13.7465 13.545L15.9619 2.83012C16.053 2.38976 15.9795 1.99547 15.755 1.71983ZM4.67545 9.24108L8.58469 7.14472L5.86021 9.64384C5.8125 9.68774 5.77443 9.74107 5.74841 9.80045C5.72238 9.85983 5.70897 9.92396 5.70902 9.9888C5.70883 9.99361 5.70824 9.9983 5.70821 10.0031L5.6988 11.5835L4.67545 9.24108ZM6.71556 12.7293C6.68826 12.7551 6.65937 12.7791 6.62905 12.8011L6.64052 10.8773L7.82153 11.6902L6.71556 12.7293ZM15.0438 2.64027L12.8284 13.3551C12.8061 13.4631 12.7332 13.7145 12.5403 13.7145C12.4502 13.7145 12.3385 13.6681 12.2257 13.5838C12.2208 13.5802 12.2159 13.5767 12.2109 13.5733L8.83679 11.2509L8.83542 11.2499L6.92772 9.93686L11.9671 5.31431C12.0513 5.23711 12.1044 5.13185 12.1164 5.01828C12.1284 4.90472 12.0986 4.79066 12.0325 4.69754C11.9664 4.60441 11.8686 4.53862 11.7574 4.51251C11.6462 4.4864 11.5293 4.50178 11.4287 4.55575L4.03643 8.51996L1.1636 7.4672C1.1615 7.46642 1.1594 7.46566 1.15729 7.46492L14.6893 2.33783C14.8034 2.2946 14.883 2.28554 14.9296 2.28554C14.9528 2.28554 15.0087 2.2881 15.0281 2.31186C15.0528 2.34226 15.084 2.44567 15.0438 2.64027Z" fill="white"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_25_4733">
-                    <rect width="16" height="16" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-            </motion.a>
-          </div>
+          <SocialLinks
+            links={socialLinks}
+            itemClassName="w-12 h-12 md:w-10 md:h-10"
+            wrapperClassName="flex items-center gap-[10px] md:pl-[10px]"
+          />
 
           <div className="text-tagline text-white text-center md:text-right">
             {supportingLineTwo ? (

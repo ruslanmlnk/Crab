@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { FloatingHiringPopup } from '@/components/FloatingHiringPopup'
 import './styles.css'
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <div id="app">{children}</div>
+        <FloatingHiringPopup />
       </body>
     </html>
   )

@@ -21,7 +21,7 @@ export default async function FAQPage({ searchParams }: FAQPageProps) {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main>
-        <FAQ items={faqItems} locale={locale} />
+        <FAQ items={faqItems} locale={locale} showCloudBackground />
       </main>
       <Footer />
     </div>

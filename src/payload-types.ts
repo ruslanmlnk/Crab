@@ -72,6 +72,7 @@ export interface Config {
     authors: Author;
     'blog-categories': BlogCategory;
     'blog-posts': BlogPost;
+    'contact-requests': ContactRequest;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
+    'contact-requests': ContactRequestsSelect<false> | ContactRequestsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -97,11 +99,15 @@ export interface Config {
     faq: Faq;
     home: Home;
     about: About;
+    contact: Contact;
+    popup: Popup;
   };
   globalsSelect: {
     faq: FaqSelect<false> | FaqSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
+    popup: PopupSelect<false> | PopupSelect<true>;
   };
   locale: 'en' | 'ru';
   user: User;
@@ -236,6 +242,22 @@ export interface BlogPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-requests".
+ */
+export interface ContactRequest {
+  id: number;
+  fullName: string;
+  email: string;
+  phoneNumber?: string | null;
+  message: string;
+  locale: 'en' | 'ru';
+  sourcePath?: string | null;
+  status: 'new' | 'in_progress' | 'resolved';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -277,6 +299,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog-posts';
         value: number | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'contact-requests';
+        value: number | ContactRequest;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -396,6 +422,21 @@ export interface BlogPostsSelect<T extends boolean = true> {
   excerpt?: T;
   featuredImage?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-requests_select".
+ */
+export interface ContactRequestsSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phoneNumber?: T;
+  message?: T;
+  locale?: T;
+  sourcePath?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -555,6 +596,33 @@ export interface About {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  title: string;
+  description: string;
+  socialLinks: {
+    youtubeUrl: string;
+    instagramUrl: string;
+    telegramUrl: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popup".
+ */
+export interface Popup {
+  id: number;
+  poster: number | Media;
+  youtubeUrl: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faq_select".
  */
 export interface FaqSelect<T extends boolean = true> {
@@ -699,6 +767,35 @@ export interface AboutSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  socialLinks?:
+    | T
+    | {
+        youtubeUrl?: T;
+        instagramUrl?: T;
+        telegramUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "popup_select".
+ */
+export interface PopupSelect<T extends boolean = true> {
+  poster?: T;
+  youtubeUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -1,4 +1,7 @@
+import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { slugField, type CollectionConfig } from 'payload'
+
+import { YouTubeVideoBlock } from './blocks/YouTubeVideoBlock'
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
@@ -83,6 +86,19 @@ export const BlogPosts: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures, rootFeatures }) => {
+          const baseFeatures =
+            rootFeatures.length > 0 ? rootFeatures : defaultFeatures
+
+          return [
+            ...baseFeatures,
+            BlocksFeature({
+              blocks: [YouTubeVideoBlock],
+            }),
+          ]
+        },
+      }),
       localized: true,
       required: true,
     },

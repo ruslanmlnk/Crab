@@ -247,7 +247,7 @@ const getFeaturedBlogPostsCached = unstable_cache(
       collection: 'blog-posts',
       depth: 2,
       fallbackLocale: 'en',
-      limit: 2,
+      limit: 4,
       locale,
       sort: '-publishedAt',
       where: {

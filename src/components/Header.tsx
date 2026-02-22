@@ -91,14 +91,16 @@ export const Header: React.FC = () => {
           transition={{ duration: 0.8, ease: "easeOut" } as any}
           className="flex-shrink-0"
         >
-          <Image
-            src="https://api.builder.io/api/v1/image/assets/TEMP/4a174e2def7f3e046be120f5486bb4104398fc1a?width=354"
-            alt="Crab Norway Logo"
-            width={177}
-            height={48}
-            className="w-[140px] md:w-[177px] h-auto object-contain"
-            priority
-          />
+          <Link href={getLinkHref('/')} aria-label="Go to homepage">
+            <Image
+              src="https://api.builder.io/api/v1/image/assets/TEMP/4a174e2def7f3e046be120f5486bb4104398fc1a?width=354"
+              alt="Crab Norway Logo"
+              width={177}
+              height={48}
+              className="w-[140px] md:w-[177px] h-auto object-contain"
+              priority
+            />
+          </Link>
         </motion.div>
 
         {/* Desktop Navigation */}

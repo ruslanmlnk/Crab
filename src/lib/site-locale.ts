@@ -14,6 +14,13 @@ type SiteMessages = {
     description: string
     eyebrow: string
     title: string
+    form: {
+      fullName: string
+      emailAddress: string
+      phoneNumber: string
+      message: string
+      submit: string
+    }
   }
   header: {
     about: string
@@ -56,6 +63,13 @@ const SITE_MESSAGES: Record<BlogLocale, SiteMessages> = {
         'Based on real offshore experience, we help you understand what to expect, how to prepare, and how to take your first steps on fishing vessels',
       eyebrow: 'get in touch',
       title: 'Get clear guidance before working at sea',
+      form: {
+        fullName: 'Full Name',
+        emailAddress: 'email Address',
+        phoneNumber: 'Phone Number',
+        message: 'Your message',
+        submit: 'submit',
+      },
     },
     header: {
       about: 'About',
@@ -96,6 +110,13 @@ const SITE_MESSAGES: Record<BlogLocale, SiteMessages> = {
         'На основе реального офшорного опыта мы помогаем понять, чего ожидать, как подготовиться и как сделать первые шаги на рыболовных судах',
       eyebrow: 'на связи',
       title: 'Получите четкий план перед работой в море',
+      form: {
+        fullName: 'Полное имя',
+        emailAddress: 'Email адрес',
+        phoneNumber: 'Номер телефона',
+        message: 'Ваше сообщение',
+        submit: 'отправить',
+      },
     },
     header: {
       about: 'О нас',

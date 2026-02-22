@@ -7,6 +7,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import { getBlogMessages, type BlogLocale, withBlogLocale } from '@/lib/blog-locale'
+import { getYouTubeEmbedURL } from '@/lib/youtube'
 import { BlogShareButtons } from './BlogShareButtons'
 
 type FeaturedPost = {
@@ -141,8 +142,8 @@ const blogRichTextConverters: JSXConvertersFunction = ({ defaultConverters }) =>
       marginBottomClass = 'mb-4'
     } else if (nextSiblingType === 'heading') {
       marginBottomClass = 'mb-6'
-    } else if (nextSiblingType === 'upload') {
-      marginBottomClass = 'mb-8'
+    } else if (nextSiblingType === 'upload' || nextSiblingType === 'block') {
+      marginBottomClass = 'mb-[32px]'
     } else if (nextSiblingType === 'list') {
       marginBottomClass = 'mb-5'
     }
@@ -224,6 +225,8 @@ const blogRichTextConverters: JSXConvertersFunction = ({ defaultConverters }) =>
       marginBottomClass = 'mb-6'
     } else if (nextSiblingType === 'paragraph') {
       marginBottomClass = 'mb-4'
+    } else if (nextSiblingType === 'upload' || nextSiblingType === 'block') {
+      marginBottomClass = 'mb-8'
     }
 
     const className = [
@@ -238,6 +241,42 @@ const blogRichTextConverters: JSXConvertersFunction = ({ defaultConverters }) =>
         {nodesToJSX({ nodes: node.children })}
       </blockquote>
     )
+  },
+  blocks: {
+    youtubeVideo: (args: { node: unknown }) => {
+      const { node } = args
+
+      const blockFields =
+        node && typeof node === 'object' && 'fields' in node
+          ? (node as { fields?: { youtubeUrl?: unknown } }).fields
+          : undefined
+
+      if (!blockFields || typeof blockFields.youtubeUrl !== 'string') {
+        return null
+      }
+
+      const embedURL = getYouTubeEmbedURL(blockFields.youtubeUrl)
+
+      if (!embedURL) {
+        return null
+      }
+
+      return (
+        <figure className="mt-0 mb-[32px]">
+          <div className="relative w-full aspect-video overflow-hidden rounded-[2px]">
+            <iframe
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="h-full w-full"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              src={embedURL}
+              title="YouTube video"
+            />
+          </div>
+        </figure>
+      )
+    },
   },
   upload: ({ node }) => {
     const uploadNode = node as {
@@ -271,7 +310,7 @@ const blogRichTextConverters: JSXConvertersFunction = ({ defaultConverters }) =>
     }
 
     return (
-      <figure className="mt-0 mb-8">
+      <figure className="mt-0 mb-[32px]">
         <div className="relative w-full aspect-[737/573] overflow-hidden rounded-[2px]">
           <Image
             alt={alt}

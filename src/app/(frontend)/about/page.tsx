@@ -54,12 +54,15 @@ export default async function AboutPage({ searchParams }: AboutPageProps) {
           headlineBeforeImage={aboutContent.hero.headlineBeforeImage}
           headlineBottom={aboutContent.hero.headlineBottom}
           inlineImageUrl={aboutContent.hero.inlineImageUrl}
+          nextSectionId="about-next-section"
         />
-        <WhoWeAre
-          description={aboutContent.whoWeAre.description}
-          learnMoreUrl={aboutContent.whoWeAre.learnMoreUrl}
-          locale={locale}
-        />
+        <div id="about-next-section">
+          <WhoWeAre
+            description={aboutContent.whoWeAre.description}
+            learnMoreUrl={aboutContent.whoWeAre.learnMoreUrl}
+            locale={locale}
+          />
+        </div>
         <RealExperience
           backgroundImage="/images/backgrounds/aboutexperience.png"
           cards={aboutContent.realExperience.cards}

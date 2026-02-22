@@ -12,9 +12,14 @@ import { DecorativeLines } from './DecorativeLines'
 type FAQProps = {
   items: FAQItem[]
   locale?: BlogLocale
+  showCloudBackground?: boolean
 }
 
-export const FAQ: React.FC<FAQProps> = ({ items, locale = 'en' }) => {
+export const FAQ: React.FC<FAQProps> = ({
+  items,
+  locale = 'en',
+  showCloudBackground = false,
+}) => {
   const messages = getSiteMessages(locale)
   const [activeIndex, setActiveIndex] = useState<number | null>(
     items.length > 0 ? 0 : null,
@@ -30,26 +35,28 @@ export const FAQ: React.FC<FAQProps> = ({ items, locale = 'en' }) => {
         transition={{ duration: 1 }}
         className="w-full relative py-20 md:pt-[140px] md:pb-[48px] overflow-hidden"
       >
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="relative w-full h-full overflow-hidden">
-            <Image
-              src="/images/backgrounds/faq-cloud-blur.webp"
-              alt="Cloud Blur"
-              width={1075}
-              height={504}
-              className="absolute top-0 left-[50%] ml-[50px] rotate-[18deg] max-w-none pointer-events-none select-none"
-              priority
-            />
-            <Image
-              src="/images/backgrounds/faq-cloud-mask.webp"
-              alt="Cloud Mask"
-              width={1123}
-              height={726}
-              className="absolute top-[56px] left-[50%] ml-[-150px] rotate-[15deg] max-w-none pointer-events-none select-none"
-              priority
-            />
+        {showCloudBackground ? (
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="relative w-full h-full overflow-hidden">
+              <Image
+                src="/images/backgrounds/faq-cloud-blur.webp"
+                alt="Cloud Blur"
+                width={1075}
+                height={504}
+                className="absolute top-0 left-[50%] ml-[50px] rotate-[18deg] max-w-none pointer-events-none select-none"
+                priority
+              />
+              <Image
+                src="/images/backgrounds/faq-cloud-mask.webp"
+                alt="Cloud Mask"
+                width={1123}
+                height={726}
+                className="absolute top-[56px] left-[50%] ml-[-150px] rotate-[15deg] max-w-none pointer-events-none select-none"
+                priority
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
         <div className="container-custom relative z-10">
           <div className="flex flex-col items-start w-full">
             <motion.h2

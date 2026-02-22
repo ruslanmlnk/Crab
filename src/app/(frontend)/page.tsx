@@ -12,6 +12,7 @@ import { FAQ } from '@/components/FAQ'
 import { Footer } from '@/components/Footer'
 import { getHomeFleetArticles } from '@/lib/blog'
 import { getFAQItems } from '@/lib/faq'
+import { getContactContent } from '@/lib/contact'
 import { getHomeContent } from '@/lib/home'
 import { normalizeBlogLocale } from '@/lib/blog-locale'
 
@@ -47,9 +48,10 @@ export async function generateMetadata({
 export default async function HomePage({ searchParams }: HomePageProps) {
   const resolvedSearchParams = await searchParams
   const locale = normalizeBlogLocale(resolvedSearchParams?.locale)
-  const [faqItems, homeContent] = await Promise.all([
+  const [faqItems, homeContent, contactContent] = await Promise.all([
     getFAQItems(locale),
     getHomeContent(locale),
+    getContactContent(locale),
   ])
   const fleetArticles = await getHomeFleetArticles(
     locale,
@@ -63,6 +65,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         <Hero
           eyebrow={homeContent.hero.eyebrow}
           headline={homeContent.hero.headline}
+          socialLinks={contactContent.socialLinks}
           supportingText={homeContent.hero.supportingText}
         />
         <WhoWeAre
@@ -88,7 +91,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           articles={fleetArticles}
           locale={locale}
         />
-        <FAQ items={faqItems} locale={locale} />
+        <FAQ items={faqItems} locale={locale} showCloudBackground={false} />
       </main>
       <Footer />
     </div>

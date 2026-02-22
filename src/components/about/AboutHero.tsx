@@ -10,6 +10,7 @@ type AboutHeroProps = {
   headlineBeforeImage?: string
   headlineBottom?: string
   inlineImageUrl?: string
+  nextSectionId?: string
 }
 
 const DEFAULT_ABOUT_HERO = {
@@ -27,7 +28,26 @@ export const AboutHero: React.FC<AboutHeroProps> = ({
   headlineBeforeImage = DEFAULT_ABOUT_HERO.headlineBeforeImage,
   headlineBottom = DEFAULT_ABOUT_HERO.headlineBottom,
   inlineImageUrl = DEFAULT_ABOUT_HERO.inlineImageUrl,
+  nextSectionId = 'about-next-section',
 }) => {
+  const handleScrollToNextSection = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    const targetSection = document.getElementById(nextSectionId)
+
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
+    const currentSection = event.currentTarget.closest('section')
+    const nextSiblingSection = currentSection?.nextElementSibling as HTMLElement | null
+
+    if (nextSiblingSection) {
+      nextSiblingSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   return (
     <section className="relative w-full bg-blue-dark overflow-hidden min-h-[600px] flex items-center pt-[140px] pb-[100px] md:py-[140px]">
       <DecorativeLines color="rgba(255, 255, 255, 1)" opacity={0.1} showCenterLine={false} showMobile={false} />
@@ -76,13 +96,15 @@ export const AboutHero: React.FC<AboutHeroProps> = ({
             </div>
 
             <motion.button
+              onClick={handleScrollToNextSection}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className="w-[60px] h-[60px] bg-white rounded-full flex items-center justify-center flex-shrink-0 transition-colors hover:bg-ice-mist"
               type="button"
+              aria-label="Scroll to next section"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform rotate-90">
-                <path d="M12.5283 18.9785L12.1553 19.3418L11.8076 18.9551L7.8945 14.5977L8.6387 13.9297L11.7119 17.3506V5H12.7119V17.4033L16.3027 13.9053L17 14.6221L12.5283 18.9785Z" fill="#071A26"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 9L12 15L6 9" stroke="#071A26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </motion.button>
           </motion.div>

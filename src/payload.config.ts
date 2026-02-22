@@ -8,11 +8,14 @@ import sharp from 'sharp'
 import { Authors } from './collections/Authors'
 import { BlogCategories } from './collections/BlogCategories'
 import { BlogPosts } from './collections/BlogPosts'
+import { ContactRequests } from './collections/ContactRequests'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { About } from './globals/About'
+import { Contact } from './globals/Contact'
 import { FAQ } from './globals/FAQ'
 import { Home } from './globals/Home'
+import { Popup } from './globals/Popup'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,8 +27,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Authors, BlogCategories, BlogPosts],
-  globals: [FAQ, Home, About],
+  collections: [Users, Media, Authors, BlogCategories, BlogPosts, ContactRequests],
+  globals: [FAQ, Home, About, Contact, Popup],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'en',
