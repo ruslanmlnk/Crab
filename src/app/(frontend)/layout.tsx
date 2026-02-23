@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { FloatingHiringPopup } from '@/components/FloatingHiringPopup'
 import './styles.css'
 
+export const dynamic = 'force-dynamic'
+
 const geistSans = Geist({
   subsets: ['latin', 'cyrillic'],
   variable: '--font-geist-sans',
