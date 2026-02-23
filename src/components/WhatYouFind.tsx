@@ -144,7 +144,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               className="w-full h-full relative"
             >
               <Image
-                src="https://api.builder.io/api/v1/image/assets/TEMP/4baa9141500c2b4a45eeb5c8233e91dc856e3b41?width=1040"
+                src="/backgrounds/find.png"
                 alt="Crab fishing documentation"
                 fill
                 className="object-cover"

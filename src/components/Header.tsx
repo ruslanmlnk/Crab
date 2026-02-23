@@ -93,7 +93,7 @@ export const Header: React.FC = () => {
         >
           <Link href={getLinkHref('/')} aria-label="Go to homepage">
             <Image
-              src="https://api.builder.io/api/v1/image/assets/TEMP/4a174e2def7f3e046be120f5486bb4104398fc1a?width=354"
+              src="/logo.svg"
               alt="Crab Norway Logo"
               width={177}
               height={48}

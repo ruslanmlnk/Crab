@@ -107,7 +107,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
     <section className="relative w-full h-auto lg:h-[700px] overflow-hidden flex items-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://api.builder.io/api/v1/image/assets/TEMP/ace8a0b3d748461036e8154f272cb5cf6d2d8a66?width=2880"
+          src="/backgrounds/contact.png"
           alt="Contact Background"
           fill
           className="object-cover"

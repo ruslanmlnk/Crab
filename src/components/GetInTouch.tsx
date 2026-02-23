@@ -18,7 +18,7 @@ export const GetInTouch: React.FC<GetInTouchProps> = ({ locale = 'en' }) => {
     <section className="relative w-full py-25 md:py-0 h-auto md:h-[700px] overflow-hidden flex items-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://api.builder.io/api/v1/image/assets/TEMP/66a516e90f1558e5509588831f967ef5aab6d6fa?width=2880"
+          src="/contact.png"
           alt="Get in Touch Background"
           fill
           className="object-cover"
@@ -62,7 +62,7 @@ const GetInTouchContent: React.FC<GetInTouchContentProps> = ({
         </div>
         <div className="relative w-[140px] h-[70px] md:w-[200px] md:h-[100px] overflow-hidden rounded-[2px] flex-shrink-0">
           <Image
-            src="https://api.builder.io/api/v1/image/assets/TEMP/d91eeb7960bbb03f6efe4a901239777e93203b1a?width=400"
+            src="/backgrounds/getintouch.png"
             alt="Underwater"
             fill
             className="object-cover"

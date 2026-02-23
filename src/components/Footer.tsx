@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
               {/* Social Media Icons Strip */}
               <div className="w-[1200px] md:w-[1527px] h-[140px] md:h-[180px] relative flex-shrink-0">
                 <Image 
-                  src="https://api.builder.io/api/v1/image/assets/TEMP/11bdb529da883f593c2ed24deff050957841da58?width=3053" 
+                  src="/footer.svg" 
                   alt="Social Media and Links" 
                   fill
                   className="object-contain"
