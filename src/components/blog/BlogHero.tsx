@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image'
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getBlogMessages, type BlogLocale } from '@/lib/blog-locale'
@@ -13,9 +14,6 @@ interface BlogHeroProps {
   locale: BlogLocale
 }
 
-const heroBackgroundImage =
-  "url('https://api.builder.io/api/v1/image/assets/TEMP/b0ab1ee8a36a96cac183b51ffa220972bea7af71?width=2880')"
-
 export const BlogHero: React.FC<BlogHeroProps> = ({ 
   activeCategory, 
   onCategoryChange, 
@@ -27,24 +25,24 @@ export const BlogHero: React.FC<BlogHeroProps> = ({
   return (
     <section className="relative w-full overflow-hidden bg-white pt-[120px] pb-[48px] md:pt-[140px]">
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{
-            backgroundImage: heroBackgroundImage,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-          }}
-        />
-        <div
-          className="absolute inset-0 hidden md:block"
-          style={{
-            backgroundImage: heroBackgroundImage,
-            backgroundPosition: '-243.73px -429.483px',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '147.802% 340.208%',
-          }}
-        />
+        <div className="relative w-full h-full overflow-hidden pointer-events-none">
+          <Image
+            src="/images/backgrounds/faq-cloud-blur.webp"
+            alt="Cloud Blur"
+            width={1075}
+            height={504}
+            className="absolute top-0 left-[50%] ml-[50px] rotate-[18deg] max-w-none pointer-events-none select-none"
+            priority
+          />
+          <Image
+            src="/images/backgrounds/faq-cloud-mask.webp"
+            alt="Cloud Mask"
+            width={1123}
+            height={726}
+            className="absolute top-[56px] left-[50%] ml-[-150px] rotate-[15deg] max-w-none pointer-events-none select-none"
+            priority
+          />
+        </div>
       </div>
       
       <div 

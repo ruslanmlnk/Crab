@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { normalizeBlogLocale } from '@/lib/blog-locale'
 import { getYouTubeEmbedURL } from '@/lib/youtube'
 
 const REOPEN_DELAY_MS = 40000
@@ -16,6 +18,8 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
   posterUrl,
   youtubeUrl,
 }) => {
+  const searchParams = useSearchParams()
+  const locale = normalizeBlogLocale(searchParams.get('locale'))
   const [isVisible, setIsVisible] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -67,6 +71,10 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
   }
 
   const embedUrl = youtubeUrl ? getYouTubeEmbedURL(youtubeUrl) : null
+  const teaserTitle =
+    locale === 'ru'
+      ? '\u0421\u043c\u043e\u0442\u0440\u0438, \u043a\u0430\u043a \u0443\u0441\u0442\u0440\u043e\u0438\u0442\u044c\u0441\u044f \u043d\u0430 \u0440\u0430\u0431\u043e\u0442\u0443 \u0432 \u0440\u044b\u0431\u043e\u043b\u043e\u0432\u0441\u0442\u0432\u0435'
+      : 'Watch how to get hired in fishing'
 
   return (
     <>
@@ -93,7 +101,7 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
 
             <div className="flex flex-col gap-4">
               <p className="text-white text-[16px] font-medium leading-[145%]">
-                Watch how to get hired in fishing
+                {teaserTitle}
               </p>
 
               <button
@@ -104,7 +112,7 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
                 {posterUrl && (
                   <Image
                     src={posterUrl}
-                    alt="Watch how to get hired in fishing"
+                    alt={teaserTitle}
                     fill
                     className="object-cover"
                     sizes="295px"

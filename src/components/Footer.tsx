@@ -1,7 +1,8 @@
 "use client"
 import Image from 'next/image'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { normalizeBlogLocale } from '@/lib/blog-locale'
+import { normalizeBlogLocale, withBlogLocale } from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 import { DecorativeLines } from './DecorativeLines'
 import { GetInTouch } from './GetInTouch'
@@ -14,6 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
   const searchParams = useSearchParams()
   const locale = normalizeBlogLocale(searchParams.get('locale'))
   const messages = getSiteMessages(locale)
+  const contactHref = withBlogLocale('/contact', locale)
 
   return (
     <footer className="w-full flex flex-col bg-blue-dark relative">
@@ -50,7 +52,7 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
               <a href="mailto:Daniil.radishevskiy@icloud.com" className="text-white hover:text-ice-mist transition-colors text-base font-normal leading-[145%]">Daniil.radishevskiy@icloud.com</a>
             </div>
 
-            <button className="flex px-6 py-3 items-center gap-2 rounded-[40px] border border-white group transition-all duration-300 hover:bg-white/10">
+            <Link href={contactHref} className="flex px-6 py-3 items-center gap-2 rounded-[40px] border border-white group transition-all duration-300 hover:bg-white/10">
               <div className="flex flex-col items-start">
                 <span className="text-white text-base font-semibold lowercase leading-[145%]">
                   {messages.footer.contactUs}
@@ -62,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ showGetInTouch = true }) => {
                   <path d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z" fill="white"/>
                 </svg>
               </div>
-            </button>
+            </Link>
           </div>
 
           {/* Divider: Horizontal on mobile, Vertical on desktop */}

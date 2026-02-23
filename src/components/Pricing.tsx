@@ -126,7 +126,7 @@ export const Pricing: React.FC<PricingProps> = ({
               key={`${plan.badgeLabel}-${index}`}
               variants={cardVariants}
               whileHover={{ y: -8 }}
-              className="group flex flex-col w-full lg:w-[400px] h-auto lg:h-[842px] bg-white p-2 pb-[24px] gap-[24px]"
+              className="group flex flex-col w-full lg:w-[400px] h-auto lg:h-[920px] bg-white p-2 pb-[24px] gap-[24px]"
             >
               <div className="h-[230px] w-full relative overflow-hidden flex-shrink-0">
                 <Image
@@ -207,7 +207,7 @@ export const Pricing: React.FC<PricingProps> = ({
                   </motion.div>
                 )}
 
-                <div className="flex flex-col gap-2 h-auto lg:h-[331px]">
+                <div className="flex flex-col gap-2 h-auto lg:h-[390px]">
                   <span className="text-base font-medium tracking-[3px] uppercase text-[#1C4D74] leading-[145%]">
                     {messages.home.includesLabel}
                   </span>
