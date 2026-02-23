@@ -35,14 +35,17 @@ export const metadata: Metadata = {
   title: 'Crab Norway',
 }
 
+import { getPopupData } from '@/lib/popup'
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
+  const popupData = await getPopupData()
 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <div id="app">{children}</div>
-        <FloatingHiringPopup />
+        <FloatingHiringPopup posterUrl={popupData.posterUrl} youtubeUrl={popupData.youtubeUrl} />
       </body>
     </html>
   )

@@ -7,4 +7,5 @@ export const CACHE_REVALIDATE = {
   blogPost: 120,
   featuredPosts: 120,
   homeFleet: 120,
+  popup: 90,
 } as const
