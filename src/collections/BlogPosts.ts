@@ -24,7 +24,6 @@ export const BlogPosts: CollectionConfig = {
       required: true,
     },
     slugField({
-      localized: true,
       useAsSlug: 'title',
     }),
     {

@@ -393,7 +393,7 @@ export const BlogContent: React.FC<BlogContentProps> = ({
                 {featuredPosts.map((post) => (
                   <Link
                     className="flex items-center gap-[15px] group"
-                    href={withBlogLocale(`/blog/${post.slug}`, locale)}
+                    href={withBlogLocale(`/blog/${encodeURIComponent(post.slug)}`, locale)}
                     key={post.id}
                   >
                     <div className="relative w-[186px] h-[124px] flex-shrink-0 overflow-hidden rounded-[2px]">

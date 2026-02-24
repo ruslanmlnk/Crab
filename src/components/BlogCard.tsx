@@ -36,7 +36,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
   readMoreLabel = 'learn more',
   variants
 }) => {
-  const postHref = withBlogLocale(`/blog/${slug}`, locale)
+  const postHref = withBlogLocale(`/blog/${encodeURIComponent(slug)}`, locale)
 
   return (
     <motion.div

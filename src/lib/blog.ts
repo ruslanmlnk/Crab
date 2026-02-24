@@ -10,8 +10,17 @@ import { CACHE_REVALIDATE } from './cache'
 
 const FALLBACK_IMAGE =
   'https://api.builder.io/api/v1/image/assets/TEMP/76ae9b75a902932af3b137ff435b94350ef3dc78?width=588'
+const BLOG_FALLBACK_LOCALE: BlogLocale = 'en'
 
 const getPayloadClient = cache(async () => getPayload({ config }))
+
+const normalizeSlugInput = (slug: string): string => {
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    return slug
+  }
+}
 
 const getMediaURL = (
   media: Media | null | number | string | undefined,
@@ -182,18 +191,18 @@ export const getBlogPageData = cache(async (locale: BlogLocale) => getBlogPageDa
 const getBlogPostBySlugCached = unstable_cache(
   async (locale: BlogLocale, slug: string) => {
     const payload = await getPayloadClient()
-
+    const normalizedSlug = normalizeSlugInput(slug)
     const postResult = await payload.find({
       collection: 'blog-posts',
       depth: 2,
-      fallbackLocale: 'en',
+      fallbackLocale: BLOG_FALLBACK_LOCALE,
       limit: 1,
       locale,
       where: {
         and: [
           {
             slug: {
-              equals: slug,
+              equals: normalizedSlug,
             },
           },
           {
@@ -204,7 +213,6 @@ const getBlogPostBySlugCached = unstable_cache(
         ],
       },
     })
-
     const post = postResult.docs[0]
 
     if (!post) {
