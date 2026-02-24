@@ -1,7 +1,23 @@
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { slugField, type CollectionConfig } from 'payload'
+import { APIError, slugField, type CollectionConfig } from 'payload'
 
 import { YouTubeVideoBlock } from './blocks/YouTubeVideoBlock'
+
+const toRelationID = (value: unknown): null | string => {
+  if (typeof value === 'number' || typeof value === 'string') {
+    return String(value)
+  }
+
+  if (value && typeof value === 'object' && 'id' in value) {
+    const relationID = (value as { id?: unknown }).id
+
+    if (typeof relationID === 'number' || typeof relationID === 'string') {
+      return String(relationID)
+    }
+  }
+
+  return null
+}
 
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
@@ -117,6 +133,35 @@ export const BlogPosts: CollectionConfig = {
         }
 
         return postData
+      },
+    ],
+    beforeDelete: [
+      async ({ id, req }) => {
+        const home = await req.payload.findGlobal({
+          slug: 'home',
+          depth: 0,
+          fallbackLocale: 'en',
+          locale: 'ru',
+          req,
+        })
+
+        const fromTheFleet =
+          home && typeof home === 'object' && 'fromTheFleet' in home
+            ? (home as { fromTheFleet?: Record<string, unknown> }).fromTheFleet
+            : undefined
+
+        const linkedPostIDs = [
+          toRelationID(fromTheFleet?.firstArticle),
+          toRelationID(fromTheFleet?.secondArticle),
+          toRelationID(fromTheFleet?.thirdArticle),
+        ]
+
+        if (linkedPostIDs.includes(String(id))) {
+          throw new APIError(
+            'Cannot delete this blog post because it is used in Home > From The Fleet. Replace it there first.',
+            400,
+          )
+        }
       },
     ],
   },
