@@ -2,7 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
@@ -57,7 +61,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
 
 export const Pricing: React.FC<PricingProps> = ({
   headline = 'Pricing for every dive adventure',
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   plans = DEFAULT_PLANS,
 }) => {
   const messages = getSiteMessages(locale)

@@ -2,7 +2,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 import { DecorativeLines } from '../DecorativeLines'
 
@@ -76,7 +80,7 @@ const isExternalUrl = (value: string): boolean => {
 export const Reviews: React.FC<ReviewsProps> = ({
   cards = DEFAULT_REVIEWS,
   description = 'Hear from the fishermen and workers who started their journey with us. Real experiences, real results, and real opportunities at sea',
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   title = 'Stories from Our Fishing Community',
 }) => {
   const messages = getSiteMessages(locale)

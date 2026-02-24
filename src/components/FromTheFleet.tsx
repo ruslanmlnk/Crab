@@ -2,7 +2,11 @@
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
@@ -57,7 +61,7 @@ const DEFAULT_ARTICLES: FleetArticle[] = [
 
 export const FromTheFleet: React.FC<FromTheFleetProps> = ({
   articles = DEFAULT_ARTICLES,
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
 }) => {
   const messages = getSiteMessages(locale)
 

@@ -3,16 +3,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { motion } from 'framer-motion'
-import type { BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  type BlogLocale,
+  withBlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 type GetInTouchProps = {
   locale?: BlogLocale
 }
 
-export const GetInTouch: React.FC<GetInTouchProps> = ({ locale = 'en' }) => {
+export const GetInTouch: React.FC<GetInTouchProps> = ({ locale = DEFAULT_BLOG_LOCALE }) => {
   const messages = getSiteMessages(locale)
-  const contactHref = locale === 'ru' ? '/contact?locale=ru' : '/contact'
+  const contactHref = withBlogLocale('/contact', locale)
 
   return (
     <section className="relative w-full py-25 md:py-0 h-auto md:h-[700px] overflow-hidden flex items-center">

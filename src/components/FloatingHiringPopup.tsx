@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation'
 import { normalizeBlogLocale } from '@/lib/blog-locale'
 import { getYouTubeEmbedURL } from '@/lib/youtube'
 
+const INITIAL_OPEN_DELAY_MS = 2000
 const REOPEN_DELAY_MS = 40000
 
 interface FloatingHiringPopupProps {
@@ -33,15 +34,15 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
     }
   }, [])
 
-  const scheduleOpen = useCallback(() => {
+  const scheduleOpen = useCallback((delayMs: number) => {
     clearReopenTimeout()
     reopenTimeoutRef.current = setTimeout(() => {
       setIsVisible(true)
-    }, REOPEN_DELAY_MS)
+    }, delayMs)
   }, [clearReopenTimeout])
 
   useEffect(() => {
-    scheduleOpen()
+    scheduleOpen(INITIAL_OPEN_DELAY_MS)
 
     return () => {
       clearReopenTimeout()
@@ -50,7 +51,7 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
 
   const handleCloseTeaser = () => {
     setIsVisible(false)
-    scheduleOpen()
+    scheduleOpen(REOPEN_DELAY_MS)
   }
 
   const handleOpenModal = (e: React.MouseEvent) => {
@@ -63,7 +64,7 @@ export const FloatingHiringPopup: React.FC<FloatingHiringPopupProps> = ({
   const handleCloseModal = () => {
     setIsModalOpen(false)
     setIsPlaying(false)
-    scheduleOpen()
+    scheduleOpen(REOPEN_DELAY_MS)
   }
 
   const handlePlay = () => {

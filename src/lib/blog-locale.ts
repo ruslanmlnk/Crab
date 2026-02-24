@@ -2,7 +2,7 @@ export const BLOG_LOCALES = ['en', 'ru'] as const
 
 export type BlogLocale = (typeof BLOG_LOCALES)[number]
 
-export const DEFAULT_BLOG_LOCALE: BlogLocale = 'en'
+export const DEFAULT_BLOG_LOCALE: BlogLocale = 'ru'
 
 const BLOG_LOCALE_SET = new Set<BlogLocale>(BLOG_LOCALES)
 

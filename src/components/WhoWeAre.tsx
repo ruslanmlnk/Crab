@@ -2,7 +2,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 import { DecorativeLines } from './DecorativeLines'
 
@@ -18,7 +22,7 @@ const DEFAULT_DESCRIPTION =
 export const WhoWeAre: React.FC<WhoWeAreProps> = ({
   description = DEFAULT_DESCRIPTION,
   learnMoreUrl = '/about',
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
 }) => {
   const messages = getSiteMessages(locale)
   const isExternalLearnMore =

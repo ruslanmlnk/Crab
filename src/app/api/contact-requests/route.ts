@@ -30,7 +30,7 @@ export const POST = async (request: Request) => {
   const phoneNumber = toSafeString(body.phoneNumber)
   const message = toSafeString(body.message)
   const sourcePath = toSafeString(body.sourcePath)
-  const locale = body.locale === 'ru' ? 'ru' : 'en'
+  const locale = body.locale === 'en' ? 'en' : 'ru'
 
   if (!fullName || !email || !message) {
     return Response.json(

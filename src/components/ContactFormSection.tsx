@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
-import type { BlogLocale } from '@/lib/blog-locale'
+import { DEFAULT_BLOG_LOCALE, type BlogLocale } from '@/lib/blog-locale'
 import type { ContactSocialLinks } from '@/lib/contact'
 import { getSiteMessages } from '@/lib/site-locale'
 
@@ -35,7 +35,7 @@ const INITIAL_FORM_STATE: ContactFormState = {
 export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   contactDescription,
   contactTitle,
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   socialLinks,
 }) => {
   const messages = getSiteMessages(locale)

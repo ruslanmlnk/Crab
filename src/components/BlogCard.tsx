@@ -3,7 +3,11 @@ import React from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 
 interface BlogCardProps {
   title: string
@@ -25,7 +29,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({
   category, 
   image, 
   slug,
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   index = 0,
   showBorder = true,
   imageHeight = "h-[200px]",

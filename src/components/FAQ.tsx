@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import type { BlogLocale } from '@/lib/blog-locale'
+import { DEFAULT_BLOG_LOCALE, type BlogLocale } from '@/lib/blog-locale'
 import type { FAQItem } from '@/lib/faq'
 import { getSiteMessages } from '@/lib/site-locale'
 
@@ -17,7 +17,7 @@ type FAQProps = {
 
 export const FAQ: React.FC<FAQProps> = ({
   items,
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   showCloudBackground = false,
 }) => {
   const messages = getSiteMessages(locale)

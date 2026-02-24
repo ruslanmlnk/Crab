@@ -2,7 +2,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
-import { withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  withBlogLocale,
+  type BlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
@@ -31,7 +35,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   ctaUrl = DEFAULT_PROPS.ctaUrl,
   firstColumnText = DEFAULT_PROPS.firstColumnText,
   headline = DEFAULT_PROPS.headline,
-  locale = 'en',
+  locale = DEFAULT_BLOG_LOCALE,
   secondColumnText = DEFAULT_PROPS.secondColumnText,
   sectionTitle = DEFAULT_PROPS.sectionTitle,
 }) => {

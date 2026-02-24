@@ -31,7 +31,7 @@ export default buildConfig({
   globals: [FAQ, Home, About, Contact, Popup],
   editor: lexicalEditor(),
   localization: {
-    defaultLocale: 'en',
+    defaultLocale: 'ru',
     fallback: true,
     locales: [
       {

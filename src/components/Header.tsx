@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { DecorativeLines } from './DecorativeLines'
-import { normalizeBlogLocale, type BlogLocale } from '@/lib/blog-locale'
+import {
+  DEFAULT_BLOG_LOCALE,
+  normalizeBlogLocale,
+  type BlogLocale,
+  withBlogLocale,
+} from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 export const Header: React.FC = () => {
@@ -28,7 +33,7 @@ export const Header: React.FC = () => {
   const updateLocale = (locale: BlogLocale) => {
     const params = new URLSearchParams(searchParams.toString())
 
-    if (locale === 'en') {
+    if (locale === DEFAULT_BLOG_LOCALE) {
       params.delete('locale')
     } else {
       params.set('locale', locale)
@@ -45,12 +50,7 @@ export const Header: React.FC = () => {
       return href
     }
 
-    if (currentLocale === 'en') {
-      return href
-    }
-
-    const separator = href.includes('?') ? '&' : '?'
-    return `${href}${separator}locale=${currentLocale}`
+    return withBlogLocale(href, currentLocale)
   }
 
   const menuVariants = {
