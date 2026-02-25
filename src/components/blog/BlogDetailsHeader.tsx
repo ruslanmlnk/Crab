@@ -18,13 +18,13 @@ export const BlogDetailsHeader: React.FC<BlogDetailsHeaderProps> = ({
 }) => {
   return (
     <section className="relative w-full overflow-hidden bg-[#071A26] py-[64px] md:py-[88px] lg:py-[100px]">
-      <div
+      {/* <div
         className="pointer-events-none absolute left-1/2 top-0 z-10 hidden h-[900px] w-px -translate-x-1/2 lg:block"
         style={{
           background:
             'linear-gradient(180deg, rgba(133, 167, 183, 0) 5%, rgba(133, 167, 183, 0.4) 85%, rgba(133, 167, 183, 0) 100%)',
         }}
-      />
+      /> */}
 
       <div className="relative z-20 mx-auto w-full max-w-[1440px] px-6 sm:px-10 lg:px-[70px]">
         <div className="mx-auto flex max-w-[1300px] flex-col items-center gap-[30px] text-center md:gap-[36px] lg:gap-[38px]">

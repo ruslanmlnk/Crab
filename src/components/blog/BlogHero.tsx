@@ -45,12 +45,12 @@ export const BlogHero: React.FC<BlogHeroProps> = ({
         </div>
       </div>
       
-      <div 
+      {/* <div 
         className="absolute left-1/2 top-0 w-px h-[900px] -translate-x-1/2 hidden lg:block z-10"
         style={{ 
           background: "linear-gradient(180deg, rgba(133, 167, 183, 0.00) 5%, rgba(133, 167, 183, 0.40) 85%, rgba(133, 167, 183, 0.00) 100%)",
         }}
-      />
+      /> */}
 
       <div className="container-custom relative z-20 px-6 lg:px-[70px]">
         <div className="flex flex-col gap-12">
