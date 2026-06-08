@@ -15,7 +15,6 @@ import { About } from './globals/About'
 import { Contact } from './globals/Contact'
 import { FAQ } from './globals/FAQ'
 import { Home } from './globals/Home'
-import { Popup } from './globals/Popup'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +27,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Authors, BlogCategories, BlogPosts, ContactRequests],
-  globals: [FAQ, Home, About, Contact, Popup],
+  globals: [FAQ, Home, About, Contact],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'ru',

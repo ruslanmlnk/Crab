@@ -68,6 +68,18 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           socialLinks={contactContent.socialLinks}
           supportingText={homeContent.hero.supportingText}
         />
+        <WhatYouFind
+          ctaUrl={homeContent.amore.ctaUrl}
+          firstColumnText={homeContent.amore.firstColumnText}
+          headline={homeContent.amore.headline}
+          image={homeContent.amore.image}
+          locale={locale}
+          secondColumnText={homeContent.amore.secondColumnText}
+          sectionTitle={homeContent.amore.sectionTitle}
+          videoPoster={homeContent.amore.videoPoster}
+          withVideo
+          youtubeUrl={homeContent.amore.youtubeUrl}
+        />
         <WhoWeAre
           description={homeContent.whoWeAre.description}
           learnMoreUrl={homeContent.whoWeAre.learnMoreUrl}

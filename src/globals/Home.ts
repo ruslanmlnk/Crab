@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { isYouTubeURL } from '@/lib/youtube'
+
 export const Home: GlobalConfig = {
   slug: 'home',
   access: {
@@ -69,6 +71,72 @@ export const Home: GlobalConfig = {
           name: 'learnMoreUrl',
           type: 'text',
           defaultValue: '/about',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'amore',
+      type: 'group',
+      label: 'AMORE section',
+      fields: [
+        {
+          name: 'sectionTitle',
+          type: 'text',
+          localized: true,
+          defaultValue: 'AMORE',
+          required: true,
+        },
+        {
+          name: 'headline',
+          type: 'textarea',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'videoPoster',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+        {
+          name: 'youtubeUrl',
+          type: 'text',
+          label: 'YouTube URL',
+          required: true,
+          admin: {
+            placeholder: 'https://www.youtube.com/watch?v=...',
+          },
+          validate: (value: unknown) => {
+            if (typeof value !== 'string' || value.trim().length === 0) {
+              return 'YouTube URL is required.'
+            }
+
+            return isYouTubeURL(value) || 'Please enter a valid YouTube URL.'
+          },
+        },
+        {
+          name: 'firstColumnText',
+          type: 'textarea',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'secondColumnText',
+          type: 'textarea',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'ctaUrl',
+          type: 'text',
+          defaultValue: '/contact',
           required: true,
         },
       ],

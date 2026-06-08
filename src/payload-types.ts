@@ -100,14 +100,12 @@ export interface Config {
     home: Home;
     about: About;
     contact: Contact;
-    popup: Popup;
   };
   globalsSelect: {
     faq: FaqSelect<false> | FaqSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
-    popup: PopupSelect<false> | PopupSelect<true>;
   };
   locale: 'en' | 'ru';
   user: User;
@@ -514,6 +512,16 @@ export interface Home {
     description: string;
     learnMoreUrl: string;
   };
+  amore: {
+    sectionTitle: string;
+    headline: string;
+    image: number | Media;
+    videoPoster: number | Media;
+    youtubeUrl: string;
+    firstColumnText: string;
+    secondColumnText: string;
+    ctaUrl: string;
+  };
   realExperience: {
     cards: {
       title: string;
@@ -612,17 +620,6 @@ export interface Contact {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "popup".
- */
-export interface Popup {
-  id: number;
-  poster: number | Media;
-  youtubeUrl: string;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faq_select".
  */
 export interface FaqSelect<T extends boolean = true> {
@@ -661,6 +658,18 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         description?: T;
         learnMoreUrl?: T;
+      };
+  amore?:
+    | T
+    | {
+        sectionTitle?: T;
+        headline?: T;
+        image?: T;
+        videoPoster?: T;
+        youtubeUrl?: T;
+        firstColumnText?: T;
+        secondColumnText?: T;
+        ctaUrl?: T;
       };
   realExperience?:
     | T
@@ -785,17 +794,6 @@ export interface ContactSelect<T extends boolean = true> {
         instagramUrl?: T;
         telegramUrl?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "popup_select".
- */
-export interface PopupSelect<T extends boolean = true> {
-  poster?: T;
-  youtubeUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

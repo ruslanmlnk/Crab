@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import { motion, Variants } from 'framer-motion'
 import {
   DEFAULT_BLOG_LOCALE,
@@ -8,6 +9,7 @@ import {
   type BlogLocale,
 } from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
+import { getYouTubeEmbedURL } from '@/lib/youtube'
 
 import { DecorativeLines } from './DecorativeLines'
 
@@ -15,31 +17,44 @@ type WhatYouFindProps = {
   ctaUrl?: string
   firstColumnText?: string
   headline?: string
+  image?: string
   locale?: BlogLocale
   secondColumnText?: string
   sectionTitle?: string
+  videoPoster?: string
+  withVideo?: boolean
+  youtubeUrl?: string
 }
 
-const DEFAULT_PROPS: Required<Omit<WhatYouFindProps, 'locale'>> = {
+const DEFAULT_PROPS = {
   ctaUrl: '/contact',
   firstColumnText:
     'We focus on practical knowledge, firsthand experience and honest insight gained through years of working at sea - from the first contracts to real offshore conditions on Norwegian vessels.',
   headline:
     "For years, we've been documenting real life and work within the Norwegian crab fishing industry",
+  image: '/images/backgrounds/find.png',
   secondColumnText:
     'Alongside articles and interviews, we provide education and personal guidance for those who want to enter the industry prepared, avoid common mistakes and understand what this work really requires.',
   sectionTitle: "WHAT YOU'LL FIND HERE",
-}
+} satisfies Required<
+  Omit<WhatYouFindProps, 'locale' | 'videoPoster' | 'withVideo' | 'youtubeUrl'>
+>
 
 export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   ctaUrl = DEFAULT_PROPS.ctaUrl,
   firstColumnText = DEFAULT_PROPS.firstColumnText,
   headline = DEFAULT_PROPS.headline,
+  image = DEFAULT_PROPS.image,
   locale = DEFAULT_BLOG_LOCALE,
   secondColumnText = DEFAULT_PROPS.secondColumnText,
   sectionTitle = DEFAULT_PROPS.sectionTitle,
+  videoPoster,
+  withVideo = false,
+  youtubeUrl,
 }) => {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const messages = getSiteMessages(locale)
+  const embedUrl = youtubeUrl ? getYouTubeEmbedURL(youtubeUrl) : null
   const normalizedHeadline = headline
     .replace(/\\r\\n/g, '\n')
     .replace(/\\n/g, '\n')
@@ -137,28 +152,98 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
           ) : null}
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-[130px] items-stretch">
+        <div
+          className={`flex flex-col items-stretch lg:flex-row ${
+            withVideo ? 'gap-12 lg:gap-12' : 'gap-12 lg:gap-[130px]'
+          }`}
+        >
           <motion.div
             variants={itemVariants}
-            className="w-full lg:w-[520px] h-[326px] overflow-hidden rounded-sm relative"
+            className={
+              withVideo
+                ? 'relative h-[360px] w-full shrink-0 sm:h-[412px] lg:w-[613px]'
+                : 'relative h-[326px] w-full overflow-hidden rounded-sm lg:w-[520px]'
+            }
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.8 }}
-              className="w-full h-full relative"
+              className={
+                withVideo
+                  ? 'relative h-[calc(100%_-_53px)] w-[calc(100%_-_93px)] overflow-hidden'
+                  : 'relative h-full w-full'
+              }
             >
               <Image
-                src="/images/backgrounds/find.png"
+                src={image}
                 alt="Crab fishing documentation"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 520px"
               />
             </motion.div>
+
+            {withVideo && videoPoster ? (
+              <div className="absolute bottom-0 right-0 h-[46%] min-h-[150px] w-[54%] min-w-[220px] overflow-hidden border border-white/40 bg-blue-dark">
+                {isVideoPlaying && embedUrl ? (
+                  <iframe
+                    src={`${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1`}
+                    title={`${sectionTitle} video`}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    disabled={!embedUrl}
+                    aria-label="Play video"
+                    onClick={() => setIsVideoPlaying(true)}
+                    className="group relative h-full w-full disabled:cursor-default"
+                  >
+                    <Image
+                      src={videoPoster}
+                      alt=""
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 54vw, 331px"
+                    />
+                    <span className="absolute inset-0 bg-blue-dark/40" />
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
+                        <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
+                          <svg
+                            className="ml-1"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
+                              fill="#071A26"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </span>
+                  </button>
+                )}
+              </div>
+            ) : null}
           </motion.div>
 
-          <div className="flex flex-col justify-start py-0 gap-[137px] flex-1">
-            <div className="flex flex-col md:flex-row gap-[64px] items-start">
+          <div
+            className={`flex flex-1 flex-col py-0 ${
+              withVideo ? 'min-h-[412px] justify-between gap-12' : 'justify-start gap-[137px]'
+            }`}
+          >
+            <div
+              className={`flex flex-col items-start md:flex-row ${
+                withVideo ? 'gap-[46px]' : 'gap-[64px]'
+              }`}
+            >
               <motion.p
                 variants={itemVariants}
                 className="text-[16px] leading-[145%] text-blue-midnight font-normal max-w-[292.36px] whitespace-pre-line"

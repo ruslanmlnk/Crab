@@ -1,7 +1,6 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { FloatingHiringPopup } from '@/components/FloatingHiringPopup'
 import './styles.css'
 
 export const dynamic = 'force-dynamic'
@@ -37,17 +36,13 @@ export const metadata: Metadata = {
   title: 'Crab Norway',
 }
 
-import { getPopupData } from '@/lib/popup'
-
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-  const popupData = await getPopupData()
 
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <div id="app">{children}</div>
-        <FloatingHiringPopup posterUrl={popupData.posterUrl} youtubeUrl={popupData.youtubeUrl} />
       </body>
     </html>
   )

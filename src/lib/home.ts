@@ -11,6 +11,20 @@ import { CACHE_REVALIDATE } from './cache'
 const getPayloadClient = cache(async () => getPayload({ config }))
 
 const DEFAULT_HOME_CONTENT = {
+  amore: {
+    ctaUrl: '/contact',
+    firstColumnText:
+      'We help you get on crab fishing vessels, fishing boats, processing plants, yachts, and merchant ships through real mentors with experience at sea. You’ll receive support, up-to-date job openings, and verified contacts to get you started quickly. We advise you on which sectors and companies are right for you, and help you navigate requirements and paperwork. Within the community, you’ll see real-life experiences from people who have already set sail and walked this path.',
+    headline: 'Community for offshore work, with\nsupport until your first contract',
+    image:
+      'https://api.builder.io/api/v1/image/assets/TEMP/92da0214d5ee8c59d7357bbb82ee9efd7bc9a706?width=1040',
+    secondColumnText:
+      'AMORE supports you every step of the way: help with paperwork, guidance on company requirements, and access to an exclusive community with opportunities to join a flight. You get direct access to current job openings and valuable contacts without unnecessary intermediaries. Mentors help you avoid common mistakes and figure out where you should really go to work. This helps significantly shorten the path from wanting to work at sea to landing your first contract.',
+    sectionTitle: 'AMORE',
+    videoPoster:
+      'https://api.builder.io/api/v1/image/assets/TEMP/9934fca1bd4a02f8d9ab8e7dc91fed3b9c13d073?width=662',
+    youtubeUrl: '',
+  },
   hero: {
     eyebrow: 'Inside the industry',
     headline: 'crab norway',
@@ -131,6 +145,7 @@ const getHomeContentCached = unstable_cache(
 
     const seo = homeGlobal.seo || {}
     const hero = homeGlobal.hero || {}
+    const amore = homeGlobal.amore || {}
     const whoWeAre = homeGlobal.whoWeAre || {}
     const realExperience = homeGlobal.realExperience || {}
     const pricing = homeGlobal.pricing || {}
@@ -181,6 +196,16 @@ const getHomeContentCached = unstable_cache(
       .filter((id): id is number => id !== null)
 
     return {
+      amore: {
+        ctaUrl: amore.ctaUrl || DEFAULT_HOME_CONTENT.amore.ctaUrl,
+        firstColumnText: amore.firstColumnText || DEFAULT_HOME_CONTENT.amore.firstColumnText,
+        headline: amore.headline || DEFAULT_HOME_CONTENT.amore.headline,
+        image: resolveMediaUrl(amore.image) || DEFAULT_HOME_CONTENT.amore.image,
+        secondColumnText: amore.secondColumnText || DEFAULT_HOME_CONTENT.amore.secondColumnText,
+        sectionTitle: amore.sectionTitle || DEFAULT_HOME_CONTENT.amore.sectionTitle,
+        videoPoster: resolveMediaUrl(amore.videoPoster) || DEFAULT_HOME_CONTENT.amore.videoPoster,
+        youtubeUrl: amore.youtubeUrl || DEFAULT_HOME_CONTENT.amore.youtubeUrl,
+      },
       hero: {
         eyebrow: hero.eyebrow || DEFAULT_HOME_CONTENT.hero.eyebrow,
         headline: hero.headline || DEFAULT_HOME_CONTENT.hero.headline,
