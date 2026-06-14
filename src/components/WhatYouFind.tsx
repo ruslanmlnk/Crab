@@ -1,17 +1,14 @@
-"use client"
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { motion, Variants } from 'framer-motion'
-import {
-  DEFAULT_BLOG_LOCALE,
-  withBlogLocale,
-  type BlogLocale,
-} from '@/lib/blog-locale'
+import { DEFAULT_BLOG_LOCALE, withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 import { getYouTubeEmbedURL } from '@/lib/youtube'
 
 import { DecorativeLines } from './DecorativeLines'
+import { VideoModal } from './VideoModal'
 
 type WhatYouFindProps = {
   ctaUrl?: string
@@ -36,9 +33,7 @@ const DEFAULT_PROPS = {
   secondColumnText:
     'Alongside articles and interviews, we provide education and personal guidance for those who want to enter the industry prepared, avoid common mistakes and understand what this work really requires.',
   sectionTitle: "WHAT YOU'LL FIND HERE",
-} satisfies Required<
-  Omit<WhatYouFindProps, 'locale' | 'videoPoster' | 'withVideo' | 'youtubeUrl'>
->
+} satisfies Required<Omit<WhatYouFindProps, 'locale' | 'videoPoster' | 'withVideo' | 'youtubeUrl'>>
 
 export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   ctaUrl = DEFAULT_PROPS.ctaUrl,
@@ -52,7 +47,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
   withVideo = false,
   youtubeUrl,
 }) => {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const messages = getSiteMessages(locale)
   const embedUrl = youtubeUrl ? getYouTubeEmbedURL(youtubeUrl) : null
   const normalizedHeadline = headline
@@ -185,51 +180,40 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
 
             {withVideo && videoPoster ? (
               <div className="absolute bottom-0 right-0 h-[46%] min-h-[150px] w-[54%] min-w-[220px] overflow-hidden border border-white/40 bg-blue-dark">
-                {isVideoPlaying && embedUrl ? (
-                  <iframe
-                    src={`${embedUrl}${embedUrl.includes('?') ? '&' : '?'}autoplay=1`}
-                    title={`${sectionTitle} video`}
-                    className="h-full w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
+                <button
+                  type="button"
+                  aria-label="Open video"
+                  onClick={() => setIsVideoModalOpen(true)}
+                  className="group relative h-full w-full"
+                >
+                  <Image
+                    src={videoPoster}
+                    alt=""
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 54vw, 331px"
                   />
-                ) : (
-                  <button
-                    type="button"
-                    disabled={!embedUrl}
-                    aria-label="Play video"
-                    onClick={() => setIsVideoPlaying(true)}
-                    className="group relative h-full w-full disabled:cursor-default"
-                  >
-                    <Image
-                      src={videoPoster}
-                      alt=""
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 54vw, 331px"
-                    />
-                    <span className="absolute inset-0 bg-blue-dark/40" />
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
-                        <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
-                          <svg
-                            className="ml-1"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
-                              fill="#071A26"
-                            />
-                          </svg>
-                        </span>
+                  <span className="absolute inset-0 bg-blue-dark/40" />
+                  <span className="absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
+                      <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
+                        <svg
+                          className="ml-1"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
+                            fill="#071A26"
+                          />
+                        </svg>
                       </span>
                     </span>
-                  </button>
-                )}
+                  </span>
+                </button>
               </div>
             ) : null}
           </motion.div>
@@ -298,10 +282,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               </motion.a>
             ) : (
               <motion.div variants={itemVariants} whileHover="hover">
-                <Link
-                  href={localizedCtaUrl}
-                  className="btn-base btn-dark self-start group w-fit"
-                >
+                <Link href={localizedCtaUrl} className="btn-base btn-dark self-start group w-fit">
                   <div className="flex flex-col items-start leading-none">
                     <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
                       {messages.home.getInTouchButton}
@@ -338,6 +319,12 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
           </div>
         </div>
       </motion.div>
+      <VideoModal
+        embedUrl={embedUrl ?? undefined}
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        posterUrl={videoPoster}
+      />
     </section>
   )
 }
