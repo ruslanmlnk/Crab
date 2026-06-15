@@ -537,6 +537,7 @@ export interface Home {
     ctaUrl: string;
   };
   pricing: {
+    show?: boolean | null;
     headline: string;
     plans: {
       image: number | Media;
@@ -710,6 +711,7 @@ export interface HomeSelect<T extends boolean = true> {
   pricing?:
     | T
     | {
+        show?: T;
         headline?: T;
         plans?:
           | T
