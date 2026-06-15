@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { CommunityCourseCardBlock } from '@/collections/blocks/CommunityCourseCardBlock'
 import { isYouTubeURL } from '@/lib/youtube'
 
 export const Home: GlobalConfig = {
@@ -207,13 +208,6 @@ export const Home: GlobalConfig = {
       type: 'group',
       fields: [
         {
-          name: 'show',
-          type: 'checkbox',
-          admin: {
-            hidden: true,
-          },
-        },
-        {
           name: 'headline',
           type: 'text',
           localized: true,
@@ -276,68 +270,10 @@ export const Home: GlobalConfig = {
           ],
         },
         {
-          name: 'communityCard',
-          type: 'group',
-          label: 'Community course card',
-          fields: [
-            {
-              name: 'show',
-              type: 'checkbox',
-              defaultValue: false,
-            },
-            {
-              name: 'imageUrl',
-              type: 'text',
-              required: true,
-            },
-            {
-              name: 'description',
-              type: 'textarea',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'focusAreas',
-              type: 'array',
-              required: true,
-              fields: [
-                {
-                  name: 'text',
-                  type: 'text',
-                  localized: true,
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'includes',
-              type: 'array',
-              required: true,
-              fields: [
-                {
-                  name: 'text',
-                  type: 'text',
-                  localized: true,
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'courseStartsAt',
-              type: 'date',
-              required: true,
-              admin: {
-                date: {
-                  pickerAppearance: 'dayAndTime',
-                },
-              },
-            },
-            {
-              name: 'signUpUrl',
-              type: 'text',
-              required: true,
-            },
-          ],
+          name: 'components',
+          type: 'blocks',
+          blocks: [CommunityCourseCardBlock],
+          maxRows: 1,
         },
       ],
     },

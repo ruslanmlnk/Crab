@@ -162,6 +162,9 @@ const getHomeContentCached = unstable_cache(
     const whoWeAre = homeGlobal.whoWeAre || {}
     const realExperience = homeGlobal.realExperience || {}
     const pricing = homeGlobal.pricing || {}
+    const communityCard = pricing.components?.find(
+      (component) => component.blockType === 'communityCourseCard',
+    )
     const fromTheFleet = homeGlobal.fromTheFleet || {}
     const whatYouFind = homeGlobal.whatYouFind || {}
     const realExperienceCards =
@@ -234,15 +237,14 @@ const getHomeContentCached = unstable_cache(
       },
       pricing: {
         communityCard: {
-          courseStartsAt: pricing.communityCard?.courseStartsAt || '',
-          description: pricing.communityCard?.description || '',
+          courseStartsAt: communityCard?.courseStartsAt || '',
+          description: communityCard?.description || '',
           focusAreas:
-            pricing.communityCard?.focusAreas?.map((item) => item.text || '').filter(Boolean) || [],
-          imageUrl: pricing.communityCard?.imageUrl || '',
-          includes:
-            pricing.communityCard?.includes?.map((item) => item.text || '').filter(Boolean) || [],
-          show: pricing.communityCard?.show === true,
-          signUpUrl: pricing.communityCard?.signUpUrl || '#',
+            communityCard?.focusAreas?.map((item) => item.text || '').filter(Boolean) || [],
+          imageUrl: communityCard?.imageUrl || '',
+          includes: communityCard?.includes?.map((item) => item.text || '').filter(Boolean) || [],
+          show: communityCard?.show === true,
+          signUpUrl: communityCard?.signUpUrl || '#',
         },
         headline: pricing.headline || DEFAULT_HOME_CONTENT.pricing.headline,
         plans: pricingPlans.length > 0 ? pricingPlans : DEFAULT_HOME_CONTENT.pricing.plans,

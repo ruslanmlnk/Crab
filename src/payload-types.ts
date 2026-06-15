@@ -537,7 +537,6 @@ export interface Home {
     ctaUrl: string;
   };
   pricing: {
-    show?: boolean | null;
     headline: string;
     plans: {
       image: number | Media;
@@ -552,21 +551,26 @@ export interface Home {
       idealFor: string;
       id?: string | null;
     }[];
-    communityCard: {
-      show?: boolean | null;
-      imageUrl: string;
-      description: string;
-      focusAreas: {
-        text: string;
-        id?: string | null;
-      }[];
-      includes: {
-        text: string;
-        id?: string | null;
-      }[];
-      courseStartsAt: string;
-      signUpUrl: string;
-    };
+    components?:
+      | {
+          show?: boolean | null;
+          imageUrl: string;
+          description: string;
+          focusAreas: {
+            text: string;
+            id?: string | null;
+          }[];
+          includes: {
+            text: string;
+            id?: string | null;
+          }[];
+          courseStartsAt: string;
+          signUpUrl: string;
+          id?: string | null;
+          blockName?: string | null;
+          blockType: 'communityCourseCard';
+        }[]
+      | null;
   };
   fromTheFleet: {
     firstArticle: number | BlogPost;
@@ -711,7 +715,6 @@ export interface HomeSelect<T extends boolean = true> {
   pricing?:
     | T
     | {
-        show?: T;
         headline?: T;
         plans?:
           | T
@@ -730,26 +733,32 @@ export interface HomeSelect<T extends boolean = true> {
               idealFor?: T;
               id?: T;
             };
-        communityCard?:
+        components?:
           | T
           | {
-              show?: T;
-              imageUrl?: T;
-              description?: T;
-              focusAreas?:
+              communityCourseCard?:
                 | T
                 | {
-                    text?: T;
+                    show?: T;
+                    imageUrl?: T;
+                    description?: T;
+                    focusAreas?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    includes?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    courseStartsAt?: T;
+                    signUpUrl?: T;
                     id?: T;
+                    blockName?: T;
                   };
-              includes?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              courseStartsAt?: T;
-              signUpUrl?: T;
             };
       };
   fromTheFleet?:
