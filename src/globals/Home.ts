@@ -207,6 +207,13 @@ export const Home: GlobalConfig = {
       type: 'group',
       fields: [
         {
+          name: 'show',
+          type: 'checkbox',
+          admin: {
+            hidden: true,
+          },
+        },
+        {
           name: 'headline',
           type: 'text',
           localized: true,
