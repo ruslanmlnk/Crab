@@ -172,15 +172,17 @@ const CommunityCard: React.FC<{
       }}
       className="flex w-full max-w-[824px] flex-col gap-6 border border-ice-mist bg-white p-2 pb-6"
     >
-      <div className="relative h-[220px] w-full overflow-hidden sm:h-[277px]">
-        <Image
-          src={card.imageUrl}
-          alt=""
-          fill
-          className="object-cover"
-          sizes="(max-width: 900px) 100vw, 824px"
-        />
-      </div>
+      {card.imageUrl ? (
+        <div className="relative h-[220px] w-full overflow-hidden sm:h-[277px]">
+          <Image
+            src={card.imageUrl}
+            alt=""
+            fill
+            className="object-cover"
+            sizes="(max-width: 900px) 100vw, 824px"
+          />
+        </div>
+      ) : null}
 
       <div className="flex flex-col gap-8 px-2">
         <p className="rounded-[40px] bg-[#D9EEFF] px-4 py-2 text-center text-base leading-[145%] text-blue-dark">

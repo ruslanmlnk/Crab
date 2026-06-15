@@ -554,7 +554,7 @@ export interface Home {
     components?:
       | {
           show?: boolean | null;
-          imageUrl: string;
+          image?: (number | null) | Media;
           description: string;
           focusAreas: {
             text: string;
@@ -740,7 +740,7 @@ export interface HomeSelect<T extends boolean = true> {
                 | T
                 | {
                     show?: T;
-                    imageUrl?: T;
+                    image?: T;
                     description?: T;
                     focusAreas?:
                       | T

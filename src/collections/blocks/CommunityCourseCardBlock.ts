@@ -13,9 +13,9 @@ export const CommunityCourseCardBlock: Block = {
       defaultValue: true,
     },
     {
-      name: 'imageUrl',
-      type: 'text',
-      required: true,
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
       name: 'description',

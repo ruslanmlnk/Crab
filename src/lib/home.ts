@@ -241,7 +241,7 @@ const getHomeContentCached = unstable_cache(
           description: communityCard?.description || '',
           focusAreas:
             communityCard?.focusAreas?.map((item) => item.text || '').filter(Boolean) || [],
-          imageUrl: communityCard?.imageUrl || '',
+          imageUrl: resolveMediaUrl(communityCard?.image) || '',
           includes: communityCard?.includes?.map((item) => item.text || '').filter(Boolean) || [],
           show: communityCard?.show === true,
           signUpUrl: communityCard?.signUpUrl || '#',
