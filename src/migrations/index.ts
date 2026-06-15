@@ -3,6 +3,7 @@ import * as migration_20260224_123200_fix_blog_posts_slug_schema from './2026022
 import * as migration_20260614_233956_community_pricing_card from './20260614_233956_community_pricing_card'
 import * as migration_20260615_020500_community_course_card_block from './20260615_020500_community_course_card_block'
 import * as migration_20260615_024500_community_course_card_upload from './20260615_024500_community_course_card_upload'
+import * as migration_20260615_032000_relax_legacy_community_card_columns from './20260615_032000_relax_legacy_community_card_columns'
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260615_024500_community_course_card_upload.up,
     down: migration_20260615_024500_community_course_card_upload.down,
     name: '20260615_024500_community_course_card_upload',
+  },
+  {
+    up: migration_20260615_032000_relax_legacy_community_card_columns.up,
+    down: migration_20260615_032000_relax_legacy_community_card_columns.down,
+    name: '20260615_032000_relax_legacy_community_card_columns',
   },
 ]
