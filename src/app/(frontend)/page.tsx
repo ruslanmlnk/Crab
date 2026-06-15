@@ -22,9 +22,7 @@ type HomePageProps = {
   }>
 }
 
-export async function generateMetadata({
-  searchParams,
-}: HomePageProps): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: HomePageProps): Promise<Metadata> {
   const resolvedSearchParams = await searchParams
   const locale = normalizeBlogLocale(resolvedSearchParams?.locale)
   const homeContent = await getHomeContent(locale)
@@ -53,10 +51,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     getHomeContent(locale),
     getContactContent(locale),
   ])
-  const fleetArticles = await getHomeFleetArticles(
-    locale,
-    homeContent.fromTheFleet.articleIds,
-  )
+  const fleetArticles = await getHomeFleetArticles(locale, homeContent.fromTheFleet.articleIds)
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -95,14 +90,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           sectionTitle={homeContent.whatYouFind.sectionTitle}
         />
         <Pricing
+          communityCard={homeContent.pricing.communityCard}
           headline={homeContent.pricing.headline}
           locale={locale}
           plans={homeContent.pricing.plans}
         />
-        <FromTheFleet
-          articles={fleetArticles}
-          locale={locale}
-        />
+        <FromTheFleet articles={fleetArticles} locale={locale} />
         <FAQ items={faqItems} locale={locale} showCloudBackground={false} />
       </main>
       <Footer />

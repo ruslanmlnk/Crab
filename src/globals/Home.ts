@@ -207,10 +207,6 @@ export const Home: GlobalConfig = {
       type: 'group',
       fields: [
         {
-          name: 'show',
-          type: 'checkbox',
-        },
-        {
           name: 'headline',
           type: 'text',
           localized: true,
@@ -228,6 +224,11 @@ export const Home: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
               required: true,
+            },
+            {
+              name: 'show',
+              type: 'checkbox',
+              defaultValue: true,
             },
             {
               name: 'badgeLabel',
@@ -263,6 +264,70 @@ export const Home: GlobalConfig = {
               name: 'idealFor',
               type: 'textarea',
               localized: true,
+              required: true,
+            },
+          ],
+        },
+        {
+          name: 'communityCard',
+          type: 'group',
+          label: 'Community course card',
+          fields: [
+            {
+              name: 'show',
+              type: 'checkbox',
+              defaultValue: false,
+            },
+            {
+              name: 'imageUrl',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'description',
+              type: 'textarea',
+              localized: true,
+              required: true,
+            },
+            {
+              name: 'focusAreas',
+              type: 'array',
+              required: true,
+              fields: [
+                {
+                  name: 'text',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'includes',
+              type: 'array',
+              required: true,
+              fields: [
+                {
+                  name: 'text',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+              ],
+            },
+            {
+              name: 'courseStartsAt',
+              type: 'date',
+              required: true,
+              admin: {
+                date: {
+                  pickerAppearance: 'dayAndTime',
+                },
+              },
+            },
+            {
+              name: 'signUpUrl',
+              type: 'text',
               required: true,
             },
           ],

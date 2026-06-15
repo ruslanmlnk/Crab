@@ -50,9 +50,21 @@ const DEFAULT_HOME_CONTENT = {
     ],
   },
   pricing: {
+    communityCard: {
+      courseStartsAt: '',
+      description:
+        'You choose a field and are immediately matched with a mentor - a professional who has walked this path themselves.',
+      focusAreas: [] as string[],
+      imageUrl:
+        'https://api.builder.io/api/v1/image/assets/TEMP/d23190661b06c1f8779411e42e9e4b18f717042f?width=1616',
+      includes: [] as string[],
+      show: false,
+      signUpUrl: '#',
+    },
     headline: 'Pricing for every dive adventure',
     plans: [
       {
+        show: true,
         badgeLabel: 'Employer Database',
         features: [
           '1000+ verified employer contacts (Norway, Denmark, UK, Europe)',
@@ -66,6 +78,7 @@ const DEFAULT_HOME_CONTENT = {
         price: '€400',
       },
       {
+        show: true,
         badgeLabel: 'Full Support Course',
         features: [
           "Step-by-step guidance from 'I do not know where to start' to sending CVs",
@@ -159,6 +172,7 @@ const getHomeContentCached = unstable_cache(
           const features = plan.features?.map((feature) => feature.text || '').filter(Boolean) || []
 
           return {
+            show: plan.show !== false,
             badgeLabel: plan.badgeLabel || '',
             features,
             idealFor: plan.idealFor || '',
@@ -168,9 +182,7 @@ const getHomeContentCached = unstable_cache(
               DEFAULT_HOME_CONTENT.pricing.plans[0].image,
             price: plan.price || '',
             purchaseUrl:
-              plan.purchaseUrl ||
-              DEFAULT_HOME_CONTENT.pricing.plans[index]?.purchaseUrl ||
-              '#',
+              plan.purchaseUrl || DEFAULT_HOME_CONTENT.pricing.plans[index]?.purchaseUrl || '#',
           }
         })
         .filter((plan) =>
@@ -221,8 +233,19 @@ const getHomeContentCached = unstable_cache(
             : DEFAULT_HOME_CONTENT.realExperience.cards,
       },
       pricing: {
+        communityCard: {
+          courseStartsAt: pricing.communityCard?.courseStartsAt || '',
+          description: pricing.communityCard?.description || '',
+          focusAreas:
+            pricing.communityCard?.focusAreas?.map((item) => item.text || '').filter(Boolean) || [],
+          imageUrl: pricing.communityCard?.imageUrl || '',
+          includes:
+            pricing.communityCard?.includes?.map((item) => item.text || '').filter(Boolean) || [],
+          show: pricing.communityCard?.show === true,
+          signUpUrl: pricing.communityCard?.signUpUrl || '#',
+        },
         headline: pricing.headline || DEFAULT_HOME_CONTENT.pricing.headline,
-        plans: pricingPlans.length === 2 ? pricingPlans : DEFAULT_HOME_CONTENT.pricing.plans,
+        plans: pricingPlans.length > 0 ? pricingPlans : DEFAULT_HOME_CONTENT.pricing.plans,
       },
       fromTheFleet: {
         articleIds:
@@ -260,5 +283,3 @@ const getHomeContentCached = unstable_cache(
 export const getHomeContent = cache(
   async (locale: BlogLocale): Promise<HomeContent> => getHomeContentCached(locale),
 )
-
-

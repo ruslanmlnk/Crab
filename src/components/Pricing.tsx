@@ -1,17 +1,16 @@
-"use client"
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { motion, Variants } from 'framer-motion'
-import {
-  DEFAULT_BLOG_LOCALE,
-  withBlogLocale,
-  type BlogLocale,
-} from '@/lib/blog-locale'
+import { DEFAULT_BLOG_LOCALE, withBlogLocale, type BlogLocale } from '@/lib/blog-locale'
 import { getSiteMessages } from '@/lib/site-locale'
 
 import { DecorativeLines } from './DecorativeLines'
 
 export type PricingPlan = {
+  show?: boolean
   badgeLabel: string
   features: string[]
   idealFor: string
@@ -20,7 +19,18 @@ export type PricingPlan = {
   purchaseUrl: string
 }
 
+export type CommunityPricingCard = {
+  courseStartsAt: string
+  description: string
+  focusAreas: string[]
+  imageUrl: string
+  includes: string[]
+  show?: boolean
+  signUpUrl: string
+}
+
 type PricingProps = {
+  communityCard?: CommunityPricingCard
   headline?: string
   locale?: BlogLocale
   plans?: PricingPlan[]
@@ -28,6 +38,7 @@ type PricingProps = {
 
 const DEFAULT_PLANS: PricingPlan[] = [
   {
+    show: true,
     badgeLabel: 'Employer Database',
     features: [
       '1000+ verified employer contacts (Norway, Denmark, UK, Europe)',
@@ -41,6 +52,7 @@ const DEFAULT_PLANS: PricingPlan[] = [
     purchaseUrl: '#',
   },
   {
+    show: true,
     badgeLabel: 'Full Support Course',
     features: [
       "Step-by-step guidance from 'I do not know where to start' to sending CVs",
@@ -59,17 +71,196 @@ const DEFAULT_PLANS: PricingPlan[] = [
   },
 ]
 
+const isExternalUrl = (value: string) =>
+  value.startsWith('http://') ||
+  value.startsWith('https://') ||
+  value.startsWith('mailto:') ||
+  value.startsWith('tel:')
+
+const ArrowIcon = () => (
+  <svg
+    className="h-6 w-6 transition-transform group-hover/btn:translate-x-1"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
+      className="fill-blue-dark transition-colors group-hover/btn:fill-white"
+    />
+  </svg>
+)
+
+const StopwatchIcon = () => (
+  <svg className="h-[50px] w-[50px] shrink-0" viewBox="0 0 50 50" fill="none">
+    <path
+      d="M40.145 14.884 43.139 11.89l-2.946-2.947-3.202 3.203a20.7 20.7 0 0 0-9.908-3.709V4.167h4.166V0h-12.5v4.167h4.167v4.27a20.7 20.7 0 0 0-9.908 3.709L9.806 8.943 6.86 11.89l2.994 2.994A20.83 20.83 0 1 0 40.145 14.884ZM25 45.833a16.667 16.667 0 1 1 0-33.333 16.667 16.667 0 0 1 0 33.333Z"
+      fill="#071A26"
+    />
+    <path d="M25 16.667v12.5H12.5A12.5 12.5 0 1 0 25 16.667Z" fill="#071A26" />
+  </svg>
+)
+
+const CommunityCard: React.FC<{
+  card: CommunityPricingCard
+  locale: BlogLocale
+}> = ({ card, locale }) => {
+  const [remaining, setRemaining] = useState({ days: 0, hours: 0, minutes: 0 })
+  const isUkrainian = locale === 'ru'
+
+  useEffect(() => {
+    const updateRemaining = () => {
+      const difference = Math.max(0, new Date(card.courseStartsAt).getTime() - Date.now())
+
+      setRemaining({
+        days: Math.floor(difference / 86_400_000),
+        hours: Math.floor((difference / 3_600_000) % 24),
+        minutes: Math.floor((difference / 60_000) % 60),
+      })
+    }
+
+    updateRemaining()
+    const interval = window.setInterval(updateRemaining, 60_000)
+
+    return () => window.clearInterval(interval)
+  }, [card.courseStartsAt])
+
+  const labels = isUkrainian
+    ? {
+        days: 'днів',
+        focus: 'Спільнота має чотири основні напрями:',
+        hours: 'годин',
+        includes: 'Включає:',
+        minutes: 'хвилин',
+        signUp: 'записатися на курс',
+        starts: 'Наступний курс починається через:',
+      }
+    : {
+        days: 'days',
+        focus: 'The community has four main areas of focus:',
+        hours: 'hours',
+        includes: 'Includes:',
+        minutes: 'minutes',
+        signUp: 'sign up for the course',
+        starts: 'The next course starts in:',
+      }
+
+  const buttonClasses =
+    'group/btn flex w-full items-center justify-center gap-2 rounded-full border border-blue-dark px-6 py-[11px] transition-colors hover:bg-blue-dark'
+  const buttonContent = (
+    <>
+      <span className="flex flex-col items-start">
+        <span className="text-base font-semibold lowercase leading-[145%] text-blue-dark transition-colors group-hover/btn:text-white">
+          {labels.signUp}
+        </span>
+        <span className="h-px w-full bg-blue-dark transition-colors group-hover/btn:bg-white" />
+      </span>
+      <ArrowIcon />
+    </>
+  )
+
+  return (
+    <motion.article
+      variants={{
+        hidden: { opacity: 0, scale: 0.95, y: 30 },
+        visible: {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          transition: { duration: 0.8, ease: 'easeOut' } as any,
+        },
+      }}
+      className="flex w-full max-w-[824px] flex-col gap-6 border border-ice-mist bg-white p-2 pb-6"
+    >
+      <div className="relative h-[220px] w-full overflow-hidden sm:h-[277px]">
+        <Image
+          src={card.imageUrl}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="(max-width: 900px) 100vw, 824px"
+        />
+      </div>
+
+      <div className="flex flex-col gap-8 px-2">
+        <p className="rounded-[40px] bg-[#D9EEFF] px-4 py-2 text-center text-base leading-[145%] text-blue-dark">
+          {card.description}
+        </p>
+
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-2">
+            <h3 className="text-base font-medium uppercase leading-[145%] tracking-[3px] text-[#1C4D74]">
+              {labels.focus}
+            </h3>
+            <ul className="flex flex-col text-base leading-[145%] text-blue-dark">
+              {card.focusAreas.map((item, index) => (
+                <li key={`community-focus-${index}`}>- {item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <h3 className="text-base font-medium uppercase leading-[145%] tracking-[3px] text-[#1C4D74]">
+              {labels.includes}
+            </h3>
+            <ul className="flex flex-col text-base leading-[145%] text-blue-dark">
+              {card.includes.map((item, index) => (
+                <li key={`community-includes-${index}`}>- {item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 rounded-[40px] bg-[#D9EEFF] px-5 py-3 sm:flex-row sm:items-center">
+          <StopwatchIcon />
+          <div className="flex flex-col gap-1">
+            <span className="text-base leading-[145%] text-blue-dark">{labels.starts}</span>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {[
+                [remaining.days, labels.days],
+                [remaining.hours, labels.hours],
+                [remaining.minutes, labels.minutes],
+              ].map(([value, unit]) => (
+                <span key={unit} className="flex items-end gap-2">
+                  <strong className="text-[35px] font-semibold leading-none tracking-[1px] text-blue-dark">
+                    {value}
+                  </strong>
+                  <span className="text-base leading-[160%] tracking-[1px] text-blue-dark">
+                    {unit}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {isExternalUrl(card.signUpUrl) ? (
+          <a
+            href={card.signUpUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClasses}
+          >
+            {buttonContent}
+          </a>
+        ) : (
+          <Link href={withBlogLocale(card.signUpUrl || '#', locale)} className={buttonClasses}>
+            {buttonContent}
+          </Link>
+        )}
+      </div>
+    </motion.article>
+  )
+}
+
 export const Pricing: React.FC<PricingProps> = ({
+  communityCard,
   headline = 'Pricing for every dive adventure',
   locale = DEFAULT_BLOG_LOCALE,
   plans = DEFAULT_PLANS,
 }) => {
   const messages = getSiteMessages(locale)
-  const isExternalUrl = (value: string) =>
-    value.startsWith('http://') ||
-    value.startsWith('https://') ||
-    value.startsWith('mailto:') ||
-    value.startsWith('tel:')
+  const visiblePlans = plans.filter((plan) => plan.show !== false)
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -124,8 +315,8 @@ export const Pricing: React.FC<PricingProps> = ({
           </motion.h2>
         </div>
 
-        <div className="flex flex-col lg:flex-row justify-center items-start gap-5 w-full">
-          {plans.map((plan, index) => (
+        <div className="flex w-full flex-col items-center justify-center gap-5 lg:flex-row lg:items-start">
+          {visiblePlans.map((plan, index) => (
             <motion.div
               key={`${plan.badgeLabel}-${index}`}
               variants={cardVariants}
@@ -172,17 +363,7 @@ export const Pricing: React.FC<PricingProps> = ({
                       </span>
                       <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
                     </div>
-                    <svg
-                      className="w-6 h-6 transition-transform group-hover/btn:translate-x-1"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                        className="fill-blue-dark group-hover/btn:fill-white transition-colors"
-                      />
-                    </svg>
+                    <ArrowIcon />
                   </motion.a>
                 ) : (
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -196,17 +377,7 @@ export const Pricing: React.FC<PricingProps> = ({
                         </span>
                         <div className="h-[1px] w-full bg-blue-dark group-hover/btn:bg-white transition-colors" />
                       </div>
-                      <svg
-                        className="w-6 h-6 transition-transform group-hover/btn:translate-x-1"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                          className="fill-blue-dark group-hover/btn:fill-white transition-colors"
-                        />
-                      </svg>
+                      <ArrowIcon />
                     </Link>
                   </motion.div>
                 )}
@@ -236,6 +407,7 @@ export const Pricing: React.FC<PricingProps> = ({
               </div>
             </motion.div>
           ))}
+          {communityCard?.show ? <CommunityCard card={communityCard} locale={locale} /> : null}
         </div>
       </motion.div>
     </section>

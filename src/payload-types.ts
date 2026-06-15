@@ -540,6 +540,7 @@ export interface Home {
     headline: string;
     plans: {
       image: number | Media;
+      show?: boolean | null;
       badgeLabel: string;
       price: string;
       purchaseUrl: string;
@@ -550,6 +551,21 @@ export interface Home {
       idealFor: string;
       id?: string | null;
     }[];
+    communityCard: {
+      show?: boolean | null;
+      imageUrl: string;
+      description: string;
+      focusAreas: {
+        text: string;
+        id?: string | null;
+      }[];
+      includes: {
+        text: string;
+        id?: string | null;
+      }[];
+      courseStartsAt: string;
+      signUpUrl: string;
+    };
   };
   fromTheFleet: {
     firstArticle: number | BlogPost;
@@ -699,6 +715,7 @@ export interface HomeSelect<T extends boolean = true> {
           | T
           | {
               image?: T;
+              show?: T;
               badgeLabel?: T;
               price?: T;
               purchaseUrl?: T;
@@ -710,6 +727,27 @@ export interface HomeSelect<T extends boolean = true> {
                   };
               idealFor?: T;
               id?: T;
+            };
+        communityCard?:
+          | T
+          | {
+              show?: T;
+              imageUrl?: T;
+              description?: T;
+              focusAreas?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              includes?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              courseStartsAt?: T;
+              signUpUrl?: T;
             };
       };
   fromTheFleet?:
