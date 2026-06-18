@@ -184,7 +184,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
             </motion.div>
 
             {withVideo && videoPoster ? (
-              <div className="absolute bottom-0 right-0 h-[46%] min-h-[150px] w-[54%] min-w-[220px] overflow-hidden border border-white/40 bg-blue-dark">
+              <div className="absolute bottom-0 right-0 h-[46%] min-h-[150px] w-[54%] min-w-[220px]">
                 <button
                   type="button"
                   aria-label="Open video"
@@ -195,10 +195,9 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                     src={videoPoster}
                     alt=""
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-contain transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 54vw, 331px"
                   />
-                  <span className="absolute inset-0 bg-blue-dark/40" />
                   <span className="absolute inset-0 flex items-center justify-center">
                     <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
                       <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
