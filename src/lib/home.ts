@@ -59,6 +59,7 @@ const DEFAULT_HOME_CONTENT = {
         'https://api.builder.io/api/v1/image/assets/TEMP/d23190661b06c1f8779411e42e9e4b18f717042f?width=1616',
       includes: [] as string[],
       show: false,
+      signUpLabel: 'sign up for the course',
       signUpUrl: '#',
     },
     headline: 'Pricing for every dive adventure',
@@ -244,6 +245,8 @@ const getHomeContentCached = unstable_cache(
           imageUrl: resolveMediaUrl(communityCard?.image) || '',
           includes: communityCard?.includes?.map((item) => item.text || '').filter(Boolean) || [],
           show: communityCard?.show === true,
+          signUpLabel:
+            communityCard?.signUpLabel || DEFAULT_HOME_CONTENT.pricing.communityCard.signUpLabel,
           signUpUrl: communityCard?.signUpUrl || '#',
         },
         headline: pricing.headline || DEFAULT_HOME_CONTENT.pricing.headline,

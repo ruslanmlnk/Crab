@@ -61,7 +61,15 @@ export const CommunityCourseCardBlock: Block = {
     },
     {
       name: 'signUpUrl',
+      label: 'Button URL',
       type: 'text',
+      required: true,
+    },
+    {
+      name: 'signUpLabel',
+      label: 'Button label',
+      type: 'text',
+      localized: true,
       required: true,
     },
   ],

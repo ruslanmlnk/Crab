@@ -26,6 +26,7 @@ export type CommunityPricingCard = {
   imageUrl: string
   includes: string[]
   show?: boolean
+  signUpLabel: string
   signUpUrl: string
 }
 
@@ -132,7 +133,6 @@ const CommunityCard: React.FC<{
         hours: 'годин',
         includes: 'Включає:',
         minutes: 'хвилин',
-        signUp: 'записатися на курс',
         starts: 'Наступний курс починається через:',
       }
     : {
@@ -141,9 +141,10 @@ const CommunityCard: React.FC<{
         hours: 'hours',
         includes: 'Includes:',
         minutes: 'minutes',
-        signUp: 'sign up for the course',
         starts: 'The next course starts in:',
       }
+  const signUpLabel =
+    card.signUpLabel || (isUkrainian ? 'записатися на курс' : 'sign up for the course')
 
   const buttonClasses =
     'group/btn flex w-full items-center justify-center gap-2 rounded-full border border-blue-dark px-6 py-[11px] transition-colors hover:bg-blue-dark'
@@ -151,7 +152,7 @@ const CommunityCard: React.FC<{
     <>
       <span className="flex flex-col items-start">
         <span className="text-base font-semibold lowercase leading-[145%] text-blue-dark transition-colors group-hover/btn:text-white">
-          {labels.signUp}
+          {signUpLabel}
         </span>
         <span className="h-px w-full bg-blue-dark transition-colors group-hover/btn:bg-white" />
       </span>

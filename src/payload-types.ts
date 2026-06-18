@@ -566,6 +566,7 @@ export interface Home {
           }[];
           courseStartsAt: string;
           signUpUrl: string;
+          signUpLabel: string;
           id?: string | null;
           blockName?: string | null;
           blockType: 'communityCourseCard';
@@ -756,6 +757,7 @@ export interface HomeSelect<T extends boolean = true> {
                         };
                     courseStartsAt?: T;
                     signUpUrl?: T;
+                    signUpLabel?: T;
                     id?: T;
                     blockName?: T;
                   };

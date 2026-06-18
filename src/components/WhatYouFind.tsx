@@ -255,14 +255,14 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                 className="btn-base btn-dark self-start group w-fit"
               >
                 <div className="flex flex-col items-start leading-none">
-                  <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
+                  <span className="text-blue-dark font-semibold text-[16px] leading-[145%] transition-colors group-hover:text-white">
                     {buttonLabel}
                   </span>
                   <motion.div
                     variants={{
                       hover: { scaleX: 0 },
                     }}
-                    className="h-[1px] w-full bg-blue-dark origin-left"
+                    className="h-[1px] w-full bg-blue-dark origin-left transition-colors group-hover:bg-white"
                   />
                 </div>
                 <motion.div
@@ -280,7 +280,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                   >
                     <path
                       d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                      fill="#071A26"
+                      className="fill-blue-dark transition-colors group-hover:fill-white"
                     />
                   </svg>
                 </motion.div>
@@ -289,14 +289,14 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               <motion.div variants={itemVariants} whileHover="hover">
                 <Link href={localizedCtaUrl} className="btn-base btn-dark self-start group w-fit">
                   <div className="flex flex-col items-start leading-none">
-                    <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
+                    <span className="text-blue-dark font-semibold text-[16px] leading-[145%] transition-colors group-hover:text-white">
                       {buttonLabel}
                     </span>
                     <motion.div
                       variants={{
                         hover: { scaleX: 0 },
                       }}
-                      className="h-[1px] w-full bg-blue-dark origin-left"
+                      className="h-[1px] w-full bg-blue-dark origin-left transition-colors group-hover:bg-white"
                     />
                   </div>
                   <motion.div
@@ -314,7 +314,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                     >
                       <path
                         d="M18.9785 11.4717L19.3418 11.8447L18.9551 12.1924L14.5977 16.1055L13.9297 15.3613L17.3506 12.2881H5V11.2881H17.4033L13.9053 7.69727L14.6221 7L18.9785 11.4717Z"
-                        fill="#071A26"
+                        className="fill-blue-dark transition-colors group-hover:fill-white"
                       />
                     </svg>
                   </motion.div>
