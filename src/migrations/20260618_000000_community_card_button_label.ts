@@ -8,7 +8,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     UPDATE "home_blocks_community_course_card_locales"
     SET "sign_up_label" = CASE
       WHEN "_locale" = 'en' THEN 'sign up for the course'
-      ELSE 'записатися на курс'
+      ELSE 'записаться на курс'
     END
     WHERE "sign_up_label" IS NULL;
 

@@ -107,7 +107,7 @@ const CommunityCard: React.FC<{
   locale: BlogLocale
 }> = ({ card, locale }) => {
   const [remaining, setRemaining] = useState({ days: 0, hours: 0, minutes: 0 })
-  const isUkrainian = locale === 'ru'
+  const isRussian = locale === 'ru'
 
   useEffect(() => {
     const updateRemaining = () => {
@@ -126,14 +126,14 @@ const CommunityCard: React.FC<{
     return () => window.clearInterval(interval)
   }, [card.courseStartsAt])
 
-  const labels = isUkrainian
+  const labels = isRussian
     ? {
-        days: 'днів',
-        focus: 'Спільнота має чотири основні напрями:',
-        hours: 'годин',
-        includes: 'Включає:',
-        minutes: 'хвилин',
-        starts: 'Наступний курс починається через:',
+        days: 'дней',
+        focus: 'У сообщества есть четыре основных направления:',
+        hours: 'часов',
+        includes: 'Включает:',
+        minutes: 'минут',
+        starts: 'Следующий курс начинается через:',
       }
     : {
         days: 'days',
@@ -144,7 +144,7 @@ const CommunityCard: React.FC<{
         starts: 'The next course starts in:',
       }
   const signUpLabel =
-    card.signUpLabel || (isUkrainian ? 'записатися на курс' : 'sign up for the course')
+    card.signUpLabel || (isRussian ? 'записаться на курс' : 'sign up for the course')
 
   const buttonClasses =
     'group/btn flex w-full items-center justify-center gap-2 rounded-full border border-blue-dark px-6 py-[11px] transition-colors hover:bg-blue-dark'
