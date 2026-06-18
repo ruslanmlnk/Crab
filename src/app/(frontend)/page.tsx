@@ -64,7 +64,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           supportingText={homeContent.hero.supportingText}
         />
         <WhatYouFind
-          ctaUrl={homeContent.amore.ctaUrl}
+          ctaLabel={locale === 'en' ? 'Learn more' : 'Подробнее'}
+          ctaUrl="#plans"
           firstColumnText={homeContent.amore.firstColumnText}
           headline={homeContent.amore.headline}
           image={homeContent.amore.image}

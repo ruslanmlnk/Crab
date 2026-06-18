@@ -285,7 +285,7 @@ export const Pricing: React.FC<PricingProps> = ({
   }
 
   return (
-    <section className="bg-ice-mist py-20 md:py-[140px] relative overflow-hidden">
+    <section id="plans" className="bg-ice-mist py-20 md:py-[140px] relative overflow-hidden">
       <DecorativeLines
         color="rgba(7, 26, 38, 1)"
         opacity={0.1}

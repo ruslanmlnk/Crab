@@ -11,6 +11,7 @@ import { DecorativeLines } from './DecorativeLines'
 import { VideoModal } from './VideoModal'
 
 type WhatYouFindProps = {
+  ctaLabel?: string
   ctaUrl?: string
   firstColumnText?: string
   headline?: string
@@ -33,9 +34,12 @@ const DEFAULT_PROPS = {
   secondColumnText:
     'Alongside articles and interviews, we provide education and personal guidance for those who want to enter the industry prepared, avoid common mistakes and understand what this work really requires.',
   sectionTitle: "WHAT YOU'LL FIND HERE",
-} satisfies Required<Omit<WhatYouFindProps, 'locale' | 'videoPoster' | 'withVideo' | 'youtubeUrl'>>
+} satisfies Required<
+  Omit<WhatYouFindProps, 'ctaLabel' | 'locale' | 'videoPoster' | 'withVideo' | 'youtubeUrl'>
+>
 
 export const WhatYouFind: React.FC<WhatYouFindProps> = ({
+  ctaLabel,
   ctaUrl = DEFAULT_PROPS.ctaUrl,
   firstColumnText = DEFAULT_PROPS.firstColumnText,
   headline = DEFAULT_PROPS.headline,
@@ -94,6 +98,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
     ctaUrl.startsWith('tel:') ||
     ctaUrl.startsWith('#')
   const localizedCtaUrl = isExternalCta ? ctaUrl : withBlogLocale(ctaUrl, locale)
+  const buttonLabel = ctaLabel ?? messages.home.getInTouchButton
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -251,7 +256,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
               >
                 <div className="flex flex-col items-start leading-none">
                   <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
-                    {messages.home.getInTouchButton}
+                    {buttonLabel}
                   </span>
                   <motion.div
                     variants={{
@@ -285,7 +290,7 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                 <Link href={localizedCtaUrl} className="btn-base btn-dark self-start group w-fit">
                   <div className="flex flex-col items-start leading-none">
                     <span className="text-blue-dark font-semibold text-[16px] leading-[145%]">
-                      {messages.home.getInTouchButton}
+                      {buttonLabel}
                     </span>
                     <motion.div
                       variants={{
