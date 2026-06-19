@@ -166,13 +166,11 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
             }
           >
             {withVideo && videoPoster ? (
-              <motion.button
+              <button
                 type="button"
                 aria-label="Open video"
                 onClick={() => setIsVideoModalOpen(true)}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.8 }}
-                className="group relative h-full w-full"
+                className="relative block h-full w-full"
               >
                 <Image
                   src={videoPoster}
@@ -182,25 +180,23 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
                   sizes="(max-width: 1024px) 100vw, 613px"
                 />
                 <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
-                    <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
-                      <svg
-                        className="ml-1"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
-                          fill="#071A26"
-                        />
-                      </svg>
-                    </span>
+                  <span className="flex size-[72px] shrink-0 items-center justify-center rounded-full bg-ice-mist">
+                    <svg
+                      className="ml-1"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
+                        fill="#071A26"
+                      />
+                    </svg>
                   </span>
                 </span>
-              </motion.button>
+              </button>
             ) : (
               <motion.div
                 whileHover={{ scale: 1.05 }}
