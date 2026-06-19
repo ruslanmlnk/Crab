@@ -161,65 +161,61 @@ export const WhatYouFind: React.FC<WhatYouFindProps> = ({
             variants={itemVariants}
             className={
               withVideo
-                ? 'relative h-[360px] w-full shrink-0 sm:h-[412px] lg:w-[613px]'
+                ? 'relative h-[326px] w-full shrink-0 overflow-hidden sm:h-[359px] lg:w-[613px]'
                 : 'relative h-[326px] w-full overflow-hidden rounded-sm lg:w-[520px]'
             }
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.8 }}
-              className={
-                withVideo
-                  ? 'relative h-[calc(100%_-_53px)] w-[calc(100%_-_93px)] overflow-hidden'
-                  : 'relative h-full w-full'
-              }
-            >
-              <Image
-                src={image}
-                alt="Crab fishing documentation"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 520px"
-              />
-            </motion.div>
-
             {withVideo && videoPoster ? (
-              <div className="absolute bottom-0 right-0 h-[46%] min-h-[150px] w-[54%] min-w-[220px]">
-                <button
-                  type="button"
-                  aria-label="Open video"
-                  onClick={() => setIsVideoModalOpen(true)}
-                  className="group relative h-full w-full"
-                >
-                  <Image
-                    src={videoPoster}
-                    alt=""
-                    fill
-                    className="object-contain transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 54vw, 331px"
-                  />
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
-                      <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
-                        <svg
-                          className="ml-1"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
-                            fill="#071A26"
-                          />
-                        </svg>
-                      </span>
+              <motion.button
+                type="button"
+                aria-label="Open video"
+                onClick={() => setIsVideoModalOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8 }}
+                className="group relative h-full w-full"
+              >
+                <Image
+                  src={videoPoster}
+                  alt=""
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 613px"
+                />
+                <span className="absolute inset-0 flex items-center justify-center">
+                  <span className="flex h-20 w-20 items-center justify-center rounded-full bg-ice-mist/25">
+                    <span className="flex h-[57px] w-[57px] items-center justify-center rounded-full bg-ice-mist">
+                      <svg
+                        className="ml-1"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M16.5 8.7L6 2.65C5.2 2.18 4.2 2.76 4.2 3.68V15.8C4.2 16.72 5.2 17.3 6 16.83L16.5 10.78C17.3 10.32 17.3 9.16 16.5 8.7Z"
+                          fill="#071A26"
+                        />
+                      </svg>
                     </span>
                   </span>
-                </button>
-              </div>
-            ) : null}
+                </span>
+              </motion.button>
+            ) : (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.8 }}
+                className="relative h-full w-full"
+              >
+                <Image
+                  src={image}
+                  alt="Crab fishing documentation"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 520px"
+                />
+              </motion.div>
+            )}
           </motion.div>
 
           <div
